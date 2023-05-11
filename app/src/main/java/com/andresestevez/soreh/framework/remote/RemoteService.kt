@@ -5,7 +5,7 @@ import com.andresestevez.soreh.framework.remote.dto.SearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-internal interface RemoteService {
+interface RemoteService {
 
     @GET("{apiKey}/search/{name}")
     suspend fun searchCharactersByName(
@@ -16,7 +16,7 @@ internal interface RemoteService {
     @GET("{apiKey}/{id}")
     suspend fun getCharacterById(
         @Path("apiKey") apiKey: String,
-        @Path("id") name: String,
+        @Path("id") id: Int,
     ): CharacterByIdResponse
 
 }
