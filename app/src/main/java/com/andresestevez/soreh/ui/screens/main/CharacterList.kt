@@ -18,11 +18,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -31,11 +28,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.andresestevez.soreh.R
 import com.andresestevez.soreh.data.Character
+import com.andresestevez.soreh.data.Repository
+import com.andresestevez.soreh.domain.SearchCharactersByNameUseCase
 import com.andresestevez.soreh.framework.remote.RemoteClient
-import com.andresestevez.soreh.framework.remote.RemoteService
-import com.andresestevez.soreh.framework.remote.dto.CharacterDTO
+import com.andresestevez.soreh.framework.remote.SuperHeroDataSource
 
-internal val service: RemoteService = RemoteClient.service
 
 @Composable
 fun CharacterListVerticalGrid(
@@ -43,37 +40,26 @@ fun CharacterListVerticalGrid(
     onClick: (Character) -> Unit = {},
 ) {
 
-    var characters by remember { mutableStateOf(emptyList<CharacterDTO>()) }
-
-    LaunchedEffect(Unit) {
-        characters = service.searchCharactersByName(
+    val searchCharactersByNameUseCase = SearchCharactersByNameUseCase(Repository(
+        remoteDataSource = SuperHeroDataSource(
             apiKey = "",
-            name = "an"
-        ).results
-    }
+            remoteService = RemoteClient.service
+        ))
+    )
+
+    val characters by searchCharactersByNameUseCase("nar").collectAsState(initial = emptyList())
 
     LazyVerticalGrid(
         contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_xsmall)),
         columns = GridCells.Adaptive(dimensionResource(id = R.dimen.cell_min_width)),
         modifier = modifier
     ) {
-
         items(items = characters) { character ->
-
-            val hero = Character(
-                title = character.name,
-                id = character.id.toInt(),
-                thumb = character.image.url,
-                type = Character.Type.PHOTO
-            )
-
             CharacterListItem(
-                name = hero.title,
-                url = hero.thumb,
-                onClick = { onClick(hero) }
+                character = character,
+                onClick = { onClick(character) }
             )
         }
-
     }
 }
 
@@ -82,8 +68,7 @@ fun CharacterListItem(
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .padding(dimensionResource(id = R.dimen.padding_xsmall)),
-    name: String,
-    url: String,
+    character: Character,
     onClick: () -> Unit = {},
 ) {
     Card(
@@ -91,15 +76,15 @@ fun CharacterListItem(
         shape = RoundedCornerShape(10.dp),
     ) {
         Column {
-            Thumb(url)
-            Title(name)
+            Thumb(character)
+            Title(character)
         }
     }
 
 }
 
 @Composable
-private fun Title(character: String) {
+private fun Title(character: Character) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -107,7 +92,7 @@ private fun Title(character: String) {
     )
     {
         Text(
-            text = character,
+            text = character.name,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.align(Alignment.Center),
             color = contentColorFor(backgroundColor = MaterialTheme.colorScheme.primary)
@@ -116,14 +101,14 @@ private fun Title(character: String) {
 }
 
 @Composable
-private fun Thumb(character: String) {
+private fun Thumb(character: Character) {
     Box(
         modifier = Modifier
             .height(dimensionResource(id = R.dimen.thumb_height))
             .fillMaxWidth()
     ) {
         AsyncImage(
-            model = character,
+            model = character.thumb,
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop

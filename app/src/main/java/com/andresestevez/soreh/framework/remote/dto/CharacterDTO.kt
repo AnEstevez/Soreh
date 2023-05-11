@@ -34,9 +34,9 @@ data class Biography(
     @Json(name = "alter-egos")
     val alterEgos: String,
     @Json(name = "first-appearance")
-    val firstAppearance: String,
+    val firstAppearance: String?,
     @Json(name = "full-name")
-    val fullName: String,
+    val fullName: String?,
     @Json(name = "place-of-birth")
     val placeOfBirth: String,
     val publisher: String
@@ -45,7 +45,7 @@ data class Biography(
 @Keep
 data class Connections(
     @Json(name = "group-affiliation")
-    val groupAffiliation: String,
+    val groupAffiliation: String?,
     val relatives: String
 )
 
