@@ -1,4 +1,4 @@
-package com.andresestevez.soreh.ui.screens.detail
+package com.andresestevez.soreh.ui.screens.characters.detail
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack

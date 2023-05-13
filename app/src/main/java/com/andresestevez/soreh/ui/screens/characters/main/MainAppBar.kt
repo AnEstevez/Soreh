@@ -1,4 +1,4 @@
-package com.andresestevez.soreh.ui.screens.main
+package com.andresestevez.soreh.ui.screens.characters.main
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
