@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Soreh</string>
-    <string name="baseUrl">https://superheroapi.com/api/</string>
+    <string name="superhero_base_url">https://superheroapi.com/api/</string>
 </resources>

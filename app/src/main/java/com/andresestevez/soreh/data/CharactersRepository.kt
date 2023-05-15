@@ -4,8 +4,9 @@ import com.andresestevez.soreh.data.datasources.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class CharactersRepository(val remoteDataSource: RemoteDataSource) {
+class CharactersRepository @Inject constructor(private val remoteDataSource: RemoteDataSource) {
 
     fun searchCharactersByName(name: String): Flow<List<Character>> = flow {
         emit(remoteDataSource.searchCharactersByName(name))
@@ -17,7 +18,7 @@ class CharactersRepository(val remoteDataSource: RemoteDataSource) {
 
     fun getRandomCharactersList(count: Int = 20) : Flow<List<Character>> = flow {
         //TODO implement correct random query
-        emit(remoteDataSource.searchCharactersByName("super"))
+        emit(remoteDataSource.searchCharactersByName("superman"))
     }.distinctUntilChanged()
 
 }

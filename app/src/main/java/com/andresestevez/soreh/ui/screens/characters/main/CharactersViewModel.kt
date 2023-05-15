@@ -5,12 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.andresestevez.soreh.domain.GetRandomCharactersListUseCase
 import com.andresestevez.soreh.ui.screens.characters.ItemUiState
 import com.andresestevez.soreh.ui.screens.characters.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CharactersViewModel(private val getRandomCharactersList: GetRandomCharactersListUseCase) :
+@HiltViewModel
+class CharactersViewModel @Inject constructor(private val getRandomCharactersList: GetRandomCharactersListUseCase) :
     ViewModel() {
 
 
