@@ -7,29 +7,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.andresestevez.soreh.data.CharactersRepository
-import com.andresestevez.soreh.domain.GetRandomCharactersListUseCase
-import com.andresestevez.soreh.framework.remote.RemoteClient
-import com.andresestevez.soreh.framework.remote.SuperHeroDataSource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.andresestevez.soreh.ui.SorehApp
 import com.andresestevez.soreh.ui.screens.characters.ItemUiState
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(onClick: (ItemUiState) -> Unit = {}) {
+fun MainScreen(
+    viewModel: CharactersViewModel = hiltViewModel(),
+    onClick: (ItemUiState) -> Unit = {},
+) {
     SorehApp {
-
-        val getRandomCharactersListUseCase = GetRandomCharactersListUseCase(
-            CharactersRepository(
-                remoteDataSource = SuperHeroDataSource(
-                    apiKey = "",
-                    remoteService = RemoteClient.service
-                )
-            )
-        )
-
-        val viewModel = CharactersViewModel(getRandomCharactersListUseCase)
 
         val state by viewModel.state.collectAsState()
 

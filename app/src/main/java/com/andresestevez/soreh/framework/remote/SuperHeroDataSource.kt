@@ -5,10 +5,12 @@ import com.andresestevez.soreh.data.datasources.RemoteDataSource
 import com.andresestevez.soreh.framework.toDomain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Named
 
-class SuperHeroDataSource(
+class SuperHeroDataSource @Inject constructor(
     private val remoteService: RemoteService,
-    private val apiKey: String,
+    @Named("apiKey") private val apiKey: String,
 ) : RemoteDataSource {
 
     override suspend fun searchCharactersByName(name: String): List<Character> =
