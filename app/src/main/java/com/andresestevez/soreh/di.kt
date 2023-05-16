@@ -1,7 +1,11 @@
 package com.andresestevez.soreh
 
 import android.app.Application
+import androidx.room.Room
+import com.andresestevez.soreh.data.datasources.LocalDataSource
 import com.andresestevez.soreh.data.datasources.RemoteDataSource
+import com.andresestevez.soreh.framework.local.RoomDataSource
+import com.andresestevez.soreh.framework.local.SorehDatabase
 import com.andresestevez.soreh.framework.remote.RemoteService
 import com.andresestevez.soreh.framework.remote.SuperHeroDataSource
 import dagger.Binds
@@ -52,6 +56,19 @@ class AppModule {
             .build()
             .create()
 
+    @Provides
+    @Singleton
+    fun sorehDbProvider(app: Application) =
+        Room.databaseBuilder(
+            app,
+            SorehDatabase::class.java,
+            "soreh-db"
+        ).build()
+
+    @Provides
+    @Singleton
+    fun characterDaoProvider(db: SorehDatabase) = db.characterDao()
+
 }
 
 @Module
@@ -60,5 +77,8 @@ abstract class AppDataModule {
 
     @Binds
     internal abstract fun bindRemoteDataSource(remoteDataSource: SuperHeroDataSource): RemoteDataSource
+
+    @Binds
+    internal abstract fun bindLocalDataSource(localDataSource: RoomDataSource): LocalDataSource
 
 }
