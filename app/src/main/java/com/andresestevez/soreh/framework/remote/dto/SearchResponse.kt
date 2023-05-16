@@ -8,5 +8,5 @@ data class SearchResponse(
     val response: String,
     @Json(name = "results-for")
     val search: String,
-    val results: List<CharacterDTO>,
+    val results: List<CharacterDto>,
 )

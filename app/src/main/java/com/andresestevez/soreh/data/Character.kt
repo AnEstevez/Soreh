@@ -1,5 +1,7 @@
 package com.andresestevez.soreh.data
 
+import java.util.Date
+
 data class Character(
     val id: Int,
     val name: String,
@@ -21,5 +23,6 @@ data class Character(
     val groupAffiliation: String ="",
     val relatives: String ="",
     val thumb: String ="",
+    val dateModified: Date? = null,
     var bookmarked: Boolean = false,
 )
