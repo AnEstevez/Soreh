@@ -7,6 +7,8 @@ interface LocalDataSource {
 
     suspend fun isEmpty() : Boolean
 
+    suspend fun isRefreshRequired() : Boolean
+
     fun getCharacterById(id: Int): Flow<Character>
 
     fun searchCharactersByName(name: String): Flow<List<Character>>

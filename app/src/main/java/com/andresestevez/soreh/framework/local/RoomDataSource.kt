@@ -10,9 +10,12 @@ import kotlinx.coroutines.flow.map
 import java.util.Date
 import javax.inject.Inject
 
+private const val TOTAL_CHARACTERS : Int = 731
 internal class RoomDataSource @Inject constructor(private val dao: CharacterDao) : LocalDataSource {
 
     override suspend fun isEmpty() = dao.count() == 0
+
+    override suspend fun isRefreshRequired(): Boolean = dao.count() < TOTAL_CHARACTERS
 
     override fun getCharacterById(id: Int): Flow<Character> =
         dao.getCharacterById(id).map { it.toDomain() }.distinctUntilChanged()
