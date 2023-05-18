@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import javax.inject.Inject
 
+
 class CharactersRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
@@ -22,13 +23,6 @@ class CharactersRepository @Inject constructor(
     }
 
     fun getRandomCharactersList(maxItems: Int = 20): Flow<Result<List<Character>>> = flow {
-
-        // TODO check if there are 731 characters in the DB (all the existing data from the API), if not request the api
-        if (localDataSource.isEmpty()) {
-            val characters = remoteDataSource.searchCharactersByName("a")
-            localDataSource.insertCharactersList(characters)
-        }
-
         localDataSource.getAllCharacters(maxItems).collect {
             emit(Result.success(it.shuffled().take(maxItems)))
         }
@@ -36,5 +30,17 @@ class CharactersRepository @Inject constructor(
         Timber.e(it)
         emit(Result.failure(it))
     }
+
+    suspend fun getCharactersFromRemoteByName(name: String): Result<List<Character>> = try {
+        Result.success(remoteDataSource.searchCharactersByName(name))
+    } catch (t: Throwable) {
+        Timber.e(t)
+        Result.failure(t)
+    }
+
+    suspend fun saveAll(characters: List<Character>) =
+        localDataSource.insertCharactersList(characters)
+
+    suspend fun isRefreshRequired(): Boolean = localDataSource.isRefreshRequired()
 
 }
