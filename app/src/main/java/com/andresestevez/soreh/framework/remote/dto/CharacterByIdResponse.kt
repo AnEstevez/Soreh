@@ -19,10 +19,10 @@ data class CharacterByIdResponse(
 
 @Keep
 data class Appearance(
-    @Json(name = "eye-color")
+    @field:Json(name = "eye-color")
     val eyeColor: String,
     val gender: String,
-    @Json(name = "hair-color")
+    @field:Json(name = "hair-color")
     val hairColor: String,
     val height: List<String>,
     val race: String,
@@ -33,20 +33,20 @@ data class Appearance(
 data class Biography(
     val aliases: List<String>,
     val alignment: String,
-    @Json(name = "alter-egos")
+    @field:Json(name = "alter-egos")
     val alterEgos: String,
-    @Json(name = "first-appearance")
+    @field:Json(name = "first-appearance")
     val firstAppearance: String?,
-    @Json(name = "full-name")
+    @field:Json(name = "full-name")
     val fullName: String?,
-    @Json(name = "place-of-birth")
+    @field:Json(name = "place-of-birth")
     val placeOfBirth: String,
     val publisher: String
 )
 
 @Keep
 data class Connections(
-    @Json(name = "group-affiliation")
+    @field:Json(name = "group-affiliation")
     val groupAffiliation: String?,
     val relatives: String
 )

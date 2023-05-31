@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">Soreh</string>
     <string name="superhero_base_url">https://superheroapi.com/api/</string>
+    <string name="power">Power</string>
+    <string name="intelligence">Intelligence</string>
+    <string name="speed">Speed</string>
+    <string name="strength">Strength</string>
+    <string name="durability">Durability</string>
+    <string name="combat">Combat</string>
+    <string name="unknownValue">-</string>
+    <string name="identity">Identity</string>
+    <string name="publisher_universe">Publisher / Universe</string>
+    <string name="first_appearance">First appearance</string>
+    <string name="relatives">Relatives</string>
+    <string name="affiliations">Affiliations</string>
+    <string name="base_url_superherodb">https://www.superherodb.com/10-</string>
+    <string name="complete_info">Complete Info</string>
 </resources>

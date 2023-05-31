@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="padding_xsmall">2.dp</dimen>
-    <dimen name="cell_min_width">150.dp</dimen>
+    <dimen name="cell_min_width">100.dp</dimen>
     <dimen name="round_corner_size">15.dp</dimen>
-    <dimen name="thumb_height">200.dp</dimen>
+    <dimen name="thumb_height">100.dp</dimen>
 </resources>

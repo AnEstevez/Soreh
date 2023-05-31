@@ -1,12 +1,10 @@
 package com.andresestevez.soreh.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import com.andresestevez.soreh.R
 
 val Jost = FontFamily(
@@ -29,16 +27,14 @@ val Jost = FontFamily(
     Font(R.font.jost_thin, FontWeight.Thin, FontStyle.Normal),
     Font(R.font.jost_thinitalic, FontWeight.Thin, FontStyle.Italic),
 )
+
+val Marcelus = FontFamily(
+    Font(R.font.marcellus_regular, FontWeight.Normal, FontStyle.Normal),
+)
+
 // Sort by decreasing size: Display, headline, title, body, and label
 // Set of Material typography styles to start with
 val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = Jost,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
     /* Other default text styles to override
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,

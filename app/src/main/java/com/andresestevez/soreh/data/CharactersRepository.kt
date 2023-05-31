@@ -2,6 +2,7 @@ package com.andresestevez.soreh.data
 
 import com.andresestevez.soreh.data.datasources.LocalDataSource
 import com.andresestevez.soreh.data.datasources.RemoteDataSource
+import com.andresestevez.soreh.data.models.Character
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -18,11 +19,16 @@ class CharactersRepository @Inject constructor(
         emit(remoteDataSource.searchCharactersByName(name))
     }
 
-    fun getCharacterById(id: Int): Flow<Character> = flow {
-        emit(remoteDataSource.getCharacterById(id))
+    fun getCharacterById(id: Int): Flow<Result<Character>> = flow {
+        localDataSource.getCharacterById(id).collect{
+            emit(Result.success(it))
+        }
+    }.catch {
+        Timber.e(it)
+        emit(Result.failure(it))
     }
 
-    fun getRandomCharactersList(maxItems: Int = 20): Flow<Result<List<Character>>> = flow {
+    fun getRandomCharactersList(maxItems: Int = 24): Flow<Result<List<Character>>> = flow {
         localDataSource.getAllCharacters(maxItems).collect {
             emit(Result.success(it.shuffled().take(maxItems)))
         }

@@ -24,10 +24,8 @@ fun Navigation() {
         composable(
             route = NavItem.Detail.route,
             arguments = NavItem.Detail.args
-        ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getInt(NavArg.CharacterId.key)
-            requireNotNull(id)
-            DetailScreen(id) { navController.navigate(NavItem.Main.baseRoute) }
+        ) {
+            DetailScreen { navController.navigate(NavItem.Main.baseRoute) }
         }
     }
 }
