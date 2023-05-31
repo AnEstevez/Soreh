@@ -1,11 +1,14 @@
 package com.andresestevez.soreh.framework
 
-import com.andresestevez.soreh.data.Character
+import com.andresestevez.soreh.data.models.Character
 import com.andresestevez.soreh.framework.local.CharacterEntity
 import com.andresestevez.soreh.framework.remote.dto.Appearance
 import com.andresestevez.soreh.framework.remote.dto.CharacterByIdResponse
 import com.andresestevez.soreh.framework.remote.dto.CharacterDto
 
+private const val NULL = "null"
+private const val ZERO = "0"
+private const val HYPHEN = "-"
 fun CharacterByIdResponse.toDomain(): Character = with(this) {
 
     val height = getCorrectHeightFromAppearanceDto(appearance)
@@ -15,23 +18,32 @@ fun CharacterByIdResponse.toDomain(): Character = with(this) {
     Character(
         id = id.toInt(),
         name = name,
-        fullName = biography.fullName ?: "",
+        fullName = if ((biography.fullName ?: name).isEmpty()) name else biography.fullName ?: name,
         height = height,
         weight = weight,
-        gender = appearance.gender,
-        race = appearance.gender,
-        occupation = work.occupation,
-        intelligence = powerstats.intelligence,
-        strength = powerstats.strength,
-        speed = powerstats.speed,
-        durability = powerstats.durability,
-        power = powerstats.power,
-        combat = powerstats.combat,
-        alignment = biography.alignment,
-        publisher = biography.publisher,
-        firstAppearance = biography.firstAppearance ?: "",
-        groupAffiliation = connections.groupAffiliation ?: "",
-        relatives = connections.relatives,
+        gender = when (appearance.gender) {
+            "Male" -> "Male"
+            "Female" -> "Female"
+            else -> HYPHEN
+        },
+        race = appearance.race.replace(NULL, HYPHEN),
+        occupation = work.occupation.ifEmpty { HYPHEN },
+        intelligence = if (powerstats.intelligence == NULL) ZERO else powerstats.intelligence,
+        strength = if (powerstats.strength == NULL) ZERO else powerstats.strength,
+        speed = if (powerstats.speed == NULL) ZERO else powerstats.speed,
+        durability = if (powerstats.durability == NULL) ZERO else powerstats.durability,
+        power = if (powerstats.power == NULL) ZERO else powerstats.power,
+        combat = if (powerstats.combat == NULL) ZERO else powerstats.combat,
+        alignment = when (biography.alignment) {
+            "good" -> "Light side"
+            "bad" -> "Dark side"
+            "neutral" -> "Neutral"
+            else -> HYPHEN
+        },
+        publisher = biography.publisher.ifEmpty { HYPHEN },
+        firstAppearance = (biography.firstAppearance ?: HYPHEN).ifEmpty { HYPHEN },
+        groupAffiliation = (connections.groupAffiliation ?: HYPHEN).ifEmpty { HYPHEN },
+        relatives = (connections.relatives).ifEmpty { HYPHEN },
         thumb = image.url,
     )
 }
@@ -45,23 +57,32 @@ fun CharacterDto.toDomain(): Character = with(this) {
     Character(
         id = id.toInt(),
         name = name,
-        fullName = biography.fullName ?: "",
+        fullName = if ((biography.fullName ?: name).isEmpty()) name else biography.fullName ?: name,
         height = height,
         weight = weight,
-        gender = appearance.gender,
-        race = appearance.gender,
-        occupation = work.occupation,
-        intelligence = powerstats.intelligence,
-        strength = powerstats.strength,
-        speed = powerstats.speed,
-        durability = powerstats.durability,
-        power = powerstats.power,
-        combat = powerstats.combat,
-        alignment = biography.alignment,
-        publisher = biography.publisher,
-        firstAppearance = biography.firstAppearance ?: "",
-        groupAffiliation = connections.groupAffiliation ?: "",
-        relatives = connections.relatives,
+        gender = when (appearance.gender) {
+            "Male" -> "Male"
+            "Female" -> "Female"
+            else -> HYPHEN
+        },
+        race = appearance.race.replace("null", HYPHEN),
+        occupation = work.occupation.ifEmpty { HYPHEN },
+        intelligence = if (powerstats.intelligence == NULL) ZERO else powerstats.intelligence,
+        strength = if (powerstats.strength == NULL) ZERO else powerstats.strength,
+        speed = if (powerstats.speed == NULL) ZERO else powerstats.speed,
+        durability = if (powerstats.durability == NULL) ZERO else powerstats.durability,
+        power = if (powerstats.power == NULL) ZERO else powerstats.power,
+        combat = if (powerstats.combat == NULL) ZERO else powerstats.combat,
+        alignment = when (biography.alignment) {
+            "good" -> "Light side"
+            "bad" -> "Dark side"
+            "neutral" -> "Neutral"
+            else -> HYPHEN
+        },
+        publisher = biography.publisher.ifEmpty { HYPHEN },
+        firstAppearance = (biography.firstAppearance ?: HYPHEN).ifEmpty { HYPHEN },
+        groupAffiliation = (connections.groupAffiliation ?: HYPHEN).ifEmpty { HYPHEN },
+        relatives = (connections.relatives).ifEmpty { HYPHEN },
         thumb = image.url,
     )
 }
@@ -81,21 +102,30 @@ private fun getCorrectWeightFromAppearanceDto(appearance: Appearance): Int {
                 .plus(multiplier)
         } else weightStr
 
+
+    weightStr = weightStr.replace("null", "0")
+
     return weightStr.toInt()
 }
 
 //The api returns a few inconsistent height values
 private fun getCorrectHeightFromAppearanceDto(appearance: Appearance): Int {
-    val heightStr = if (appearance.height.size > 1 && appearance.height[1].contains(" "))
+    var heightStr = if (appearance.height.size > 1 && appearance.height[1].contains(" "))
         appearance.height[1].substringBefore(" ")
     else "0"
 
-    return if (heightStr.contains(".")) {
-        heightStr.filterNot { char -> char == '.' }.plus("0").toInt()
+    heightStr = if (heightStr.contains(".")) {
+        heightStr.filterNot { char -> char == '.' }.plus("0")
     } else if (heightStr.contains(",")) {
-        heightStr.substringBefore(",").toInt()
+        heightStr.substringBefore(",")
     } else {
-        heightStr.toInt()
+        heightStr
+    }
+
+    return when (heightStr.replace("null", HYPHEN)) {
+        "0" -> 0
+        else -> heightStr
+            .replace("null", "0").toInt()
     }
 }
 

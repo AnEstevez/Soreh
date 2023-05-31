@@ -1,6 +1,6 @@
 package com.andresestevez.soreh.data.datasources
 
-import com.andresestevez.soreh.data.Character
+import com.andresestevez.soreh.data.models.Character
 import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {

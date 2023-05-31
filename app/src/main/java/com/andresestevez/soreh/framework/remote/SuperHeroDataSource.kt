@@ -1,6 +1,6 @@
 package com.andresestevez.soreh.framework.remote
 
-import com.andresestevez.soreh.data.Character
+import com.andresestevez.soreh.data.models.Character
 import com.andresestevez.soreh.data.datasources.RemoteDataSource
 import com.andresestevez.soreh.framework.toDomain
 import javax.inject.Inject

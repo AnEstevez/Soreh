@@ -1,37 +1,37 @@
-package com.andresestevez.soreh.ui.screens.characters.main
+package com.andresestevez.soreh.ui.screens.characters.detail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andresestevez.soreh.domain.GetRandomCharactersListUseCase
+import com.andresestevez.soreh.domain.GetCharacterByIdUseCase
 import com.andresestevez.soreh.ui.common.getUserMessage
+import com.andresestevez.soreh.ui.navigation.NavArg
 import com.andresestevez.soreh.ui.screens.common.ItemUiState
-import com.andresestevez.soreh.ui.screens.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class CharactersViewModel @Inject constructor(getRandomCharactersList: GetRandomCharactersListUseCase) :
-    ViewModel() {
+class CharacterDetailViewModel @Inject constructor(
+    stateHandle: SavedStateHandle,
+    useCase: GetCharacterByIdUseCase,
+) : ViewModel() {
 
     var state = MutableStateFlow(UiState())
         private set
 
+    private val characterId = stateHandle.get<Int>(NavArg.CharacterId.key) ?: 0
+
     init {
         viewModelScope.launch {
             state.value = UiState(loading = true)
-            getRandomCharactersList(24).collect { result ->
+            useCase(characterId).collect { result ->
                 state.update { currentState ->
-                    result.fold({ characters ->
-                        currentState.copy(
-                            data = characters.map { character -> ItemUiState(character = character) },
-                            loading = false
-                        )
+                    result.fold({
+                        currentState.copy(loading = false, data = ItemUiState(it))
                     }) {
-                        Timber.e(it)
                         currentState.copy(userMessage = it.getUserMessage())
                     }
                 }
@@ -42,5 +42,12 @@ class CharactersViewModel @Inject constructor(getRandomCharactersList: GetRandom
     fun dismissUserMessage() {
         state.update { it.copy(userMessage = "") }
     }
+
+    data class UiState(
+        val loading: Boolean = false,
+        val data: ItemUiState? = null,
+        val userMessage: String = "",
+    )
 }
+
 

@@ -99,7 +99,10 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:$work_version")
     implementation 'androidx.hilt:hilt-work:1.0.0'
     kapt("androidx.hilt:hilt-compiler:1.0.0")
-    
+
+    implementation("androidx.palette:palette:1.0.0")
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.31.3-beta"
+
     // For instrumentation tests
     androidTestImplementation  "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptAndroidTest "com.google.dagger:hilt-compiler:$hilt_version"

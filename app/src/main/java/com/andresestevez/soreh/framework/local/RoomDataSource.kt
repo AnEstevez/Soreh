@@ -1,6 +1,6 @@
 package com.andresestevez.soreh.framework.local
 
-import com.andresestevez.soreh.data.Character
+import com.andresestevez.soreh.data.models.Character
 import com.andresestevez.soreh.data.datasources.LocalDataSource
 import com.andresestevez.soreh.framework.toDomain
 import com.andresestevez.soreh.framework.toEntity

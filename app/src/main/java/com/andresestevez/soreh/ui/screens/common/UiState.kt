@@ -1,6 +1,6 @@
-package com.andresestevez.soreh.ui.screens.characters
+package com.andresestevez.soreh.ui.screens.common
 
-import com.andresestevez.soreh.data.Character
+import com.andresestevez.soreh.data.models.Character
 
 data class UiState(
     val loading: Boolean = false,
