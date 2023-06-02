@@ -8,6 +8,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
@@ -16,18 +17,21 @@ private val DarkColorScheme = darkColorScheme(
     tertiary = TomiokaYellow700,
     background = TomiokaBlack,
     surface = TomiokaBlack,
+    inverseSurface = TomiokaWhiteHighEmphasis,
     onSurface = TomiokaWhiteHighEmphasis,
     scrim = TomiokaBlack.copy(alpha = 0.4f),
     onSurfaceVariant = TomiokaWhiteMediumEmphasis,
-    onSecondaryContainer = TomiokaWhiteDisabled
-)
+    onSecondaryContainer = TomiokaWhiteDisabled,
+
+    )
 
 private val LightColorScheme = lightColorScheme(
     primary = TomiokaRed700,
     secondary = TomiokaGreen600,
     tertiary = TomiokaYellow700,
-    background = TomiokaWhiteHighEmphasis,
-    surface = TomiokaWhiteHighEmphasis,
+    background = Color.White,
+    surface = Color.White,
+    inverseSurface = TomiokaBlack,
     onSurface = TomiokaBlack,
     scrim = TomiokaBlack.copy(alpha = 0.4f),
     onSurfaceVariant = TomiokaBlackMediumEmphasis,

@@ -4,9 +4,9 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
 
-sealed class NavItem(
+sealed class NavCommand(
     val baseRoute: String,
-    val navArgs: List<NavArg> = emptyList()
+    val navArgs: List<NavArg> = emptyList(),
 ) {
     val route = run {
         // baseroute/{arg1}/{arg2}...
@@ -18,8 +18,11 @@ sealed class NavItem(
         navArgument(it.key) { type = it.navType }
     }
 
-    object Main: NavItem("main")
-    object Detail: NavItem("detail", listOf(NavArg.CharacterId))
+    object Main : NavCommand("home")
+    object Search : NavCommand("search")
+    object Tops : NavCommand("tops")
+    object Favorites : NavCommand("favorites")
+    object Detail : NavCommand("detail", listOf(NavArg.CharacterId))
 }
 
 enum class NavArg(val key: String, val navType: NavType<*>) {

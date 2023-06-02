@@ -19,7 +19,6 @@ val TomiokaBlack = Color(0xFF121212)
 val TomiokaBlackMediumEmphasis = Color(0x99121212)
 val TomiokaBlackdisabled = Color(0x61121212)
 
-
 val TomiokaWhiteHighEmphasis = Color(0xDEFFFFFF)
 val TomiokaWhiteMediumEmphasis = Color(0x99FFFFFF)
 val TomiokaWhiteDisabled = Color(0x61FFFFFF)

@@ -42,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -53,7 +54,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.palette.graphics.Palette
 import com.andresestevez.soreh.R
 import com.andresestevez.soreh.data.models.Character
-import com.andresestevez.soreh.ui.SorehApp
+import com.andresestevez.soreh.ui.SorehScreen
 import com.andresestevez.soreh.ui.screens.common.CharacterStats
 import com.andresestevez.soreh.ui.screens.common.thumbWithPalette
 import com.andresestevez.soreh.ui.theme.Marcelus
@@ -74,7 +75,7 @@ fun DetailScreen(
 
     val context = LocalContext.current
 
-    SorehApp {
+    SorehScreen {
         Scaffold(
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
         ) { padding ->
@@ -97,7 +98,6 @@ fun DetailScreen(
                 palette?.dominantSwatch?.rgb
                     ?: Color.Black.toArgb()
             )
-
 
             Box(
                 modifier = Modifier
@@ -134,12 +134,16 @@ fun DetailScreen(
                                     containerColor = MaterialTheme.colorScheme.surface,
                                 ),
                                 border = BorderStroke(
-                                    5.dp,
-                                    MaterialTheme.colorScheme.onSurface
+                                    10.dp,
+                                    MaterialTheme.colorScheme.surface
                                 ),
                                 shape = RoundedCornerShape(4),
                                 modifier = Modifier
                                     .padding(20.dp)
+                                    .shadow(
+                                        elevation = 5.dp,
+                                        shape = RoundedCornerShape(4),
+                                    )
                             ) {
                                 Box {
                                     Box(
@@ -153,6 +157,11 @@ fun DetailScreen(
                                         modifier = Modifier
                                             .align(Alignment.BottomEnd)
                                             .padding(horizontal = 19.dp, vertical = 15.dp)
+                                            .shadow(
+                                                elevation = 4.dp,
+                                                shape = RoundedCornerShape(25),
+                                                spotColor = MaterialTheme.colorScheme.onSurface
+                                            )
                                             .size(35.dp),
                                         onClick = {
                                             shareCharacter(
