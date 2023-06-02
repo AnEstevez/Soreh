@@ -4,11 +4,14 @@ import android.content.ClipDescription
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,6 +21,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -39,6 +44,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,6 +64,8 @@ import com.andresestevez.soreh.ui.SorehScreen
 import com.andresestevez.soreh.ui.screens.common.CharacterStats
 import com.andresestevez.soreh.ui.screens.common.thumbWithPalette
 import com.andresestevez.soreh.ui.theme.Marcelus
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,29 +83,31 @@ fun DetailScreen(
 
     val context = LocalContext.current
 
+    val coroutineScope = rememberCoroutineScope()
+
+    var palette by remember { mutableStateOf<Palette?>(null) }
+
+    val gradientStartColor = if (isSystemInDarkTheme()) {
+        Color(
+            palette?.darkVibrantSwatch?.rgb
+                ?: MaterialTheme.colorScheme.surface.toArgb()
+        )
+    } else {
+        Color(
+            palette?.lightMutedSwatch?.rgb
+                ?: MaterialTheme.colorScheme.surface.toArgb()
+        )
+    }
+
+    val gradientEndColor = Color(
+        palette?.dominantSwatch?.rgb
+            ?: Color.Black.toArgb()
+    )
+
     SorehScreen {
         Scaffold(
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
         ) { padding ->
-
-            var palette by remember { mutableStateOf<Palette?>(null) }
-
-            val gradientStartColor = if (isSystemInDarkTheme()) {
-                Color(
-                    palette?.darkVibrantSwatch?.rgb
-                        ?: MaterialTheme.colorScheme.surface.toArgb()
-                )
-            } else {
-                Color(
-                    palette?.lightMutedSwatch?.rgb
-                        ?: MaterialTheme.colorScheme.surface.toArgb()
-                )
-            }
-
-            val gradientEndColor = Color(
-                palette?.dominantSwatch?.rgb
-                    ?: Color.Black.toArgb()
-            )
 
             Box(
                 modifier = Modifier
@@ -153,31 +163,11 @@ fun DetailScreen(
                                         palette = thumbWithPalette(uiState = state.data)
                                     }
 
-                                    FilledIconButton(
-                                        modifier = Modifier
-                                            .align(Alignment.BottomEnd)
-                                            .padding(horizontal = 19.dp, vertical = 15.dp)
-                                            .shadow(
-                                                elevation = 4.dp,
-                                                shape = RoundedCornerShape(25),
-                                                spotColor = MaterialTheme.colorScheme.onSurface
-                                            )
-                                            .size(35.dp),
-                                        onClick = {
-                                            shareCharacter(
-                                                context,
-                                                state.data!!.character
-                                            )
-                                        },
-                                        colors = IconButtonDefaults.filledIconButtonColors(
-                                            containerColor = MaterialTheme.colorScheme.surface
-                                        ),
-                                        shape = RoundedCornerShape(25)
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Outlined.Share,
-                                            contentDescription = null,
-                                            tint = MaterialTheme.colorScheme.onSurface
+                                    Box(modifier = Modifier.align(Alignment.BottomEnd)) {
+                                        ActionButtonsCharacterDetails(
+                                            coroutineScope,
+                                            state,
+                                            context
                                         )
                                     }
                                 }
@@ -258,6 +248,87 @@ fun DetailScreen(
         }
     }
 
+}
+
+@Composable
+private fun ActionButtonsCharacterDetails(
+    coroutineScope: CoroutineScope,
+    state: CharacterDetailViewModel.UiState,
+    context: Context,
+) {
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 19.dp, vertical = 15.dp)
+    ) {
+
+        FilledIconButton(
+            modifier = Modifier
+                .padding(horizontal = 5.dp)
+                .shadow(
+                    elevation = 4.dp,
+                    shape = RoundedCornerShape(25),
+                    spotColor = MaterialTheme.colorScheme.onSurface
+                )
+                .size(35.dp),
+            onClick = {
+                coroutineScope.launch {
+                    state.data?.onClick?.let { onClick -> onClick() }
+                }
+            },
+            colors = IconButtonDefaults.filledIconButtonColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            shape = RoundedCornerShape(25)
+        ) {
+            Crossfade(
+                targetState = state.data?.character?.bookmarked == true,
+                animationSpec = tween(durationMillis = 1000)
+            ) { bookmarked ->
+
+                if (bookmarked) {
+                    Icon(
+                        imageVector = Icons.Outlined.Favorite,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Outlined.FavoriteBorder,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
+        }
+
+
+        FilledIconButton(
+            modifier = Modifier
+                .padding(horizontal = 5.dp)
+                .shadow(
+                    elevation = 4.dp,
+                    shape = RoundedCornerShape(25),
+                    spotColor = MaterialTheme.colorScheme.onSurface
+                )
+                .size(35.dp),
+            onClick = {
+                shareCharacter(
+                    context,
+                    state.data!!.character
+                )
+            },
+            colors = IconButtonDefaults.filledIconButtonColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            shape = RoundedCornerShape(25)
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Share,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurface
+            )
+        }
+    }
 }
 
 fun shareCharacter(context: Context, character: Character) {

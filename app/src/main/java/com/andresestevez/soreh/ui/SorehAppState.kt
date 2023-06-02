@@ -18,7 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 class SorehAppState(
     val navHostController: NavHostController,
     val snackbarHostState: SnackbarHostState,
-    val topAppState: TopAppBarState,
+    val topAppBarState: TopAppBarState,
     val coroutineScope: CoroutineScope,
 ) {
 
@@ -29,7 +29,7 @@ class SorehAppState(
 
     val scrollBehavior
         @Composable get() = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
-            topAppState
+            topAppBarState
         )
 
     val currentRoute
@@ -49,8 +49,8 @@ class SorehAppState(
 fun rememberSorehAppState(
     navController: NavHostController = rememberNavController(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    topAppState: TopAppBarState = rememberTopAppBarState(),
+    topAppBarState: TopAppBarState = rememberTopAppBarState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-): SorehAppState = remember(navController, snackbarHostState, topAppState, coroutineScope) {
-    SorehAppState(navController, snackbarHostState, topAppState, coroutineScope)
+): SorehAppState = remember(navController, snackbarHostState, topAppBarState, coroutineScope) {
+    SorehAppState(navController, snackbarHostState, topAppBarState, coroutineScope)
 }

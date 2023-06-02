@@ -5,13 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.andresestevez.soreh.ui.screens.common.ItemUiState
 
 @Composable
 fun MainScreen(
     viewModel: CharactersViewModel = hiltViewModel(),
     paddingValues: PaddingValues,
-    onClick: (ItemUiState) -> Unit = {},
+    onClick: (Int) -> Unit = {},
 ) {
 
     val state by viewModel.state.collectAsState()

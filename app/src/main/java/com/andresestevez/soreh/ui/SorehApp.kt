@@ -60,9 +60,9 @@ fun SorehApp() {
                     SorehBottomNavigationBar(
                         navItems = SorehAppState.BOTTOM_NAVIGATION_OPTIONS,
                         currentRoute = appState.currentRoute,
-                        onClick = {
+                        onClick = { route ->
                             appState.navHostController.navigateSingleTopWithPopUpToStartDestination(
-                                it
+                                route
                             )
                         }
                     )

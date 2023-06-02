@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andresestevez.soreh.domain.GetCharacterByIdUseCase
+import com.andresestevez.soreh.domain.ToggleFavoriteUseCase
 import com.andresestevez.soreh.ui.common.getUserMessage
 import com.andresestevez.soreh.ui.navigation.NavArg
 import com.andresestevez.soreh.ui.screens.common.ItemUiState
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
     stateHandle: SavedStateHandle,
-    useCase: GetCharacterByIdUseCase,
+    getCharacterByIdUseCase: GetCharacterByIdUseCase,
+    toggleFavoriteUseCase: ToggleFavoriteUseCase,
 ) : ViewModel() {
 
     var state = MutableStateFlow(UiState())
@@ -27,10 +29,12 @@ class CharacterDetailViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             state.value = UiState(loading = true)
-            useCase(characterId).collect { result ->
+            getCharacterByIdUseCase(characterId).collect { result ->
                 state.update { currentState ->
                     result.fold({
-                        currentState.copy(loading = false, data = ItemUiState(it))
+                        currentState.copy(loading = false, data = ItemUiState(it).apply {
+                            onClick = { toggleFavoriteUseCase(it) }
+                        })
                     }) {
                         currentState.copy(userMessage = it.getUserMessage())
                     }

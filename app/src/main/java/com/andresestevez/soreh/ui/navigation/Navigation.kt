@@ -20,10 +20,10 @@ fun Navigation(paddingValues: PaddingValues, navHostController: NavHostControlle
         startDestination = NavCommand.Main.route
     ) {
         composable(route = NavCommand.Main.route) {
-            MainScreen(paddingValues = paddingValues) { uiState ->
+            MainScreen(paddingValues = paddingValues) { characterId ->
                 navHostController.navigateSingleTopWithPopUpToStartDestination(
                     NavCommand.Detail.baseRoute.plus(
-                        "/${uiState.character.id}"
+                        "/${characterId}"
                     )
                 )
             }
@@ -38,7 +38,13 @@ fun Navigation(paddingValues: PaddingValues, navHostController: NavHostControlle
         }
 
         composable(route = NavCommand.Favorites.route) {
-            FavoritesScreen()
+            FavoritesScreen(paddingValues = paddingValues) { characterId ->
+                navHostController.navigateSingleTopTo(
+                    NavCommand.Detail.baseRoute.plus(
+                        "/${characterId}"
+                    )
+                )
+            }
         }
 
         composable(
@@ -64,3 +70,4 @@ fun NavHostController.navigateSingleTopWithPopUpToStartDestination(route: String
         launchSingleTop = true
         restoreState = true
     }
+

@@ -15,6 +15,8 @@ interface LocalDataSource {
 
     fun getAllCharacters(maxItems: Int): Flow<List<Character>>
 
+    fun getFavorites(): Flow<List<Character>>
+
     suspend fun updateCharacter(character: Character)
 
     suspend fun insertCharactersList(characters: List<Character>)

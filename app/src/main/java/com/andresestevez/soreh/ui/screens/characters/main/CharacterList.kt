@@ -31,8 +31,9 @@ import com.andresestevez.soreh.ui.screens.common.UiState
 fun CharacterListVerticalGrid(
     modifier: Modifier = Modifier,
     state: UiState,
-    onClick: (ItemUiState) -> Unit = {},
+    onClick: (Int) -> Unit = {},
     contentPaddingValues: PaddingValues,
+    columns: Int = 3,
 ) {
 
     Box(
@@ -46,12 +47,12 @@ fun CharacterListVerticalGrid(
 
         LazyVerticalGrid(
             contentPadding = contentPaddingValues,
-            columns = GridCells.Fixed(3)
+            columns = GridCells.Fixed(columns)
         ) {
-            items(items = state.data) { character ->
+            items(items = state.data) { itemUiState ->
                 CharacterListItem(
-                    character = character
-                ) { onClick(character) }
+                    character = itemUiState
+                ) { onClick(itemUiState.character.id) }
             }
         }
     }

@@ -19,11 +19,14 @@ interface CharacterDao {
     @Query("SELECT * FROM character WHERE id = :id")
     fun getCharacterById(id: Int): Flow<CharacterEntity>
 
-    @Query("SELECT * FROM character WHERE name LIKE '%' || :name || '%' ")
+    @Query("SELECT * FROM character WHERE name LIKE '%' || :name || '%' order by name asc")
     fun searchCharactersByName(name: String): Flow<List<CharacterEntity>>
 
     @Query("SELECT * FROM character WHERE id IN (:idList)")
     fun getCharactersByIdList(idList: List<Int>): Flow<List<CharacterEntity>>
+
+    @Query("Select * FROM character WHERE bookmarked = 1 order by dateModified desc")
+    fun getFavorites(): Flow<List<CharacterEntity>>
 
     @Update
     suspend fun updateCharacter(character: CharacterEntity)

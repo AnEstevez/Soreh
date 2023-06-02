@@ -17,10 +17,12 @@ class CharactersRepository @Inject constructor(
 
     fun searchCharactersByName(name: String): Flow<List<Character>> = flow {
         emit(remoteDataSource.searchCharactersByName(name))
+    }.catch {
+        Timber.e(it)
     }
 
     fun getCharacterById(id: Int): Flow<Result<Character>> = flow {
-        localDataSource.getCharacterById(id).collect{
+        localDataSource.getCharacterById(id).collect {
             emit(Result.success(it))
         }
     }.catch {
@@ -37,12 +39,24 @@ class CharactersRepository @Inject constructor(
         emit(Result.failure(it))
     }
 
+    fun getFavorites(): Flow<Result<List<Character>>> = flow {
+        localDataSource.getFavorites().collect { characters ->
+            emit(Result.success(characters))
+        }
+    }.catch {
+        Timber.e(it)
+        emit(Result.failure(it))
+    }
+
     suspend fun getCharactersFromRemoteByName(name: String): Result<List<Character>> = try {
         Result.success(remoteDataSource.searchCharactersByName(name))
     } catch (t: Throwable) {
         Timber.e(t)
         Result.failure(t)
     }
+
+    suspend fun updateCharacter(character: Character) =
+        localDataSource.updateCharacter(character)
 
     suspend fun saveAll(characters: List<Character>) =
         localDataSource.insertCharactersList(characters)

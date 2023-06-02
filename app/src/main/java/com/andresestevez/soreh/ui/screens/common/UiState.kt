@@ -9,5 +9,5 @@ data class UiState(
 )
 
 data class ItemUiState(val character: Character) {
-    val onClick: (Int) -> Unit = {}
+    var onClick: suspend () -> Unit = {}
 }

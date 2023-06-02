@@ -29,6 +29,11 @@ internal class RoomDataSource @Inject constructor(private val dao: CharacterDao)
             .map { it.map { characterEntity -> characterEntity.toDomain() } }.distinctUntilChanged()
     }
 
+    override fun getFavorites(): Flow<List<Character>> {
+        return dao.getFavorites()
+            .map { it.map { characterEntity -> characterEntity.toDomain() } }.distinctUntilChanged()
+    }
+
     override suspend fun updateCharacter(character: Character) =
         dao.updateCharacter(character.toEntity().copy(dateModified = Date()))
 
