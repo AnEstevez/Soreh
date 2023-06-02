@@ -274,25 +274,27 @@ fun CharacterStats(
                 state.data?.character?.intelligence?.toInt() ?: 0
             ),
             Pair(
-                stringResource(id = R.string.speed),
-                state.data?.character?.speed?.toInt() ?: 0
-            ),
-            Pair(
                 stringResource(id = R.string.strength),
                 state.data?.character?.strength?.toInt() ?: 0
             ),
+            Pair(
+                stringResource(id = R.string.speed),
+                state.data?.character?.speed?.toInt() ?: 0
+            ),
+
             Pair(
                 stringResource(id = R.string.durability),
                 state.data?.character?.durability?.toInt() ?: 0
             ),
             Pair(
-                stringResource(id = R.string.combat),
-                state.data?.character?.combat?.toInt() ?: 0
-            ),
-            Pair(
                 stringResource(id = R.string.power),
                 state.data?.character?.power?.toInt() ?: 0
             ),
+            Pair(
+                stringResource(id = R.string.combat),
+                state.data?.character?.combat?.toInt() ?: 0
+            ),
+
         )
 
         val statNameWidthPx: Int = getMaxStatFieldWidth(
