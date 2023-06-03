@@ -3,6 +3,7 @@ package com.andresestevez.soreh.ui
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -18,7 +19,8 @@ import kotlinx.coroutines.CoroutineScope
 class SorehAppState(
     val navHostController: NavHostController,
     val snackbarHostState: SnackbarHostState,
-    val topAppBarState: TopAppBarState,
+    val homeTopAppBarState: TopAppBarState,
+    val favoritesTopAppBarState: TopAppBarState,
     val coroutineScope: CoroutineScope,
 ) {
 
@@ -27,9 +29,14 @@ class SorehAppState(
             listOf(NavItem.HOME, NavItem.SEARCH, NavItem.TOPS, NavItem.FAVORITES)
     }
 
-    val scrollBehavior
+    val homeScrollBehavior
         @Composable get() = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
-            topAppBarState
+            homeTopAppBarState
+        )
+
+    val favoritesScrollBehavior
+        @Composable get() = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+            favoritesTopAppBarState
         )
 
     val currentRoute
@@ -41,6 +48,13 @@ class SorehAppState(
 
     val showBottomNavigationBar: Boolean
         @Composable get() = currentRoute in BOTTOM_NAVIGATION_OPTIONS.map { it.navCommand.route }
+
+    @Composable
+    fun getTopAppBarScrollBehavior() : TopAppBarScrollBehavior = when (currentRoute) {
+        NavItem.HOME.navCommand.route -> homeScrollBehavior
+        NavItem.FAVORITES.navCommand.route -> favoritesScrollBehavior
+        else -> favoritesScrollBehavior
+    }
 }
 
 
@@ -49,8 +63,15 @@ class SorehAppState(
 fun rememberSorehAppState(
     navController: NavHostController = rememberNavController(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    topAppBarState: TopAppBarState = rememberTopAppBarState(),
+    homeTopAppBarState: TopAppBarState = rememberTopAppBarState(),
+    favoritesTopAppBarState: TopAppBarState = rememberTopAppBarState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-): SorehAppState = remember(navController, snackbarHostState, topAppBarState, coroutineScope) {
-    SorehAppState(navController, snackbarHostState, topAppBarState, coroutineScope)
+): SorehAppState = remember(navController, snackbarHostState, homeTopAppBarState, coroutineScope) {
+    SorehAppState(
+        navController,
+        snackbarHostState,
+        homeTopAppBarState,
+        favoritesTopAppBarState,
+        coroutineScope
+    )
 }

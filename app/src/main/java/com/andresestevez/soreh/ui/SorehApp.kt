@@ -48,12 +48,12 @@ fun SorehApp() {
                             titleContentColor = MaterialTheme.colorScheme.onBackground,
                             actionIconContentColor = MaterialTheme.colorScheme.onBackground
                         ),
-                        scrollBehavior = appState.scrollBehavior
+                        scrollBehavior = appState.getTopAppBarScrollBehavior()
                     )
 
                 }
             },
-            modifier = Modifier.nestedScroll(appState.scrollBehavior.nestedScrollConnection),
+            modifier = Modifier.nestedScroll(appState.getTopAppBarScrollBehavior().nestedScrollConnection),
             snackbarHost = { SnackbarHost(hostState = appState.snackbarHostState) },
             bottomBar = {
                 if (appState.showBottomNavigationBar) {
