@@ -13,7 +13,7 @@ interface LocalDataSource {
 
     fun searchCharactersByName(name: String): Flow<List<Character>>
 
-    fun getAllCharacters(maxItems: Int): Flow<List<Character>>
+    fun getAllCharacters(): Flow<List<Character>>
 
     fun getFavorites(): Flow<List<Character>>
 

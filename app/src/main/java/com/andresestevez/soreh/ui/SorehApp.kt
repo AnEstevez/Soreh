@@ -8,7 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -41,7 +41,7 @@ fun SorehApp() {
                         },
                         modifier = Modifier
                             .fillMaxWidth(),
-                        colors = TopAppBarDefaults.smallTopAppBarColors(
+                        colors = topAppBarColors(
                             containerColor = MaterialTheme.colorScheme.background.copy(alpha = 0.8f),
                             scrolledContainerColor = MaterialTheme.colorScheme.background.copy(alpha = 0.8f),
                             navigationIconContentColor = MaterialTheme.colorScheme.onBackground,
@@ -70,7 +70,7 @@ fun SorehApp() {
             }
         ) { padding ->
 
-            Navigation(padding, appState.navHostController)
+            Navigation(padding, appState)
 
         }
     }
@@ -88,3 +88,5 @@ fun SorehScreen(content: @Composable () -> Unit) {
         }
     }
 }
+
+

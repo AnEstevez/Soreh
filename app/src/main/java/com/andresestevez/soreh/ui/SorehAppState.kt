@@ -12,6 +12,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.andresestevez.soreh.ui.navigation.NavCommand
+import com.andresestevez.soreh.ui.navigation.navigateSingleTopWithPopUpToStartDestination
 import com.andresestevez.soreh.ui.screens.characters.main.NavItem
 import kotlinx.coroutines.CoroutineScope
 
@@ -44,17 +46,25 @@ class SorehAppState(
             ?: ""
 
     val showTopAppBar: Boolean
-        @Composable get() = currentRoute in BOTTOM_NAVIGATION_OPTIONS.map { it.navCommand.route }
+        @Composable get() = currentRoute in listOf(
+            NavCommand.Home.destination,
+            NavCommand.Tops.destination,
+            NavCommand.Favorites.destination
+        )
 
     val showBottomNavigationBar: Boolean
-        @Composable get() = currentRoute in BOTTOM_NAVIGATION_OPTIONS.map { it.navCommand.route }
+        @Composable get() = currentRoute in BOTTOM_NAVIGATION_OPTIONS.map { it.navCommand.destination }
 
     @Composable
-    fun getTopAppBarScrollBehavior() : TopAppBarScrollBehavior = when (currentRoute) {
-        NavItem.HOME.navCommand.route -> homeScrollBehavior
-        NavItem.FAVORITES.navCommand.route -> favoritesScrollBehavior
+    fun getTopAppBarScrollBehavior(): TopAppBarScrollBehavior = when (currentRoute) {
+        NavCommand.Home.destination -> homeScrollBehavior
+        NavCommand.Favorites.destination -> favoritesScrollBehavior
         else -> favoritesScrollBehavior
     }
+
+    val onBack: () -> Unit
+    @Composable get() = { navHostController.navigateSingleTopWithPopUpToStartDestination(NavCommand.Home.destination) }
+
 }
 
 

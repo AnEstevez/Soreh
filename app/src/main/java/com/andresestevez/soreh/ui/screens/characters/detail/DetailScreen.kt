@@ -72,7 +72,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun DetailScreen(
     viewModel: CharacterDetailViewModel = hiltViewModel(),
-    onBackClick: () -> Unit,
+    onBackClick: () -> Unit = {},
 ) {
 
     val state by viewModel.state.collectAsState()

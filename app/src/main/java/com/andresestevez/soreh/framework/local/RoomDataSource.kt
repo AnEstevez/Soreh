@@ -24,7 +24,7 @@ internal class RoomDataSource @Inject constructor(private val dao: CharacterDao)
         dao.searchCharactersByName(name)
             .map { it.map { characterEntity -> characterEntity.toDomain() } }.distinctUntilChanged()
 
-    override fun getAllCharacters(maxItems: Int): Flow<List<Character>> {
+    override fun getAllCharacters(): Flow<List<Character>> {
         return dao.getAllCharacters()
             .map { it.map { characterEntity -> characterEntity.toDomain() } }.distinctUntilChanged()
     }

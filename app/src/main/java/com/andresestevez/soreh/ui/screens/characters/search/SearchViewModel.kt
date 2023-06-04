@@ -1,8 +1,8 @@
-package com.andresestevez.soreh.ui.screens.characters.favorites
+package com.andresestevez.soreh.ui.screens.characters.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andresestevez.soreh.domain.GetFavoritesUseCase
+import com.andresestevez.soreh.domain.SearchCharactersByNameUseCase
 import com.andresestevez.soreh.ui.common.getUserMessage
 import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import com.andresestevez.soreh.ui.screens.common.UiState
@@ -13,33 +13,28 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoritesViewModel @Inject constructor(useCase: GetFavoritesUseCase) : ViewModel() {
+class SearchViewModel @Inject constructor(private val searchCharactersByNameUseCase: SearchCharactersByNameUseCase) :
+    ViewModel() {
 
-    var state: MutableStateFlow<UiState> = MutableStateFlow(UiState())
+    var state = MutableStateFlow(UiState())
         private set
 
-    init {
+    fun searchCharactersByName(name: String) {
         viewModelScope.launch {
-            state.update { currentState -> currentState.copy(loading = true) }
-            useCase().collect { result ->
+            state.value = UiState(loading = true)
+            searchCharactersByNameUseCase(name).collect { result ->
                 state.update { currentState ->
                     result.fold({ characters ->
                         currentState.copy(
                             loading = false,
-                            data = characters.map { ItemUiState(it) })
-                    }) {
-                        currentState.copy(
-                            loading = false,
-                            userMessage = it.getUserMessage()
-                        )
-                    }
+                            data = characters.map { character -> ItemUiState(character) })
 
+                    }) {
+                        currentState.copy(loading = false, userMessage = it.getUserMessage())
+                    }
                 }
             }
         }
     }
 
-    fun dismissUserMessage() {
-        state.update { it.copy(userMessage = "") }
-    }
 }

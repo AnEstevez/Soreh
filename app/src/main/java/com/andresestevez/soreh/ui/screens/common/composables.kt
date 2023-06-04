@@ -18,8 +18,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,6 +38,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -67,9 +66,9 @@ fun thumbWithPalette(uiState: ItemUiState?): Palette? {
         AsyncImage(
             model = uiState?.character?.thumb,
             contentDescription = null,
-            placeholder = rememberVectorPainter(Icons.Outlined.Person),
+            placeholder = rememberVectorPainter(ImageVector.vectorResource(R.drawable.placeholder)),
             error = rememberVectorPainterWithColor(
-                image = Icons.Outlined.Person,
+                image =  ImageVector.vectorResource(R.drawable.placeholder),
                 tintColor = MaterialTheme.colorScheme.onSecondaryContainer
             ),
             modifier = Modifier.fillMaxWidth(),

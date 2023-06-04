@@ -15,4 +15,5 @@
     <string name="affiliations">Affiliations</string>
     <string name="base_url_superherodb">https://www.superherodb.com/10-</string>
     <string name="complete_info">Complete Info</string>
+    <string name="find_your_heroes">Find your heroes</string>
 </resources>

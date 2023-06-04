@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.andresestevez.soreh.domain.GetCharacterByIdUseCase
 import com.andresestevez.soreh.domain.ToggleFavoriteUseCase
 import com.andresestevez.soreh.ui.common.getUserMessage
-import com.andresestevez.soreh.ui.navigation.NavArg
+import com.andresestevez.soreh.ui.navigation.NavCommand.Companion.CHARACTER_ID
 import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +24,7 @@ class CharacterDetailViewModel @Inject constructor(
     var state = MutableStateFlow(UiState())
         private set
 
-    private val characterId = stateHandle.get<Int>(NavArg.CharacterId.key) ?: 0
+    private val characterId = stateHandle.get<Int>(CHARACTER_ID) ?: 0
 
     init {
         viewModelScope.launch {

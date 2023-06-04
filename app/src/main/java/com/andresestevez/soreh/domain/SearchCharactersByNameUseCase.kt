@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class SearchCharactersByNameUseCase @Inject constructor(private val repository: CharactersRepository) {
 
-    operator fun invoke(name: String): Flow<List<Character>> = repository.searchCharactersByName(name)
+    operator fun invoke(name: String): Flow<Result<List<Character>>> = repository.searchCharactersByName(name)
 
 }
