@@ -12,6 +12,7 @@ data class CharactersFilter(
     var durability: ClosedRange<Int> = 0..100,
     var power: ClosedRange<Int> = 0..100,
     var combat: ClosedRange<Int> = 0..100,
+    var sort: Pair<SortingField, SortingDirection> = Pair(SortingField.Power, SortingDirection.Asc),
 )
 
 interface CharacterFieldValues {
@@ -21,7 +22,7 @@ interface CharacterFieldValues {
 enum class Gender(override val value: String) : CharacterFieldValues {
     Male("Male"),
     Female("Female"),
-    Agender("Agender"),
+    Agender("-"),
 }
 
 enum class Alignment(override val value: String) : CharacterFieldValues {
@@ -51,4 +52,18 @@ enum class Race(override val value: String) : CharacterFieldValues {
     Alpha("Alpha"),
     Asgardian("Asgardian"),
     Atlantean("Atlantean"),
+}
+
+enum class SortingField(val value: String) {
+    Intelligence("intelligence"),
+    Strength("strength"),
+    Speed("speed"),
+    Durability("durability"),
+    Power("power"),
+    Combat("combat"),
+}
+
+enum class SortingDirection(val value: String) {
+    Asc("asc"),
+    Desc("desc"),
 }

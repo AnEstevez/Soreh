@@ -1,18 +1,22 @@
 package com.andresestevez.soreh.ui.screens.characters.search
 
 import androidx.activity.compose.BackHandler
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.ArrowDropDown
+import androidx.compose.material.icons.outlined.ArrowDropUp
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Sort
 import androidx.compose.material.icons.outlined.Tune
@@ -37,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -55,9 +60,8 @@ fun SearchScreen(
 ) {
 
     val uiState by viewModel.state.collectAsState()
-
+    val filters by viewModel.filters.collectAsState()
     var sortMenuExpanded by remember { mutableStateOf(false) }
-
     val coroutineScope = rememberCoroutineScope()
 
     BackHandler(appState.bottomSheetScaffoldState.bottomSheetState.isVisible) {
@@ -80,8 +84,59 @@ fun SearchScreen(
             DropdownMenu(
                 expanded = sortMenuExpanded,
                 onDismissRequest = { sortMenuExpanded = false }) {
-                DropdownMenuItem(text = { Text("Power >") }, onClick = { /*TODO*/ })
-                DropdownMenuItem(text = { Text("Power <") }, onClick = { /*TODO*/ })
+                SorehDropdownMenuItem(R.string.intelligence, Icons.Outlined.ArrowDropDown) {
+                    filters.sort = Pair(SortingField.Intelligence, SortingDirection.Desc)
+                    viewModel.searchCharacters(CharactersQueryBuilder(filters, false).build())
+                }
+                SorehDropdownMenuItem(R.string.intelligence, Icons.Outlined.ArrowDropUp) {
+                    filters.sort = Pair(SortingField.Intelligence, SortingDirection.Asc)
+                    viewModel.searchCharacters(CharactersQueryBuilder(filters, false).build())
+                }
+
+                SorehDropdownMenuItem(R.string.strength, Icons.Outlined.ArrowDropDown) {
+                    filters.sort = Pair(SortingField.Strength, SortingDirection.Desc)
+                    viewModel.searchCharacters(CharactersQueryBuilder(filters, false).build())
+                }
+                SorehDropdownMenuItem(R.string.strength, Icons.Outlined.ArrowDropUp) {
+                    filters.sort = Pair(SortingField.Strength, SortingDirection.Asc)
+                    viewModel.searchCharacters(CharactersQueryBuilder(filters, false).build())
+                }
+
+                SorehDropdownMenuItem(R.string.speed, Icons.Outlined.ArrowDropDown) {
+                    filters.sort = Pair(SortingField.Speed, SortingDirection.Desc)
+                    viewModel.searchCharacters(CharactersQueryBuilder(filters, false).build())
+                }
+                SorehDropdownMenuItem(R.string.speed, Icons.Outlined.ArrowDropUp) {
+                    filters.sort = Pair(SortingField.Speed, SortingDirection.Asc)
+                    viewModel.searchCharacters(CharactersQueryBuilder(filters, false).build())
+                }
+
+                SorehDropdownMenuItem(R.string.durability, Icons.Outlined.ArrowDropDown) {
+                    filters.sort = Pair(SortingField.Durability, SortingDirection.Desc)
+                    viewModel.searchCharacters(CharactersQueryBuilder(filters, false).build())
+                }
+                SorehDropdownMenuItem(R.string.durability, Icons.Outlined.ArrowDropUp) {
+                    filters.sort = Pair(SortingField.Durability, SortingDirection.Asc)
+                    viewModel.searchCharacters(CharactersQueryBuilder(filters, false).build())
+                }
+
+                SorehDropdownMenuItem(R.string.power, Icons.Outlined.ArrowDropDown) {
+                    filters.sort = Pair(SortingField.Power, SortingDirection.Desc)
+                    viewModel.searchCharacters(CharactersQueryBuilder(filters, false).build())
+                }
+                SorehDropdownMenuItem(R.string.power, Icons.Outlined.ArrowDropUp) {
+                    filters.sort = Pair(SortingField.Power, SortingDirection.Asc)
+                    viewModel.searchCharacters(CharactersQueryBuilder(filters, false).build())
+                }
+
+                SorehDropdownMenuItem(R.string.combat, Icons.Outlined.ArrowDropDown) {
+                    filters.sort = Pair(SortingField.Combat, SortingDirection.Desc)
+                    viewModel.searchCharacters(CharactersQueryBuilder(filters, false).build())
+                }
+                SorehDropdownMenuItem(R.string.combat, Icons.Outlined.ArrowDropUp) {
+                    filters.sort = Pair(SortingField.Combat, SortingDirection.Asc)
+                    viewModel.searchCharacters(CharactersQueryBuilder(filters, false).build())
+                }
 
             }
             IconButton(onClick = {
@@ -102,13 +157,32 @@ fun SearchScreen(
     }
 }
 
+@Composable
+private fun SorehDropdownMenuItem(
+    @StringRes label: Int,
+    trailIcon: ImageVector,
+    onClick: () -> Unit,
+) {
+    DropdownMenuItem(
+        text = { Text(stringResource(id = label)) },
+        modifier = Modifier.height(40.dp),
+        trailingIcon = {
+            Icon(
+                imageVector = trailIcon,
+                contentDescription = null
+            )
+        },
+        onClick = { onClick() }
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharactersSearchBar(viewModel: SearchViewModel) {
     var inputText by rememberSaveable { mutableStateOf("") }
     var isSearchBarEnabled by remember { mutableStateOf(false) }
     val searchHistory = remember { mutableStateListOf<String>() }
-    var filters = viewModel.filters.collectAsState()
+    val filters = viewModel.filters.collectAsState()
 
     Column(modifier = Modifier.padding(horizontal = 10.dp)) {
 
