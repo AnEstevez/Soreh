@@ -1,5 +1,6 @@
 package com.andresestevez.soreh.data.datasources
 
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.andresestevez.soreh.data.models.Character
 import kotlinx.coroutines.flow.Flow
 
@@ -11,9 +12,11 @@ interface LocalDataSource {
 
     fun getCharacterById(id: Int): Flow<Character>
 
-    fun searchCharactersByName(name: String): Flow<List<Character>>
+    suspend fun searchCharactersRawSuspend(query: SupportSQLiteQuery): List<Character>
 
-    fun getAllCharacters(maxItems: Int): Flow<List<Character>>
+    suspend fun countCharactersRaw(query: SupportSQLiteQuery): Int
+
+    fun getAllCharacters(): Flow<List<Character>>
 
     fun getFavorites(): Flow<List<Character>>
 

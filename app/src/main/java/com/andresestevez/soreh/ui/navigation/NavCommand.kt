@@ -1,30 +1,80 @@
 package com.andresestevez.soreh.ui.navigation
 
+import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
 
 sealed class NavCommand(
-    val baseRoute: String,
-    val navArgs: List<NavArg> = emptyList(),
+    val baseRoute: String, // For NavGraphBuilder.navigation(route = baseRoute)
+    val arguments: List<NamedNavArgument>,
+    val destination: String,
 ) {
-    val route = run {
+
+    companion object {
+        const val CHARACTER_ID = "characterId"
+    }
+
+    val destinationWithArgs = run {
         // baseroute/{arg1}/{arg2}...
-        val argKeys = navArgs.joinToString { "/{${it.key}}" }
-        baseRoute.plus(argKeys)
+        val argKeys = arguments.joinToString { "/{${it.name}}" }
+        destination.plus(argKeys)
     }
 
-    val args = navArgs.map {
-        navArgument(it.key) { type = it.navType }
-    }
+    object Home : NavCommand(
+        baseRoute = "home",
+        arguments = emptyList(),
+        destination = "home_main"
+    )
 
-    object Main : NavCommand("home")
-    object Search : NavCommand("search")
-    object Tops : NavCommand("tops")
-    object Favorites : NavCommand("favorites")
-    object Detail : NavCommand("detail", listOf(NavArg.CharacterId))
-}
+    object HomeDetail : NavCommand(
+        baseRoute = "home",
+        arguments = listOf(
+            navArgument(CHARACTER_ID) { type = NavType.IntType }
+        ),
+        destination = "home_detail"
+    )
 
-enum class NavArg(val key: String, val navType: NavType<*>) {
-    CharacterId("characterId", NavType.IntType)
+    object Search : NavCommand(
+        baseRoute = "search",
+        arguments = emptyList(),
+        destination = "search_main"
+    )
+
+    object SearchDetail : NavCommand(
+        baseRoute = "search",
+        arguments = listOf(
+            navArgument(CHARACTER_ID) { type = NavType.IntType }
+        ),
+        destination = "search_detail"
+    )
+
+    object Tops : NavCommand(
+        baseRoute = "tops",
+        arguments = emptyList(),
+        destination = "tops_main"
+    )
+
+    object TopsDetail : NavCommand(
+        baseRoute = "tops",
+        arguments = listOf(
+            navArgument(CHARACTER_ID) { type = NavType.IntType }
+        ),
+        destination = "tops_detail"
+    )
+
+    object Favorites : NavCommand(
+        baseRoute = "favorites",
+        arguments = emptyList(),
+        destination = "favorites_main"
+    )
+
+    object FavoritesDetail : NavCommand(
+        baseRoute = "favorites",
+        arguments = listOf(
+            navArgument(CHARACTER_ID) { type = NavType.IntType }
+        ),
+        destination = "favorites_detail"
+    )
+
 }

@@ -7,7 +7,6 @@ import com.andresestevez.soreh.framework.remote.dto.CharacterByIdResponse
 import com.andresestevez.soreh.framework.remote.dto.CharacterDto
 
 private const val NULL = "null"
-private const val ZERO = "0"
 private const val HYPHEN = "-"
 fun CharacterByIdResponse.toDomain(): Character = with(this) {
 
@@ -24,16 +23,40 @@ fun CharacterByIdResponse.toDomain(): Character = with(this) {
         gender = when (appearance.gender) {
             "Male" -> "Male"
             "Female" -> "Female"
-            else -> HYPHEN
+            else -> "Agender"
         },
         race = appearance.race.replace(NULL, HYPHEN),
         occupation = work.occupation.ifEmpty { HYPHEN },
-        intelligence = if (powerstats.intelligence == NULL) ZERO else powerstats.intelligence,
-        strength = if (powerstats.strength == NULL) ZERO else powerstats.strength,
-        speed = if (powerstats.speed == NULL) ZERO else powerstats.speed,
-        durability = if (powerstats.durability == NULL) ZERO else powerstats.durability,
-        power = if (powerstats.power == NULL) ZERO else powerstats.power,
-        combat = if (powerstats.combat == NULL) ZERO else powerstats.combat,
+        intelligence = if (powerstats.intelligence == NULL) {
+            0
+        } else {
+            if (powerstats.intelligence.toInt() > 100) 100 else powerstats.intelligence.toInt()
+        },
+        strength = if (powerstats.strength == NULL) {
+            0
+        } else {
+            if (powerstats.strength.toInt() > 100) 100 else powerstats.strength.toInt()
+        },
+        speed = if (powerstats.speed == NULL) {
+            0
+        } else {
+            if (powerstats.speed.toInt() > 100) 100 else powerstats.speed.toInt()
+        },
+        durability = if (powerstats.durability == NULL) {
+            0
+        } else {
+            if (powerstats.durability.toInt() > 100) 100 else powerstats.durability.toInt()
+        },
+        power = if (powerstats.power == NULL) {
+            0
+        } else {
+            if (powerstats.power.toInt() > 100) 100 else powerstats.power.toInt()
+        },
+        combat = if (powerstats.combat == NULL) {
+            0
+        } else {
+            if (powerstats.combat.toInt() > 100) 100 else powerstats.combat.toInt()
+        },
         alignment = when (biography.alignment) {
             "good" -> "Light side"
             "bad" -> "Dark side"
@@ -63,16 +86,40 @@ fun CharacterDto.toDomain(): Character = with(this) {
         gender = when (appearance.gender) {
             "Male" -> "Male"
             "Female" -> "Female"
-            else -> HYPHEN
+            else -> "Agender"
         },
         race = appearance.race.replace("null", HYPHEN),
         occupation = work.occupation.ifEmpty { HYPHEN },
-        intelligence = if (powerstats.intelligence == NULL) ZERO else powerstats.intelligence,
-        strength = if (powerstats.strength == NULL) ZERO else powerstats.strength,
-        speed = if (powerstats.speed == NULL) ZERO else powerstats.speed,
-        durability = if (powerstats.durability == NULL) ZERO else powerstats.durability,
-        power = if (powerstats.power == NULL) ZERO else powerstats.power,
-        combat = if (powerstats.combat == NULL) ZERO else powerstats.combat,
+        intelligence = if (powerstats.intelligence == NULL) {
+            0
+        } else {
+            if (powerstats.intelligence.toInt() > 100) 100 else powerstats.intelligence.toInt()
+        },
+        strength = if (powerstats.strength == NULL) {
+            0
+        } else {
+            if (powerstats.strength.toInt() > 100) 100 else powerstats.strength.toInt()
+        },
+        speed = if (powerstats.speed == NULL) {
+            0
+        } else {
+            if (powerstats.speed.toInt() > 100) 100 else powerstats.speed.toInt()
+        },
+        durability = if (powerstats.durability == NULL) {
+            0
+        } else {
+            if (powerstats.durability.toInt() > 100) 100 else powerstats.durability.toInt()
+        },
+        power = if (powerstats.power == NULL) {
+            0
+        } else {
+            if (powerstats.power.toInt() > 100) 100 else powerstats.power.toInt()
+        },
+        combat = if (powerstats.combat == NULL) {
+            0
+        } else {
+            if (powerstats.combat.toInt() > 100) 100 else powerstats.combat.toInt()
+        },
         alignment = when (biography.alignment) {
             "good" -> "Light side"
             "bad" -> "Dark side"

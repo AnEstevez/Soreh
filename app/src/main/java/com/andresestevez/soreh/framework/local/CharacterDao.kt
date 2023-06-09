@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.IGNORE
 import androidx.room.Query
+import androidx.room.RawQuery
 import androidx.room.Update
+import androidx.sqlite.db.SupportSQLiteQuery
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -21,6 +23,15 @@ interface CharacterDao {
 
     @Query("SELECT * FROM character WHERE name LIKE '%' || :name || '%' order by name asc")
     fun searchCharactersByName(name: String): Flow<List<CharacterEntity>>
+
+    @RawQuery(observedEntities = [CharacterEntity::class])
+    fun searchCharactersRaw(query: SupportSQLiteQuery): Flow<List<CharacterEntity>>
+
+    @RawQuery(observedEntities = [CharacterEntity::class])
+    suspend fun countCharactersRaw(query: SupportSQLiteQuery): Int
+
+    @RawQuery(observedEntities = [CharacterEntity::class])
+    suspend fun searchCharactersRawSuspend(query: SupportSQLiteQuery): List<CharacterEntity>
 
     @Query("SELECT * FROM character WHERE id IN (:idList)")
     fun getCharactersByIdList(idList: List<Int>): Flow<List<CharacterEntity>>

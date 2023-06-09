@@ -45,7 +45,7 @@ fun SorehBottomNavigationBar(
     ) {
         navItems.forEach {
             NavigationBarItem(
-                selected = currentRoute.contains(it.navCommand.route),
+                selected = currentRoute.contains(it.navCommand.destination),
                 colors = NavigationBarItemDefaults.colors(
                     indicatorColor = MaterialTheme.colorScheme.onSurface,
                     selectedIconColor = MaterialTheme.colorScheme.surface,
@@ -53,7 +53,7 @@ fun SorehBottomNavigationBar(
 
                 ),
                 icon = { Icon(imageVector = it.icon, contentDescription = null) },
-                onClick = { onClick(it.navCommand.route) },
+                onClick = { onClick(it.navCommand.destination) },
             )
         }
     }
@@ -63,7 +63,7 @@ enum class NavItem(
     val navCommand: NavCommand,
     val icon: ImageVector,
 ) {
-    HOME(NavCommand.Main, Icons.Outlined.Home),
+    HOME(NavCommand.Home, Icons.Outlined.Home),
     SEARCH(NavCommand.Search, Icons.Outlined.Search),
     TOPS(NavCommand.Tops, Icons.Outlined.MilitaryTech),
     FAVORITES(NavCommand.Favorites, Icons.Outlined.FavoriteBorder),

@@ -23,7 +23,6 @@ class FavoritesViewModel @Inject constructor(useCase: GetFavoritesUseCase) : Vie
             state.update { currentState -> currentState.copy(loading = true) }
             useCase().collect { result ->
                 state.update { currentState ->
-
                     result.fold({ characters ->
                         currentState.copy(
                             loading = false,
