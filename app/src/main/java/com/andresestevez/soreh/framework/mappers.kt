@@ -86,7 +86,7 @@ fun CharacterDto.toDomain(): Character = with(this) {
         gender = when (appearance.gender) {
             "Male" -> "Male"
             "Female" -> "Female"
-            else -> "Agender"
+            else -> HYPHEN
         },
         race = appearance.race.replace("null", HYPHEN),
         occupation = work.occupation.ifEmpty { HYPHEN },

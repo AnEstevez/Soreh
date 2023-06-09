@@ -22,6 +22,8 @@ class CharactersQueryBuilder(private val filter: CharactersFilter, private val c
         addFilterRange(query, "power", filter.power)
         addFilterRange(query, "combat", filter.combat)
 
+        query.append(" order by ${filter.sort.first.value} ${filter.sort.second.value}")
+
         Timber.d(query.toString())
 
         return SimpleSQLiteQuery(query.toString())

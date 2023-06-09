@@ -1,5 +1,6 @@
 package com.andresestevez.soreh.ui.theme
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -36,8 +37,9 @@ private val LightColorScheme = lightColorScheme(
     scrim = TomiokaBlack.copy(alpha = 0.4f),
     onSurfaceVariant = TomiokaBlackMediumEmphasis,
     onSecondaryContainer = TomiokaBlackdisabled
-    )
+)
 
+@SuppressLint("RestrictedApi")
 @Composable
 fun SorehTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
