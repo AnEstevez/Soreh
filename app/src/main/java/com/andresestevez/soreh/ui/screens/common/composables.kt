@@ -49,6 +49,7 @@ import androidx.palette.graphics.Palette
 import coil.compose.AsyncImage
 import com.andresestevez.soreh.R
 import com.andresestevez.soreh.ui.screens.characters.detail.CharacterDetailViewModel
+import com.andresestevez.soreh.ui.theme.TomiokaRed700
 
 @Composable
 fun Int.pxToDp() = with(LocalDensity.current) { this@pxToDp.toDp() }
@@ -131,7 +132,7 @@ fun CustomProgressBar(
 
     val animatedColor by animateColorAsState(
         targetValue = when {
-            (percentCounter < 25) -> MaterialTheme.colorScheme.primary
+            (percentCounter < 25) -> TomiokaRed700
             (percentCounter > 74) -> MaterialTheme.colorScheme.secondary
             else -> MaterialTheme.colorScheme.tertiary
         },
@@ -270,28 +271,28 @@ fun CharacterStats(
         val stats: List<Pair<String, Int>> = listOf(
             Pair(
                 stringResource(id = R.string.intelligence),
-                state.data?.character?.intelligence?.toInt() ?: 0
+                state.data?.character?.intelligence ?: 0
             ),
             Pair(
                 stringResource(id = R.string.strength),
-                state.data?.character?.strength?.toInt() ?: 0
+                state.data?.character?.strength ?: 0
             ),
             Pair(
                 stringResource(id = R.string.speed),
-                state.data?.character?.speed?.toInt() ?: 0
+                state.data?.character?.speed ?: 0
             ),
 
             Pair(
                 stringResource(id = R.string.durability),
-                state.data?.character?.durability?.toInt() ?: 0
+                state.data?.character?.durability ?: 0
             ),
             Pair(
                 stringResource(id = R.string.power),
-                state.data?.character?.power?.toInt() ?: 0
+                state.data?.character?.power ?: 0
             ),
             Pair(
                 stringResource(id = R.string.combat),
-                state.data?.character?.combat?.toInt() ?: 0
+                state.data?.character?.combat ?: 0
             ),
 
         )

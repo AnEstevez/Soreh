@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = TomiokaRed700,
+    primary = Color.White,
     secondary = TomiokaRed700Complementary400,
     tertiary = TomiokaYellow700,
     background = TomiokaBlack,
@@ -26,7 +26,7 @@ private val DarkColorScheme = darkColorScheme(
     )
 
 private val LightColorScheme = lightColorScheme(
-    primary = TomiokaRed700,
+    primary = Color.Black,
     secondary = TomiokaGreen600,
     tertiary = TomiokaYellow700,
     background = Color.White,

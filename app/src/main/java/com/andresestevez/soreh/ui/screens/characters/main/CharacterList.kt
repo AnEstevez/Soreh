@@ -1,5 +1,6 @@
 package com.andresestevez.soreh.ui.screens.characters.main
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import com.andresestevez.soreh.ui.screens.common.UiState
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CharacterListVerticalGrid(
     modifier: Modifier = Modifier,
@@ -51,6 +53,10 @@ fun CharacterListVerticalGrid(
         ) {
             items(items = state.data) { itemUiState ->
                 CharacterListItem(
+                    Modifier
+                        .animateItemPlacement()
+                        .fillMaxWidth()
+                        .padding(dimensionResource(id = R.dimen.padding_xsmall)),
                     character = itemUiState
                 ) { onClick(itemUiState.character.id) }
             }

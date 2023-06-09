@@ -1,5 +1,6 @@
 package com.andresestevez.soreh.ui.screens.characters.detail
 
+import android.app.PendingIntent
 import android.content.ClipDescription
 import android.content.Context
 import android.content.Intent
@@ -217,7 +218,7 @@ fun DetailScreen(
                                 )
 
 
-                                DetailsInfo(showDetails, state, MaterialTheme.colorScheme.primary)
+                                DetailsInfo(showDetails, state)
 
 
                                 Box(

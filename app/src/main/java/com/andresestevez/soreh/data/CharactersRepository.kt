@@ -1,5 +1,6 @@
 package com.andresestevez.soreh.data
 
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.andresestevez.soreh.data.datasources.LocalDataSource
 import com.andresestevez.soreh.data.datasources.RemoteDataSource
 import com.andresestevez.soreh.data.models.Character
@@ -15,13 +16,20 @@ class CharactersRepository @Inject constructor(
     private val localDataSource: LocalDataSource,
 ) {
 
-    fun searchCharactersByName(name: String): Flow<Result<List<Character>>> =
-        localDataSource.searchCharactersByName(name)
-            .map { characters -> Result.success(characters) }
-            .catch {
-                Timber.e(it)
-                emit(Result.failure(it))
-            }
+
+    suspend fun searchCharactersRawSuspend(query: SupportSQLiteQuery): Result<List<Character>> = try {
+        Result.success(localDataSource.searchCharactersRawSuspend(query))
+    } catch (t: Throwable){
+        Timber.e(t)
+        Result.failure(t)
+    }
+
+    suspend fun countCharactersRaw(query: SupportSQLiteQuery): Result<Int> = try {
+        Result.success(localDataSource.countCharactersRaw(query))
+    } catch (t: Throwable){
+        Timber.e(t)
+        Result.failure(t)
+    }
 
     fun getCharacterById(id: Int): Flow<Result<Character>> =
         localDataSource.getCharacterById(id)

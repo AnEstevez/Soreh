@@ -1,7 +1,6 @@
 package com.andresestevez.soreh.ui.navigation
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -15,7 +14,7 @@ import com.andresestevez.soreh.ui.screens.characters.search.SearchScreen
 import com.andresestevez.soreh.ui.screens.characters.tops.TopsScreen
 
 @Composable
-fun Navigation(paddingValues: PaddingValues, appState: SorehAppState) {
+fun Navigation(appState: SorehAppState) {
 
 
     NavHost(
@@ -25,7 +24,7 @@ fun Navigation(paddingValues: PaddingValues, appState: SorehAppState) {
 
         // Home graph
         composable(route = NavCommand.Home.destination) {
-            MainScreen(paddingValues = paddingValues) { characterId ->
+            MainScreen(paddingValues = appState.scaffoldPadding.value) { characterId ->
                 appState.navHostController.navigateSingleTopTo(
                     route = NavCommand.HomeDetail.destination.plus("/$characterId")
                 )
@@ -43,7 +42,7 @@ fun Navigation(paddingValues: PaddingValues, appState: SorehAppState) {
         // Search graph
         composable(route = NavCommand.Search.destination) {
             BackHandler(onBack = appState.onBack)
-            SearchScreen() { characterId ->
+            SearchScreen(appState = appState) { characterId ->
                 appState.navHostController.navigateSingleTopTo(
                     route = NavCommand.SearchDetail.destination.plus("/$characterId"),
                 )
@@ -78,7 +77,7 @@ fun Navigation(paddingValues: PaddingValues, appState: SorehAppState) {
         // Favorites graph
         composable(route = NavCommand.Favorites.destination) {
             BackHandler(onBack = appState.onBack)
-            FavoritesScreen(paddingValues = paddingValues) { characterId ->
+            FavoritesScreen(paddingValues = appState.scaffoldPadding.value) { characterId ->
                 appState.navHostController.navigateSingleTopTo(
                     route = NavCommand.FavoritesDetail.destination.plus("/$characterId"),
                 )

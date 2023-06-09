@@ -1,21 +1,28 @@
 package com.andresestevez.soreh.ui
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarState
+import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.andresestevez.soreh.ui.navigation.NavCommand
 import com.andresestevez.soreh.ui.navigation.navigateSingleTopWithPopUpToStartDestination
 import com.andresestevez.soreh.ui.screens.characters.main.NavItem
-import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 class SorehAppState(
@@ -23,8 +30,11 @@ class SorehAppState(
     val snackbarHostState: SnackbarHostState,
     val homeTopAppBarState: TopAppBarState,
     val favoritesTopAppBarState: TopAppBarState,
-    val coroutineScope: CoroutineScope,
-) {
+    val bottomSheetScaffoldState: BottomSheetScaffoldState,
+    val navigationBarsInsetsDp: MutableState<Dp>,
+    var scaffoldPadding: MutableState<PaddingValues>,
+
+    ) {
 
     companion object {
         val BOTTOM_NAVIGATION_OPTIONS =
@@ -63,7 +73,11 @@ class SorehAppState(
     }
 
     val onBack: () -> Unit
-    @Composable get() = { navHostController.navigateSingleTopWithPopUpToStartDestination(NavCommand.Home.destination) }
+        @Composable get() = {
+            navHostController.navigateSingleTopWithPopUpToStartDestination(
+                NavCommand.Home.destination
+            )
+        }
 
 }
 
@@ -75,13 +89,30 @@ fun rememberSorehAppState(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     homeTopAppBarState: TopAppBarState = rememberTopAppBarState(),
     favoritesTopAppBarState: TopAppBarState = rememberTopAppBarState(),
-    coroutineScope: CoroutineScope = rememberCoroutineScope(),
-): SorehAppState = remember(navController, snackbarHostState, homeTopAppBarState, coroutineScope) {
-    SorehAppState(
+    bottomSheetScaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+        rememberStandardBottomSheetState(
+            initialValue = SheetValue.Hidden,
+            skipHiddenState = false
+        )
+    ),
+    navigationBarsInsetsDp: MutableState<Dp> = remember { mutableStateOf(0.dp) },
+    scaffoldPadding: MutableState<PaddingValues> = remember { mutableStateOf(PaddingValues()) },
+): SorehAppState =
+    remember(
         navController,
         snackbarHostState,
         homeTopAppBarState,
-        favoritesTopAppBarState,
-        coroutineScope
-    )
-}
+        bottomSheetScaffoldState,
+        navigationBarsInsetsDp,
+        scaffoldPadding,
+    ) {
+        SorehAppState(
+            navController,
+            snackbarHostState,
+            homeTopAppBarState,
+            favoritesTopAppBarState,
+            bottomSheetScaffoldState,
+            navigationBarsInsetsDp,
+            scaffoldPadding,
+        )
+    }
