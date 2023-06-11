@@ -25,4 +25,11 @@ data class Character(
     val thumb: String ="-",
     val dateModified: Date? = null,
     var bookmarked: Boolean = false,
-)
+){
+
+    val average: Float
+        get() = ((intelligence + strength + speed + durability + power + combat).toFloat() / 6)
+
+    fun getFormatedAverage(): String = String.format("%.2f", average)
+
+}

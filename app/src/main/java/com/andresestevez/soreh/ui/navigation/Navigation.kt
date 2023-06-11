@@ -59,7 +59,7 @@ fun Navigation(appState: SorehAppState) {
 
         // Tops graph
         composable(route = NavCommand.Tops.destination) {
-            TopsScreen() { characterId ->
+            TopsScreen(appState = appState) { characterId ->
                 appState.navHostController.navigateSingleTopTo(
                     route = NavCommand.TopsDetail.destination.plus("/$characterId"),
                 )

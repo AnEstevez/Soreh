@@ -12,7 +12,9 @@ data class CharactersFilter(
     var durability: ClosedRange<Int> = 0..100,
     var power: ClosedRange<Int> = 0..100,
     var combat: ClosedRange<Int> = 0..100,
+    var average: ClosedRange<Int> = 0..100,
     var sort: Pair<SortingField, SortingDirection> = Pair(SortingField.Power, SortingDirection.Asc),
+    var limit: Int = -1
 )
 
 interface CharacterFieldValues {
@@ -61,6 +63,7 @@ enum class SortingField(val value: String) {
     Durability("durability"),
     Power("power"),
     Combat("combat"),
+    Average("average"),
 }
 
 enum class SortingDirection(val value: String) {

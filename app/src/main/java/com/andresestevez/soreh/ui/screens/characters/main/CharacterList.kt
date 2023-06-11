@@ -43,10 +43,6 @@ fun CharacterListVerticalGrid(
         contentAlignment = Alignment.TopCenter
     ) {
 
-        if (state.loading) {
-            CircularProgressIndicator(modifier.align(Alignment.Center))
-        }
-
         LazyVerticalGrid(
             contentPadding = contentPaddingValues,
             columns = GridCells.Fixed(columns)
@@ -60,6 +56,11 @@ fun CharacterListVerticalGrid(
                     character = itemUiState
                 ) { onClick(itemUiState.character.id) }
             }
+        }
+
+
+        if (state.loading) {
+            CircularProgressIndicator(modifier.align(Alignment.Center))
         }
     }
 }
