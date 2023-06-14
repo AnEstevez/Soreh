@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 fun TopsScreen(
     viewModel: TopsViewModel = hiltViewModel(),
     appState: SorehAppState,
-    onClick: (Int) -> Unit,
+    onClick: (characterPosition: Int, publisher: Int ) -> Unit,
 ) {
 
     val coroutineScope = rememberCoroutineScope()

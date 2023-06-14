@@ -34,12 +34,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.andresestevez.soreh.R
+import com.andresestevez.soreh.data.models.Character
 
 
 @Composable
 fun DetailsInfo(
     showDetails: Boolean,
-    state: CharacterDetailViewModel.UiState,
+    character: Character?,
     iconsColor: Color = MaterialTheme.colorScheme.onSurface,
     titlesColor: Color = MaterialTheme.colorScheme.onSurface,
     infoColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -78,7 +79,7 @@ fun DetailsInfo(
 
                         Text(
                             textAlign = TextAlign.Center,
-                            text = state.data?.character?.race.toString(),
+                            text = character?.race.toString(),
                             style = MaterialTheme.typography.bodyMedium,
                             color = infoColor,
                         )
@@ -90,7 +91,7 @@ fun DetailsInfo(
                         modifier = Modifier.width(IntrinsicSize.Max)
                     ) {
 
-                        when (state.data?.character?.gender) {
+                        when (character?.gender) {
                             "Male" -> Icon(
                                 imageVector = Icons.Outlined.Male,
                                 contentDescription = "",
@@ -112,7 +113,7 @@ fun DetailsInfo(
 
                         Text(
                             textAlign = TextAlign.Center,
-                            text = state.data?.character?.gender
+                            text = character?.gender
                                 ?: stringResource(id = R.string.unknownValue),
                             color = infoColor,
                             style = MaterialTheme.typography.bodyMedium
@@ -132,8 +133,8 @@ fun DetailsInfo(
 
                         Text(
                             textAlign = TextAlign.Center,
-                            text = if (state.data?.character?.height.toString() == "0") "- cm"
-                            else state.data?.character?.height.toString() + " cm",
+                            text = if (character?.height.toString() == "0") "- cm"
+                            else character?.height.toString() + " cm",
                             color = infoColor,
                             style = MaterialTheme.typography.bodyMedium
                         )
@@ -154,8 +155,8 @@ fun DetailsInfo(
 
                         Text(
                             textAlign = TextAlign.Center,
-                            text = if (state.data?.character?.weight.toString() == "0") "- kg"
-                            else state.data?.character?.weight.toString() + " kg",
+                            text = if (character?.weight.toString() == "0") "- kg"
+                            else character?.weight.toString() + " kg",
                             color = infoColor,
                             style = MaterialTheme.typography.bodyMedium
                         )
@@ -174,7 +175,7 @@ fun DetailsInfo(
 
                         Text(
                             textAlign = TextAlign.Center,
-                            text = state.data?.character?.alignment
+                            text = character?.alignment
                                 ?: stringResource(id = R.string.unknownValue),
                             color = infoColor,
                             style = MaterialTheme.typography.bodyMedium
@@ -205,8 +206,7 @@ fun DetailsInfo(
                 }
                 Text(
                     textAlign = TextAlign.Start,
-                    text = state.data?.character?.fullName
-                        ?: stringResource(id = R.string.unknownValue),
+                    text = character?.fullName ?: stringResource(id = R.string.unknownValue),
                     color = infoColor,
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -231,8 +231,7 @@ fun DetailsInfo(
                 }
                 Text(
                     textAlign = TextAlign.Center,
-                    text = state.data?.character?.publisher
-                        ?: stringResource(id = R.string.unknownValue),
+                    text = character?.publisher ?: stringResource(id = R.string.unknownValue),
                     color = infoColor,
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -256,8 +255,7 @@ fun DetailsInfo(
                 }
                 Text(
                     textAlign = TextAlign.Start,
-                    text = state.data?.character?.firstAppearance
-                        ?: stringResource(id = R.string.unknownValue),
+                    text = character?.firstAppearance ?: stringResource(id = R.string.unknownValue),
                     color = infoColor,
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -280,8 +278,7 @@ fun DetailsInfo(
                 }
                 Text(
                     textAlign = TextAlign.Start,
-                    text = state.data?.character?.relatives
-                        ?: stringResource(id = R.string.unknownValue),
+                    text = character?.relatives ?: stringResource(id = R.string.unknownValue),
                     color = infoColor,
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -307,7 +304,7 @@ fun DetailsInfo(
                 }
                 Text(
                     textAlign = TextAlign.Start,
-                    text = state.data?.character?.groupAffiliation
+                    text = character?.groupAffiliation
                         ?: stringResource(id = R.string.unknownValue),
                     color = infoColor,
                     style = MaterialTheme.typography.bodyMedium

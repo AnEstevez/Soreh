@@ -74,7 +74,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
         viewModelScope.launch {
             launch {
                 dcUiState.update { currentState ->
-                    useCase(dcQuery).fold({ characters ->
+                    useCase.searchCharactersSuspend(dcQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
                         currentState.copy(loading = false, userMessage = it.getUserMessage())
@@ -84,7 +84,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
 
             launch {
                 marvelUiState.update { currentState ->
-                    useCase(marvelQuery).fold({ characters ->
+                    useCase.searchCharactersSuspend(marvelQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
                         currentState.copy(loading = false, userMessage = it.getUserMessage())
@@ -94,7 +94,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
 
             launch {
                 imageUiState.update { currentState ->
-                    useCase(imageQuery).fold({ characters ->
+                    useCase.searchCharactersSuspend(imageQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
                         currentState.copy(loading = false, userMessage = it.getUserMessage())
@@ -104,7 +104,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
 
             launch {
                 darkUiState.update { currentState ->
-                    useCase(darkQuery).fold({ characters ->
+                    useCase.searchCharactersSuspend(darkQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
                         currentState.copy(loading = false, userMessage = it.getUserMessage())
@@ -114,7 +114,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
 
             launch {
                 lucasUiState.update { currentState ->
-                    useCase(lucasQuery).fold({ characters ->
+                    useCase.searchCharactersSuspend(lucasQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
                         currentState.copy(loading = false, userMessage = it.getUserMessage())
@@ -124,7 +124,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
 
             launch {
                 nbcUiState.update { currentState ->
-                    useCase(nbcQuery).fold({ characters ->
+                    useCase.searchCharactersSuspend(nbcQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
                         currentState.copy(loading = false, userMessage = it.getUserMessage())

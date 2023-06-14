@@ -1,10 +1,6 @@
 package com.andresestevez.soreh.ui.screens.characters.detail
 
-import android.app.PendingIntent
-import android.content.ClipDescription
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
@@ -59,10 +55,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.palette.graphics.Palette
-import com.andresestevez.soreh.R
-import com.andresestevez.soreh.data.models.Character
 import com.andresestevez.soreh.ui.SorehScreen
 import com.andresestevez.soreh.ui.screens.common.CharacterStats
+import com.andresestevez.soreh.ui.screens.common.shareCharacter
 import com.andresestevez.soreh.ui.screens.common.thumbWithPalette
 import com.andresestevez.soreh.ui.theme.Marcelus
 import kotlinx.coroutines.CoroutineScope
@@ -73,7 +68,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun DetailScreen(
     viewModel: CharacterDetailViewModel = hiltViewModel(),
-    onBackClick: () -> Unit = {},
 ) {
 
     val state by viewModel.state.collectAsState()
@@ -161,7 +155,8 @@ fun DetailScreen(
                                         modifier = Modifier
                                             .background(MaterialTheme.colorScheme.surface)
                                     ) {
-                                        palette = thumbWithPalette(uiState = state.data)
+                                        palette =
+                                            thumbWithPalette(thumb = state.data?.character?.thumb)
                                     }
 
                                     Box(modifier = Modifier.align(Alignment.BottomEnd)) {
@@ -218,7 +213,7 @@ fun DetailScreen(
                                 )
 
 
-                                DetailsInfo(showDetails, state)
+                                DetailsInfo(showDetails, state.data?.character)
 
 
                                 Box(
@@ -231,7 +226,7 @@ fun DetailScreen(
                                             end = 20.dp
                                         ),
                                 ) {
-                                    CharacterStats(state)
+                                    CharacterStats(state.data?.character)
                                 }
 
 
@@ -332,31 +327,4 @@ private fun ActionButtonsCharacterDetails(
     }
 }
 
-fun shareCharacter(context: Context, character: Character) {
-
-    val idUrl = character.thumb.substringAfterLast(delimiter = "/").substringBefore(".")
-
-    val sendIntent: Intent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(
-            Intent.EXTRA_TITLE,
-            character.name + " " + context.getString(R.string.complete_info)
-        )
-        putExtra(Intent.EXTRA_SUBJECT, character.name)
-        putExtra(Intent.EXTRA_TEXT, context.getString(R.string.base_url_superherodb) + idUrl)
-        type = ClipDescription.MIMETYPE_TEXT_PLAIN
-    }
-
-    val openIntent = Intent().apply {
-        action = Intent.ACTION_VIEW
-        setDataAndType(
-            Uri.parse(context.getString(R.string.base_url_superherodb) + idUrl),
-            ClipDescription.MIMETYPE_TEXT_PLAIN
-        )
-    }
-
-    Intent.createChooser(sendIntent, null)
-        .putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(openIntent))
-        .also { context.startActivity(it) }
-}
 

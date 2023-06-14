@@ -20,7 +20,7 @@ import com.andresestevez.soreh.ui.screens.common.pagerCubeOutDepthTransition
 @OptIn(ExperimentalFoundationApi::class)
 fun SorehTopsPager(
     pagerState: PagerState,
-    onClick: (Int) -> Unit,
+    onClick: (characterPosition: Int, publisher: Int )-> Unit,
     appState: SorehAppState,
     viewModel: TopsViewModel,
 ) {
@@ -52,38 +52,44 @@ fun SorehTopsPager(
         ) {
             when (page) {
                 0 -> TopsCharacterLazyColumn(
+                    page = page,
                     state = dcState.value,
-                    onClick = { characterId -> onClick(characterId) },
+                    onClick = {characterPosition, publisher -> onClick(characterPosition, publisher) },
                     contentPaddingValues = PaddingValues(bottom = appState.scaffoldPadding.value.calculateBottomPadding()),
                 )
 
                 1 -> TopsCharacterLazyColumn(
+                    page = page,
                     state = marvelState.value,
-                    onClick = { characterId -> onClick(characterId) },
+                    onClick = {characterPosition, publisher -> onClick(characterPosition, publisher) },
                     contentPaddingValues = PaddingValues(bottom = appState.scaffoldPadding.value.calculateBottomPadding()),
                 )
 
                 2 -> TopsCharacterLazyColumn(
+                    page = page,
                     state = imageState.value,
-                    onClick = { characterId -> onClick(characterId) },
+                    onClick = {characterPosition, publisher -> onClick(characterPosition, publisher) },
                     contentPaddingValues = PaddingValues(bottom = appState.scaffoldPadding.value.calculateBottomPadding()),
                 )
 
                 3 -> TopsCharacterLazyColumn(
+                    page = page,
                     state = darkState.value,
-                    onClick = { characterId -> onClick(characterId) },
+                    onClick = {characterPosition, publisher -> onClick(characterPosition, publisher) },
                     contentPaddingValues = PaddingValues(bottom = appState.scaffoldPadding.value.calculateBottomPadding()),
                 )
 
                 4 -> TopsCharacterLazyColumn(
+                    page = page,
                     state = lucasState.value,
-                    onClick = { characterId -> onClick(characterId) },
+                    onClick = {characterPosition, publisher -> onClick(characterPosition, publisher) },
                     contentPaddingValues = PaddingValues(bottom = appState.scaffoldPadding.value.calculateBottomPadding()),
                 )
 
                 5 -> TopsCharacterLazyColumn(
+                    page = page,
                     state = nbcState.value,
-                    onClick = { characterId -> onClick(characterId) },
+                    onClick = {characterPosition, publisher -> onClick(characterPosition, publisher) },
                     contentPaddingValues = PaddingValues(bottom = appState.scaffoldPadding.value.calculateBottomPadding()),
                 )
 

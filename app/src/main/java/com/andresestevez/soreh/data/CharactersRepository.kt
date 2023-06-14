@@ -17,16 +17,25 @@ class CharactersRepository @Inject constructor(
 ) {
 
 
-    suspend fun searchCharactersRawSuspend(query: SupportSQLiteQuery): Result<List<Character>> = try {
-        Result.success(localDataSource.searchCharactersRawSuspend(query))
-    } catch (t: Throwable){
-        Timber.e(t)
-        Result.failure(t)
-    }
+    fun searchCharactersRaw(query: SupportSQLiteQuery): Flow<Result<List<Character>>> =
+        localDataSource.searchCharactersRawFlow(query).map { characters ->
+            Result.success(characters)
+        }.catch {
+            Timber.e(it)
+            Result.failure<List<Character>>(it)
+        }
+
+    suspend fun searchCharactersRawSuspend(query: SupportSQLiteQuery): Result<List<Character>> =
+        try {
+            Result.success(localDataSource.searchCharactersRawSuspend(query))
+        } catch (t: Throwable) {
+            Timber.e(t)
+            Result.failure(t)
+        }
 
     suspend fun countCharactersRaw(query: SupportSQLiteQuery): Result<Int> = try {
         Result.success(localDataSource.countCharactersRaw(query))
-    } catch (t: Throwable){
+    } catch (t: Throwable) {
         Timber.e(t)
         Result.failure(t)
     }
@@ -62,8 +71,11 @@ class CharactersRepository @Inject constructor(
         Result.failure(t)
     }
 
-    suspend fun updateCharacter(character: Character) =
+    suspend fun updateCharacter(character: Character) {
+        Timber.d("llamada a favoritos repo")
         localDataSource.updateCharacter(character)
+
+    }
 
     suspend fun saveAll(characters: List<Character>) =
         localDataSource.insertCharactersList(characters)

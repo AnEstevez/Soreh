@@ -34,10 +34,11 @@ import com.andresestevez.soreh.ui.screens.common.UiState
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TopsCharacterLazyColumn(
+    page: Int,
     modifier: Modifier = Modifier,
     state: UiState,
     contentPaddingValues: PaddingValues,
-    onClick: (Int) -> Unit = {},
+    onClick: (characterPosition: Int, publisher: Int ) -> Unit,
 ) {
 
     val numberIcons = listOf(
@@ -70,7 +71,7 @@ fun TopsCharacterLazyColumn(
                             .padding(dimensionResource(id = R.dimen.padding_xsmall)),
                         character = itemUiState,
                         numberIcons[index],
-                    ) { onClick(itemUiState.character.id) }
+                    ) { onClick(index, page) }
                 }
             }
         }

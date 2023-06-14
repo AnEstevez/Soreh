@@ -6,6 +6,8 @@ import javax.inject.Inject
 
 class GetTopsUseCase @Inject constructor(private val repository: CharactersRepository) {
 
-    suspend operator fun invoke(query: SupportSQLiteQuery) =
+    suspend fun searchCharactersSuspend(query: SupportSQLiteQuery) =
         repository.searchCharactersRawSuspend(query)
+
+    fun searcheCharacters(query: SupportSQLiteQuery) = repository.searchCharactersRaw(query)
 }
