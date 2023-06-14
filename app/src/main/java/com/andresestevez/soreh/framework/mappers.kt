@@ -217,6 +217,7 @@ fun Character.toEntity() = CharacterEntity(
     durability = durability,
     power = power,
     combat = combat,
+    average = average,
     alignment = alignment,
     publisher = publisher,
     firstAppearance = firstAppearance,

@@ -24,6 +24,8 @@ class CharactersQueryBuilder(private val filter: CharactersFilter, private val c
 
         query.append(" order by ${filter.sort.first.value} ${filter.sort.second.value}")
 
+        query.append(" limit ${filter.limit}")
+
         Timber.d(query.toString())
 
         return SimpleSQLiteQuery(query.toString())

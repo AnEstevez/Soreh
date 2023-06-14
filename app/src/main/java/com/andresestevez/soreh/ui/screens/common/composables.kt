@@ -48,14 +48,14 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import coil.compose.AsyncImage
 import com.andresestevez.soreh.R
-import com.andresestevez.soreh.ui.screens.characters.detail.CharacterDetailViewModel
+import com.andresestevez.soreh.data.models.Character
 import com.andresestevez.soreh.ui.theme.TomiokaRed700
 
 @Composable
 fun Int.pxToDp() = with(LocalDensity.current) { this@pxToDp.toDp() }
 
 @Composable
-fun thumbWithPalette(uiState: ItemUiState?): Palette? {
+fun thumbWithPalette(thumb: String?): Palette? {
 
     var palette by remember { mutableStateOf<Palette?>(null) }
 
@@ -65,11 +65,11 @@ fun thumbWithPalette(uiState: ItemUiState?): Palette? {
     ) {
 
         AsyncImage(
-            model = uiState?.character?.thumb,
+            model = thumb,
             contentDescription = null,
             placeholder = rememberVectorPainter(ImageVector.vectorResource(R.drawable.placeholder)),
             error = rememberVectorPainterWithColor(
-                image =  ImageVector.vectorResource(R.drawable.placeholder),
+                image = ImageVector.vectorResource(R.drawable.placeholder),
                 tintColor = MaterialTheme.colorScheme.onSecondaryContainer
             ),
             modifier = Modifier.fillMaxWidth(),
@@ -98,7 +98,6 @@ fun rememberVectorPainterWithColor(image: ImageVector, tintColor: Color) =
         tintBlendMode = image.tintBlendMode,
         autoMirror = false, content = { _, _ -> RenderVectorGroup(group = image.root) }
     )
-
 
 
 @Composable
@@ -260,7 +259,7 @@ fun getMaxStatFieldWidth(
 
 @Composable
 fun CharacterStats(
-    state: CharacterDetailViewModel.UiState,
+    character: Character?,
     largestStatName: String = stringResource(id = R.string.intelligence),
     textStyle: TextStyle = MaterialTheme.typography.bodySmall,
     fontWeightStatValue: FontWeight = FontWeight.SemiBold,
@@ -271,31 +270,31 @@ fun CharacterStats(
         val stats: List<Pair<String, Int>> = listOf(
             Pair(
                 stringResource(id = R.string.intelligence),
-                state.data?.character?.intelligence ?: 0
+                character?.intelligence ?: 0
             ),
             Pair(
                 stringResource(id = R.string.strength),
-                state.data?.character?.strength ?: 0
+                character?.strength ?: 0
             ),
             Pair(
                 stringResource(id = R.string.speed),
-                state.data?.character?.speed ?: 0
+                character?.speed ?: 0
             ),
 
             Pair(
                 stringResource(id = R.string.durability),
-                state.data?.character?.durability ?: 0
+                character?.durability ?: 0
             ),
             Pair(
                 stringResource(id = R.string.power),
-                state.data?.character?.power ?: 0
+                character?.power ?: 0
             ),
             Pair(
                 stringResource(id = R.string.combat),
-                state.data?.character?.combat ?: 0
+                character?.combat ?: 0
             ),
 
-        )
+            )
 
         val statNameWidthPx: Int = getMaxStatFieldWidth(
             value = largestStatName,

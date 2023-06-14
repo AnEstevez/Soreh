@@ -21,6 +21,7 @@ data class CharacterEntity(
     var durability: Int = 0,
     var power: Int = 0,
     var combat: Int = 0,
+    var average: Float = 0f,
     var alignment: String = "",
     var publisher: String = "",
     var firstAppearance: String = "",

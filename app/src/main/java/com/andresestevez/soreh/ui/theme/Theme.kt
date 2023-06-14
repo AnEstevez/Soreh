@@ -20,7 +20,7 @@ private val DarkColorScheme = darkColorScheme(
     surface = TomiokaBlack,
     inverseSurface = TomiokaWhiteHighEmphasis,
     onSurface = TomiokaWhiteHighEmphasis,
-    scrim = TomiokaBlack.copy(alpha = 0.4f),
+    scrim = TomiokaWhite200.copy(alpha = 0.2f),
     onSurfaceVariant = TomiokaWhiteMediumEmphasis,
     onSecondaryContainer = TomiokaWhiteDisabled,
 
@@ -34,7 +34,7 @@ private val LightColorScheme = lightColorScheme(
     surface = Color.White,
     inverseSurface = TomiokaBlack,
     onSurface = TomiokaBlack,
-    scrim = TomiokaBlack.copy(alpha = 0.4f),
+    scrim = TomiokaBlack.copy(alpha = 0.2f),
     onSurfaceVariant = TomiokaBlackMediumEmphasis,
     onSecondaryContainer = TomiokaBlackdisabled
 )

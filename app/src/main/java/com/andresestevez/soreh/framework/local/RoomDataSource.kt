@@ -22,6 +22,9 @@ internal class RoomDataSource @Inject constructor(private val dao: CharacterDao)
     override fun getCharacterById(id: Int): Flow<Character> =
         dao.getCharacterById(id).map { it.toDomain() }.distinctUntilChanged()
 
+    override fun searchCharactersRawFlow(query: SupportSQLiteQuery): Flow<List<Character>> = dao.searchCharactersRaw(query)
+        .map { it.map { characterEntity -> characterEntity.toDomain() } }.distinctUntilChanged()
+
     override suspend fun searchCharactersRawSuspend(query: SupportSQLiteQuery): List<Character> =
         dao.searchCharactersRawSuspend(query).map { characterEntity -> characterEntity.toDomain() }
 

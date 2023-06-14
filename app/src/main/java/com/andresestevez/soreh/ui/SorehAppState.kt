@@ -46,6 +46,11 @@ class SorehAppState(
             homeTopAppBarState
         )
 
+    val topsScrollBehavior
+        @Composable get() = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+            homeTopAppBarState
+        )
+
     val favoritesScrollBehavior
         @Composable get() = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
             favoritesTopAppBarState
@@ -68,6 +73,7 @@ class SorehAppState(
     @Composable
     fun getTopAppBarScrollBehavior(): TopAppBarScrollBehavior = when (currentRoute) {
         NavCommand.Home.destination -> homeScrollBehavior
+        NavCommand.Tops.destination -> topsScrollBehavior
         NavCommand.Favorites.destination -> favoritesScrollBehavior
         else -> favoritesScrollBehavior
     }

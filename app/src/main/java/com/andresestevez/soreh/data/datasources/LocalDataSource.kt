@@ -12,6 +12,8 @@ interface LocalDataSource {
 
     fun getCharacterById(id: Int): Flow<Character>
 
+    fun searchCharactersRawFlow(query: SupportSQLiteQuery): Flow<List<Character>>
+
     suspend fun searchCharactersRawSuspend(query: SupportSQLiteQuery): List<Character>
 
     suspend fun countCharactersRaw(query: SupportSQLiteQuery): Int

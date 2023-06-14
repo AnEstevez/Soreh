@@ -13,11 +13,13 @@ sealed class NavCommand(
 
     companion object {
         const val CHARACTER_ID = "characterId"
+        const val CURRENT_TOP_CHARACTER = "currentTopCharacter"
+        const val CURRENT_TOP_PUBLISHER = "currentTopPublisher"
     }
 
     val destinationWithArgs = run {
         // baseroute/{arg1}/{arg2}...
-        val argKeys = arguments.joinToString { "/{${it.name}}" }
+        val argKeys = arguments.joinToString(prefix = "/{", separator = "}/{", postfix = "}") {it.name}
         destination.plus(argKeys)
     }
 
@@ -58,7 +60,8 @@ sealed class NavCommand(
     object TopsDetail : NavCommand(
         baseRoute = "tops",
         arguments = listOf(
-            navArgument(CHARACTER_ID) { type = NavType.IntType }
+            navArgument(CURRENT_TOP_CHARACTER) { type = NavType.IntType },
+            navArgument(CURRENT_TOP_PUBLISHER) { type = NavType.IntType },
         ),
         destination = "tops_detail"
     )
