@@ -45,4 +45,5 @@
     <string name="clear_history">Clear history</string>
     <string name="power_stats">Power Stats</string>
     <string name="show_x_results">Show %1$s results</string>
+    <string name="filters">Filters</string>
 </resources>

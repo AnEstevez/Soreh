@@ -131,7 +131,6 @@ private fun Thumb(uiState: ItemUiState) {
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth(),
-            // .aspectRatio(1f),
             contentScale = ContentScale.Crop
         )
 

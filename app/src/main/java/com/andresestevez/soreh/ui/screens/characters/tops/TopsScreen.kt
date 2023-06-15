@@ -83,8 +83,6 @@ fun TopsScreen(
                     }
                 )
             }
-
-
         }
 
         SquareIndicator(state = pagerState, numberOfPages = tabs.size)
