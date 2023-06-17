@@ -7,5 +7,5 @@ import javax.inject.Inject
 
 class GetRandomCharactersListUseCase @Inject constructor(private val repository: CharactersRepository) {
 
-    operator fun invoke(maxItems: Int = 24): Flow<Result<List<Character>>> = repository.getRandomCharactersList(maxItems)
+    operator fun invoke(maxItems: Int = 10): Flow<Result<List<Character>>> = repository.getRandomCharactersList(maxItems)
 }

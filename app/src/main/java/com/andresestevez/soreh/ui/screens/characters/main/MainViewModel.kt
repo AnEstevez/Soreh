@@ -14,7 +14,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class CharactersViewModel @Inject constructor(getRandomCharactersList: GetRandomCharactersListUseCase) :
+class MainViewModel @Inject constructor(getRandomCharactersList: GetRandomCharactersListUseCase) :
     ViewModel() {
 
     var state = MutableStateFlow(UiState())
@@ -23,7 +23,7 @@ class CharactersViewModel @Inject constructor(getRandomCharactersList: GetRandom
     init {
         viewModelScope.launch {
             state.value = UiState(loading = true)
-            getRandomCharactersList(24).collect { result ->
+            getRandomCharactersList(10).collect { result ->
                 state.update { currentState ->
                     result.fold({ characters ->
                         currentState.copy(
