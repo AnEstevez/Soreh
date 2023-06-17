@@ -17,6 +17,14 @@ class CharactersRepository @Inject constructor(
 ) {
 
 
+    fun getCharactersByIdList(idList: List<Int>, idListOrder: String): Flow<Result<List<Character>>> =
+        localDataSource.getCharactersByIdList(idList, idListOrder).map { characters ->
+            Result.success(characters)
+        }.catch {
+            Timber.e(it)
+            Result.failure<List<Character>>(it)
+        }
+
     fun searchCharactersRaw(query: SupportSQLiteQuery): Flow<Result<List<Character>>> =
         localDataSource.searchCharactersRawFlow(query).map { characters ->
             Result.success(characters)
@@ -48,7 +56,7 @@ class CharactersRepository @Inject constructor(
                 emit(Result.failure(it))
             }
 
-    fun getRandomCharactersList(maxItems: Int = 24): Flow<Result<List<Character>>> =
+    fun getRandomCharactersList(maxItems: Int = 10): Flow<Result<List<Character>>> =
         localDataSource.getAllCharacters()
             .map { characters -> Result.success(characters.shuffled().take(maxItems)) }
             .catch {
@@ -72,9 +80,7 @@ class CharactersRepository @Inject constructor(
     }
 
     suspend fun updateCharacter(character: Character) {
-        Timber.d("llamada a favoritos repo")
         localDataSource.updateCharacter(character)
-
     }
 
     suspend fun saveAll(characters: List<Character>) =

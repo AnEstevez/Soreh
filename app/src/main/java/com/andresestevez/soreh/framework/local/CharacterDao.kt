@@ -33,8 +33,8 @@ interface CharacterDao {
     @RawQuery(observedEntities = [CharacterEntity::class])
     suspend fun searchCharactersRawSuspend(query: SupportSQLiteQuery): List<CharacterEntity>
 
-    @Query("SELECT * FROM character WHERE id IN (:idList)")
-    fun getCharactersByIdList(idList: List<Int>): Flow<List<CharacterEntity>>
+    @Query("SELECT * FROM character WHERE id IN (:idList) ORDER BY INSTR(:idListOrder, id)")
+    fun getCharactersByIdList(idList: List<Int>, idListOrder: String): Flow<List<CharacterEntity>>
 
     @Query("Select * FROM character WHERE bookmarked = 1 order by dateModified desc")
     fun getFavorites(): Flow<List<CharacterEntity>>

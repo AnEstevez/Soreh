@@ -10,6 +10,8 @@ interface LocalDataSource {
 
     suspend fun isRefreshRequired() : Boolean
 
+    fun getCharactersByIdList(idList: List<Int>, idListOrder: String): Flow<List<Character>>
+
     fun getCharacterById(id: Int): Flow<Character>
 
     fun searchCharactersRawFlow(query: SupportSQLiteQuery): Flow<List<Character>>

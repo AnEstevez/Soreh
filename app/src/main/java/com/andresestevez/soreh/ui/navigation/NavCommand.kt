@@ -15,11 +15,15 @@ sealed class NavCommand(
         const val CHARACTER_ID = "characterId"
         const val CURRENT_TOP_CHARACTER = "currentTopCharacter"
         const val CURRENT_TOP_PUBLISHER = "currentTopPublisher"
+        const val CURRENT_MAIN_CHARACTER = "currentMainCharacter"
+        const val MAIN_CHARACTERS_LIST = "mainCharactersList"
+
     }
 
     val destinationWithArgs = run {
         // baseroute/{arg1}/{arg2}...
-        val argKeys = arguments.joinToString(prefix = "/{", separator = "}/{", postfix = "}") {it.name}
+        val argKeys =
+            arguments.joinToString(prefix = "/{", separator = "}/{", postfix = "}") { it.name }
         destination.plus(argKeys)
     }
 
@@ -32,7 +36,8 @@ sealed class NavCommand(
     object HomeDetail : NavCommand(
         baseRoute = "home",
         arguments = listOf(
-            navArgument(CHARACTER_ID) { type = NavType.IntType }
+            navArgument(CURRENT_MAIN_CHARACTER) { type = NavType.IntType },
+            navArgument(MAIN_CHARACTERS_LIST) { type = NavType.StringType }
         ),
         destination = "home_detail"
     )

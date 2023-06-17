@@ -10,6 +10,7 @@ import com.andresestevez.soreh.ui.SorehAppState
 import com.andresestevez.soreh.ui.screens.characters.detail.DetailScreen
 import com.andresestevez.soreh.ui.screens.characters.favorites.FavoritesScreen
 import com.andresestevez.soreh.ui.screens.characters.main.MainScreen
+import com.andresestevez.soreh.ui.screens.characters.main.detail.MainDetailScreen
 import com.andresestevez.soreh.ui.screens.characters.search.SearchScreen
 import com.andresestevez.soreh.ui.screens.characters.tops.TopsScreen
 import com.andresestevez.soreh.ui.screens.characters.tops.detail.TopsDetailScreen
@@ -25,9 +26,9 @@ fun Navigation(appState: SorehAppState) {
 
         // Home graph
         composable(route = NavCommand.Home.destination) {
-            MainScreen(paddingValues = appState.scaffoldPadding.value) { characterId ->
+            MainScreen(appState = appState) { currentCharacter, idList ->
                 appState.navHostController.navigateSingleTopTo(
-                    route = NavCommand.HomeDetail.destination.plus("/$characterId")
+                    route = NavCommand.HomeDetail.destination.plus("/$currentCharacter/$idList")
                 )
             }
         }
@@ -36,7 +37,7 @@ fun Navigation(appState: SorehAppState) {
             route = NavCommand.HomeDetail.destinationWithArgs,
             arguments = NavCommand.HomeDetail.arguments
         ) {
-            DetailScreen()
+            MainDetailScreen()
         }
 
 
