@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.palette.graphics.Palette
 import com.andresestevez.soreh.ui.SorehScreen
+import com.andresestevez.soreh.ui.screens.characters.favorites.detail.FavoritesDetailViewModel
 import com.andresestevez.soreh.ui.screens.common.CharacterStats
 import com.andresestevez.soreh.ui.screens.common.shareCharacter
 import com.andresestevez.soreh.ui.screens.common.thumbWithPalette
@@ -67,7 +68,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
-    viewModel: CharacterDetailViewModel = hiltViewModel(),
+    viewModel: FavoritesDetailViewModel = hiltViewModel(),
 ) {
 
     val state by viewModel.state.collectAsState()
@@ -213,7 +214,10 @@ fun DetailScreen(
                                 )
 
 
-                                DetailsInfo(showDetails, state.data?.character)
+                                com.andresestevez.soreh.ui.screens.characters.favorites.detail.DetailsInfo(
+                                    showDetails,
+                                    state.data?.character
+                                )
 
 
                                 Box(
@@ -249,7 +253,7 @@ fun DetailScreen(
 @Composable
 private fun ActionButtonsCharacterDetails(
     coroutineScope: CoroutineScope,
-    state: CharacterDetailViewModel.UiState,
+    state: FavoritesDetailViewModel.UiState,
     context: Context,
 ) {
     Row(

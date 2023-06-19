@@ -44,6 +44,7 @@ fun MainScreen(
         ),
         itemCount = 10,
         carouselState = carouselState,
+        autoScrollDurationMillis = 3000,
         carouselIndicator = {
             CarouselDefaults.IndicatorRow(
                 itemCount = 10,

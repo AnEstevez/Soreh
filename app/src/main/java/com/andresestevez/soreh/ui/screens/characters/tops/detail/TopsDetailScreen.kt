@@ -72,7 +72,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.andresestevez.soreh.R
 import com.andresestevez.soreh.ui.SorehScreen
-import com.andresestevez.soreh.ui.screens.characters.detail.DetailsInfo
+import com.andresestevez.soreh.ui.screens.characters.favorites.detail.DetailsInfo
 import com.andresestevez.soreh.ui.screens.common.CharacterStats
 import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import com.andresestevez.soreh.ui.screens.common.UiState

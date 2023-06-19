@@ -33,6 +33,8 @@ class SorehAppState(
     val bottomSheetScaffoldState: BottomSheetScaffoldState,
     val navigationBarsInsetsDp: MutableState<Dp>,
     var scaffoldPadding: MutableState<PaddingValues>,
+    var forceTopAppBar: Boolean = true,
+    var forceBottomNavigationBar: Boolean = true,
 
     ) {
 
@@ -103,6 +105,8 @@ fun rememberSorehAppState(
     ),
     navigationBarsInsetsDp: MutableState<Dp> = remember { mutableStateOf(0.dp) },
     scaffoldPadding: MutableState<PaddingValues> = remember { mutableStateOf(PaddingValues()) },
+    forceTopAppBar: Boolean = remember{true},
+    forceBottomNavigationBar: Boolean = remember {true},
 ): SorehAppState =
     remember(
         navController,
@@ -111,6 +115,8 @@ fun rememberSorehAppState(
         bottomSheetScaffoldState,
         navigationBarsInsetsDp,
         scaffoldPadding,
+        forceTopAppBar,
+        forceBottomNavigationBar,
     ) {
         SorehAppState(
             navController,
@@ -120,5 +126,7 @@ fun rememberSorehAppState(
             bottomSheetScaffoldState,
             navigationBarsInsetsDp,
             scaffoldPadding,
+            forceTopAppBar,
+            forceBottomNavigationBar,
         )
     }

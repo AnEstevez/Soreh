@@ -14,7 +14,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -34,6 +40,8 @@ import com.andresestevez.soreh.ui.theme.SorehTheme
 fun SorehApp() {
 
     val appState = rememberSorehAppState()
+    var forceTopAppBar by rememberSaveable {mutableStateOf(appState.forceTopAppBar)}
+    var forceBottomNavigationBar by rememberSaveable {mutableStateOf(appState.forceBottomNavigationBar)}
 
     SorehScreen {
 
@@ -47,7 +55,7 @@ fun SorehApp() {
 
             Scaffold(
                 topBar = {
-                    if (appState.showTopAppBar) {
+                    if (appState.showTopAppBar and forceTopAppBar) {
                         CenterAlignedTopAppBar(
                             title = {
                                 Text(
@@ -74,7 +82,7 @@ fun SorehApp() {
                 modifier = Modifier.nestedScroll(appState.getTopAppBarScrollBehavior().nestedScrollConnection),
                 snackbarHost = { SnackbarHost(hostState = appState.snackbarHostState) },
                 bottomBar = {
-                    if (appState.showBottomNavigationBar) {
+                    if (appState.showBottomNavigationBar and forceBottomNavigationBar) {
                         SorehBottomNavigationBar(
                             navItems = SorehAppState.BOTTOM_NAVIGATION_OPTIONS,
                             currentRoute = appState.currentRoute,
@@ -103,7 +111,8 @@ fun SorehScreen(content: @Composable () -> Unit) {
     SorehTheme {
         // A surface container using the 'background' color from the theme
         Surface(
-            color = MaterialTheme.colorScheme.background
+          //  color = MaterialTheme.colorScheme.
+            color = Color.Transparent
         ) {
             content()
         }
