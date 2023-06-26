@@ -1,4 +1,4 @@
-package com.andresestevez.soreh.ui.screens.characters.detail
+package com.andresestevez.soreh.ui.screens.common.detail
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically

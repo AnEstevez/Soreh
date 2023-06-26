@@ -41,12 +41,12 @@ import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -69,10 +69,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.andresestevez.soreh.R
 import com.andresestevez.soreh.ui.SorehScreen
-import com.andresestevez.soreh.ui.screens.characters.detail.DetailsInfo
+import com.andresestevez.soreh.ui.screens.common.detail.DetailsInfo
 import com.andresestevez.soreh.ui.screens.common.CharacterStats
 import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import com.andresestevez.soreh.ui.screens.common.UiState
@@ -90,9 +91,9 @@ fun TopsDetailScreen(
     viewModel: TopsDetailViewModel = hiltViewModel(),
 ) {
 
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
-    val pagesColorState by viewModel.pagesColorState.collectAsState()
+    val pagesColorState by viewModel.pagesColorState.collectAsStateWithLifecycle()
 
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -107,7 +108,15 @@ fun TopsDetailScreen(
         state.data.size
     }
 
-
+    if (state.userMessage.isNotEmpty()) {
+        LaunchedEffect(snackbarHostState) {
+            snackbarHostState.showSnackbar(
+                message = state.userMessage,
+                duration = SnackbarDuration.Short
+            )
+            viewModel.dismissUserMessage()
+        }
+    }
     SorehScreen {
         Scaffold(
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
@@ -280,22 +289,12 @@ fun TopsDetailScreen(
                             }
                         }
                     }
-
-
                     if (state.loading) {
                         CircularProgressIndicator(Modifier.align(Alignment.Center))
                     }
-
                 }
             }
         }
-        if (state.userMessage.isNotEmpty()) {
-            LaunchedEffect(snackbarHostState) {
-                snackbarHostState.showSnackbar(state.userMessage)
-            }
-            viewModel.dismissUserMessage()
-        }
-
     }
 
 }
