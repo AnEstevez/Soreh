@@ -16,7 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -24,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.andresestevez.soreh.R
 import com.andresestevez.soreh.ui.SorehAppState
 import com.andresestevez.soreh.ui.common.noRippleClickable
@@ -39,13 +39,18 @@ fun SearchScreen(
     onClick: (Int) -> Unit,
 ) {
 
-    val uiState by viewModel.state.collectAsState()
-    val filters by viewModel.filters.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val filters by viewModel.filters.collectAsStateWithLifecycle()
 
     val coroutineScope = rememberCoroutineScope()
 
     BackHandler(appState.bottomSheetScaffoldState.bottomSheetState.isVisible) {
         coroutineScope.launch { appState.bottomSheetScaffoldState.bottomSheetState.hide() }
+    }
+
+    if (state.userMessage.isNotEmpty()) {
+        appState.onShowUserMessage(state.userMessage)
+        viewModel.dismissUserMessage()
     }
 
     Column(verticalArrangement = Arrangement.Top) {
@@ -102,7 +107,7 @@ fun SearchScreen(
         }
 
         CharacterListVerticalGrid(
-            state = uiState,
+            state = state,
             contentPaddingValues = PaddingValues(
                 top = 0.dp,
                 start = 5.dp,
@@ -113,4 +118,5 @@ fun SearchScreen(
         )
 
     }
+
 }

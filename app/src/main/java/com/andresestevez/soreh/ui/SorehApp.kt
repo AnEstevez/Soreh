@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -41,6 +42,12 @@ fun SorehApp() {
             scaffoldState = appState.bottomSheetScaffoldState,
             sheetPeekHeight = 0.dp,
             sheetTonalElevation = 2.dp,
+            snackbarHost = {
+                SnackbarHost(
+                    hostState = appState.bottomSheetScaffoldState.snackbarHostState,
+                    modifier = Modifier.padding(appState.scaffoldPadding.value)
+                )
+            },
             sheetContent = {
                 SorehBottomSheet(appState)
             }) {
@@ -72,7 +79,6 @@ fun SorehApp() {
                     }
                 },
                 modifier = Modifier.nestedScroll(appState.getTopAppBarScrollBehavior().nestedScrollConnection),
-                snackbarHost = { SnackbarHost(hostState = appState.snackbarHostState) },
                 bottomBar = {
                     if (appState.showBottomNavigationBar) {
                         SorehBottomNavigationBar(

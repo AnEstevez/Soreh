@@ -22,7 +22,6 @@ import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +36,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.andresestevez.soreh.R
 import com.andresestevez.soreh.ui.SorehAppState
 import com.andresestevez.soreh.ui.mainActivity
@@ -52,8 +52,8 @@ fun SorehBottomSheet(
     searchViewModel: SearchViewModel = hiltViewModel(mainActivity()),
 ) {
 
-    var filters = searchViewModel.filters.collectAsState()
-    val targetCharactersState = searchViewModel.targetCharactersState.collectAsState()
+    val filters = searchViewModel.filters.collectAsStateWithLifecycle()
+    val targetCharactersState = searchViewModel.targetCharactersState.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
 
     Column(
@@ -76,7 +76,12 @@ fun SorehBottomSheet(
                 contentColor = MaterialTheme.colorScheme.surface,
             ),
             onClick = {
-                searchViewModel.searchCharacters(CharactersQueryBuilder(filters.value, false).build())
+                searchViewModel.searchCharacters(
+                    CharactersQueryBuilder(
+                        filters.value,
+                        false
+                    ).build()
+                )
                 coroutineScope.launch {
                     appState.bottomSheetScaffoldState.bottomSheetState.hide()
                 }
@@ -404,8 +409,6 @@ fun SorehRangeSlider(
             onValueChange = { sliderPosition = it },
             valueRange = 0f..100f,
             onValueChangeFinished = {
-                // launch some business logic update with the state you hold
-                // viewModel.updateSelectedSliderValue(sliderPosition)
                 onValueChangeFinished(sliderPosition.start.roundToInt()..sliderPosition.endInclusive.roundToInt())
             },
             startInteractionSource = startInteractionSource,

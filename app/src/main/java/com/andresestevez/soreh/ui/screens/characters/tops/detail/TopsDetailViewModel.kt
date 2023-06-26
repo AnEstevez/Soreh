@@ -45,7 +45,7 @@ class TopsDetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            getTopsUseCase.searcheCharacters(getQueryForPublisher(currentTopPublisher))
+            getTopsUseCase.searchCharacters(getQueryForPublisher(currentTopPublisher))
                 .collect { result ->
                     state.update { currentState ->
                         currentState.copy(

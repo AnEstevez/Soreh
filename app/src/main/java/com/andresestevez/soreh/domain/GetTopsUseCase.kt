@@ -9,5 +9,5 @@ class GetTopsUseCase @Inject constructor(private val repository: CharactersRepos
     suspend fun searchCharactersSuspend(query: SupportSQLiteQuery) =
         repository.searchCharactersRawSuspend(query)
 
-    fun searcheCharacters(query: SupportSQLiteQuery) = repository.searchCharactersRaw(query)
+    fun searchCharacters(query: SupportSQLiteQuery) = repository.searchCharactersRaw(query)
 }

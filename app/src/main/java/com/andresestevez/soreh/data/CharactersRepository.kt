@@ -17,7 +17,10 @@ class CharactersRepository @Inject constructor(
 ) {
 
 
-    fun getCharactersByIdList(idList: List<Int>, idListOrder: String): Flow<Result<List<Character>>> =
+    fun getCharactersByIdList(
+        idList: List<Int>,
+        idListOrder: String,
+    ): Flow<Result<List<Character>>> =
         localDataSource.getCharactersByIdList(idList, idListOrder).map { characters ->
             Result.success(characters)
         }.catch {
@@ -26,6 +29,7 @@ class CharactersRepository @Inject constructor(
         }
 
     fun searchCharactersRaw(query: SupportSQLiteQuery): Flow<Result<List<Character>>> =
+
         localDataSource.searchCharactersRawFlow(query).map { characters ->
             Result.success(characters)
         }.catch {
@@ -58,16 +62,17 @@ class CharactersRepository @Inject constructor(
 
     fun getRandomCharactersList(maxItems: Int = 10): Flow<Result<List<Character>>> =
         localDataSource.getAllCharacters()
-            .map { characters -> Result.success(characters.shuffled().take(maxItems)) }
+            .map { characters ->
+                Result.success(characters.shuffled().take(maxItems))
+            }
             .catch {
                 Timber.e(it)
-                emit(Result.failure(it))
+                Result.failure<List<Character>>(it)
             }
 
-    fun getFavorites(): Flow<Result<List<Character>>> =
-        localDataSource.getFavorites().map { characters ->
-            Result.success(characters)
-        }.catch {
+    fun getFavorites(): Flow<Result<List<Character>>> = localDataSource.getFavorites()
+        .map { characters -> Result.success(characters) }
+        .catch {
             Timber.e(it)
             Result.failure<List<Character>>(it)
         }

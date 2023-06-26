@@ -1,4 +1,4 @@
-package com.andresestevez.soreh.ui.screens.characters.detail
+package com.andresestevez.soreh.ui.screens.common.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

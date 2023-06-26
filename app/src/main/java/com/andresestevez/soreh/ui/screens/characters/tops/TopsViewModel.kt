@@ -133,4 +133,14 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
             }
         }
     }
+
+    fun dismissUserMessage() {
+        dcUiState.update { it.copy(userMessage = "") }
+        marvelUiState.update { it.copy(userMessage = "") }
+        imageUiState.update { it.copy(userMessage = "") }
+        darkUiState.update { it.copy(userMessage = "") }
+        lucasUiState.update { it.copy(userMessage = "") }
+        nbcUiState.update { it.copy(userMessage = "") }
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.andresestevez.soreh.ui.screens.characters.tops
 
+import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -27,10 +28,12 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.andresestevez.soreh.R
+import com.andresestevez.soreh.ui.SorehAppState
 import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import com.andresestevez.soreh.ui.screens.common.UiState
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TopsCharacterLazyColumn(
@@ -38,7 +41,9 @@ fun TopsCharacterLazyColumn(
     modifier: Modifier = Modifier,
     state: UiState,
     contentPaddingValues: PaddingValues,
-    onClick: (characterPosition: Int, publisher: Int ) -> Unit,
+    onClick: (characterPosition: Int, publisher: Int) -> Unit,
+    appState: SorehAppState,
+    onDismissUserMessage: () -> Unit,
 ) {
 
     val numberIcons = listOf(
@@ -53,6 +58,11 @@ fun TopsCharacterLazyColumn(
         R.drawable.outlined_9,
         R.drawable.outlined_10,
     )
+
+    if (state.userMessage.isNotEmpty()) {
+        appState.onShowUserMessage(state.userMessage)
+        onDismissUserMessage()
+    }
 
     Box(
         modifier = modifier.fillMaxSize(),
@@ -76,12 +86,13 @@ fun TopsCharacterLazyColumn(
             }
         }
 
-
         if (state.loading) {
             CircularProgressIndicator(modifier.align(Alignment.Center))
         }
     }
+
 }
+
 
 @Composable
 fun CharacterListItem(

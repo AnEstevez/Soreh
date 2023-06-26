@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.andresestevez.soreh.ui.SorehAppState
-import com.andresestevez.soreh.ui.screens.characters.detail.DetailScreen
+import com.andresestevez.soreh.ui.screens.common.detail.DetailScreen
 import com.andresestevez.soreh.ui.screens.characters.favorites.FavoritesScreen
 import com.andresestevez.soreh.ui.screens.characters.main.MainScreen
 import com.andresestevez.soreh.ui.screens.characters.main.detail.MainDetailScreen
@@ -17,7 +17,6 @@ import com.andresestevez.soreh.ui.screens.characters.tops.detail.TopsDetailScree
 
 @Composable
 fun Navigation(appState: SorehAppState) {
-
 
     NavHost(
         navController = appState.navHostController,
@@ -79,7 +78,9 @@ fun Navigation(appState: SorehAppState) {
         // Favorites graph
         composable(route = NavCommand.Favorites.destination) {
             BackHandler(onBack = appState.onBack)
-            FavoritesScreen(paddingValues = appState.scaffoldPadding.value) { characterId ->
+            FavoritesScreen(
+                appState = appState,
+            ) { characterId ->
                 appState.navHostController.navigateSingleTopTo(
                     route = NavCommand.FavoritesDetail.destination.plus("/$characterId"),
                 )
