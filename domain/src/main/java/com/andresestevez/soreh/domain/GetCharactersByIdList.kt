@@ -5,6 +5,7 @@ import javax.inject.Inject
 
 class GetCharactersByIdList @Inject constructor(private val repository: CharactersRepository) {
 
-    operator fun invoke(idList: List<Int>, idListOrder: String) = repository.getCharactersByIdList(idList, idListOrder)
+    operator fun invoke(idList: List<Int>, idListOrder: String) =
+        repository.getCharactersByIdList(idList, idListOrder)
 
 }

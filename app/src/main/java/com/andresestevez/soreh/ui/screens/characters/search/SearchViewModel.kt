@@ -2,7 +2,6 @@ package com.andresestevez.soreh.ui.screens.characters.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.sqlite.db.SupportSQLiteQuery
 import com.andresestevez.soreh.domain.SearchCharactersUseCase
 import com.andresestevez.soreh.ui.common.getUserMessage
 import com.andresestevez.soreh.ui.screens.common.ItemUiState
@@ -24,7 +23,7 @@ class SearchViewModel @Inject constructor(
     var targetCharactersState = MutableStateFlow(TargetCharactersUiState())
         private set
 
-    fun searchCharacters(query: SupportSQLiteQuery) {
+    fun searchCharacters(query: String) {
         viewModelScope.launch {
             state.value = UiState(loading = true)
             searchCharactersUseCase.searchCharacters(query).fold({ characters ->
@@ -47,7 +46,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun countTargetCharacters(query: SupportSQLiteQuery) {
+    fun countTargetCharacters(query: String) {
         viewModelScope.launch {
             targetCharactersState.value = TargetCharactersUiState(loading = true)
             searchCharactersUseCase.countCharacters(query).fold({ count ->

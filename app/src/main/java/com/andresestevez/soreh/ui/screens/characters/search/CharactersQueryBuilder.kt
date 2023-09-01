@@ -1,11 +1,10 @@
 package com.andresestevez.soreh.ui.screens.characters.search
 
-import androidx.sqlite.db.SimpleSQLiteQuery
 import timber.log.Timber
 
 class CharactersQueryBuilder(private val filter: CharactersFilter, private val count: Boolean = true) {
 
-    fun build(): SimpleSQLiteQuery {
+    fun build(): String {
         val query = StringBuilder(if(count) "select count(id) from character where" else "select * from character where")
 
         addFilterName(query, filter.name)
@@ -28,7 +27,7 @@ class CharactersQueryBuilder(private val filter: CharactersFilter, private val c
 
         Timber.d(query.toString())
 
-        return SimpleSQLiteQuery(query.toString())
+        return query.toString()
     }
 
 

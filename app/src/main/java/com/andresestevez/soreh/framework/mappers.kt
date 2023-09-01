@@ -1,10 +1,10 @@
 package com.andresestevez.soreh.framework
 
-import com.andresestevez.soreh.data.models.Character
 import com.andresestevez.soreh.framework.local.CharacterEntity
 import com.andresestevez.soreh.framework.remote.dto.Appearance
 import com.andresestevez.soreh.framework.remote.dto.CharacterByIdResponse
 import com.andresestevez.soreh.framework.remote.dto.CharacterDto
+import com.andresestevez.soreh.data.models.Character
 
 private const val NULL = "null"
 private const val HYPHEN = "-"
