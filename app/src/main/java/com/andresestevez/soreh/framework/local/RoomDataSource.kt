@@ -1,6 +1,6 @@
 package com.andresestevez.soreh.framework.local
 
-import androidx.sqlite.db.SupportSQLiteQuery
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.andresestevez.soreh.data.datasources.LocalDataSource
 import com.andresestevez.soreh.data.models.Character
 import com.andresestevez.soreh.framework.toDomain
@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import java.util.Date
 import javax.inject.Inject
+
 
 private const val TOTAL_CHARACTERS: Int = 731
 
@@ -25,16 +26,16 @@ internal class RoomDataSource @Inject constructor(private val dao: CharacterDao)
     override fun getCharacterById(id: Int): Flow<Character> =
         dao.getCharacterById(id).map { it.toDomain() }.distinctUntilChanged()
 
-    override fun searchCharactersRawFlow(query: SupportSQLiteQuery): Flow<List<Character>> =
-        dao.searchCharactersRaw(query)
+    override fun searchCharactersRawFlow(query: String): Flow<List<Character>> =
+        dao.searchCharactersRaw(SimpleSQLiteQuery(query))
             .map { it.map { characterEntity -> characterEntity.toDomain() } }.distinctUntilChanged()
 
-    override suspend fun searchCharactersRawSuspend(query: SupportSQLiteQuery): List<Character> =
-        dao.searchCharactersRawSuspend(query).map { characterEntity -> characterEntity.toDomain() }
+    override suspend fun searchCharactersRawSuspend(query: String): List<Character> =
+        dao.searchCharactersRawSuspend(SimpleSQLiteQuery(query)).map { characterEntity -> characterEntity.toDomain() }
 
 
-    override suspend fun countCharactersRaw(query: SupportSQLiteQuery): Int =
-        dao.countCharactersRaw(query)
+    override suspend fun countCharactersRaw(query: String): Int =
+        dao.countCharactersRaw(SimpleSQLiteQuery(query))
 
 
     override fun getAllCharacters(): Flow<List<Character>> {

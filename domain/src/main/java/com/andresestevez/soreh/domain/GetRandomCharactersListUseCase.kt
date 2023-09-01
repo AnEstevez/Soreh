@@ -1,7 +1,7 @@
 package com.andresestevez.soreh.domain
 
-import com.andresestevez.soreh.data.models.Character
 import com.andresestevez.soreh.data.CharactersRepository
+import com.andresestevez.soreh.data.models.Character
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

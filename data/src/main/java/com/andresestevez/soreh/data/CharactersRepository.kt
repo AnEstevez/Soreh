@@ -1,13 +1,11 @@
 package com.andresestevez.soreh.data
 
-import androidx.sqlite.db.SupportSQLiteQuery
 import com.andresestevez.soreh.data.datasources.LocalDataSource
 import com.andresestevez.soreh.data.datasources.RemoteDataSource
 import com.andresestevez.soreh.data.models.Character
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -24,31 +22,27 @@ class CharactersRepository @Inject constructor(
         localDataSource.getCharactersByIdList(idList, idListOrder).map { characters ->
             Result.success(characters)
         }.catch {
-            Timber.e(it)
             Result.failure<List<Character>>(it)
         }
 
-    fun searchCharactersRaw(query: SupportSQLiteQuery): Flow<Result<List<Character>>> =
+    fun searchCharactersRaw(query: String): Flow<Result<List<Character>>> =
 
         localDataSource.searchCharactersRawFlow(query).map { characters ->
             Result.success(characters)
         }.catch {
-            Timber.e(it)
             Result.failure<List<Character>>(it)
         }
 
-    suspend fun searchCharactersRawSuspend(query: SupportSQLiteQuery): Result<List<Character>> =
+    suspend fun searchCharactersRawSuspend(query: String): Result<List<Character>> =
         try {
             Result.success(localDataSource.searchCharactersRawSuspend(query))
         } catch (t: Throwable) {
-            Timber.e(t)
             Result.failure(t)
         }
 
-    suspend fun countCharactersRaw(query: SupportSQLiteQuery): Result<Int> = try {
+    suspend fun countCharactersRaw(query: String): Result<Int> = try {
         Result.success(localDataSource.countCharactersRaw(query))
     } catch (t: Throwable) {
-        Timber.e(t)
         Result.failure(t)
     }
 
@@ -56,7 +50,6 @@ class CharactersRepository @Inject constructor(
         localDataSource.getCharacterById(id)
             .map { Result.success(it) }
             .catch {
-                Timber.e(it)
                 emit(Result.failure(it))
             }
 
@@ -66,21 +59,18 @@ class CharactersRepository @Inject constructor(
                 Result.success(characters.shuffled().take(maxItems))
             }
             .catch {
-                Timber.e(it)
                 Result.failure<List<Character>>(it)
             }
 
     fun getFavorites(): Flow<Result<List<Character>>> = localDataSource.getFavorites()
         .map { characters -> Result.success(characters) }
         .catch {
-            Timber.e(it)
             Result.failure<List<Character>>(it)
         }
 
     suspend fun getCharactersFromRemoteByName(name: String): Result<List<Character>> = try {
         Result.success(remoteDataSource.searchCharactersByName(name))
     } catch (t: Throwable) {
-        Timber.e(t)
         Result.failure(t)
     }
 
