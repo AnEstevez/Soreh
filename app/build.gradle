@@ -22,7 +22,7 @@ android {
         // Put the key in gradle.properties
         buildConfigField("String", "API_KEY", API_KEY)
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.andresestevez.soreh.di.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -90,6 +90,7 @@ dependencies {
     implementation Libs.timber
 
     implementation Libs.Hilt.android
+    testImplementation project(path: ':app')
     kapt Libs.Hilt.compiler
     implementation Libs.AndroidX.hiltNavigationCompose
 
@@ -98,7 +99,7 @@ dependencies {
     implementation Libs.AndroidX.Room.roomKtx
 
     // workmanager and worker dependency injection with hilt
-    implementation Libs.AndroidX.workRuntimeKtx
+    implementation Libs.AndroidX.Work.runtimeKtx
     implementation Libs.AndroidX.hiltWork
     kapt Libs.AndroidX.hiltCompiler
 
@@ -109,17 +110,34 @@ dependencies {
 
     implementation Libs.glide
 
-    // For instrumentation tests
-    androidTestImplementation  Libs.Hilt.androidTesting
-    kaptAndroidTest Libs.Hilt.compiler
+
 
     // For local unit tests
     testImplementation Libs.Hilt.androidTesting
     kaptTest Libs.Hilt.compiler
 
     testImplementation Libs.junit
+
+    // For instrumentation tests
     androidTestImplementation Libs.AndroidX.Test.junit
     androidTestImplementation Libs.AndroidX.Test.Compose.junit4
+    androidTestImplementation Libs.AndroidX.Test.rules
+    androidTestImplementation Libs.AndroidX.Test.runner
+    androidTestImplementation Libs.AndroidX.Test.espresso
+    androidTestImplementation Libs.Hilt.androidTesting
+    androidTestImplementation Libs.Kotlin.Coroutines.test
+    androidTestImplementation Libs.Okhttp3.mockWebServer
+    androidTestImplementation Libs.AndroidX.Work.testing
+    androidTestImplementation Libs.AndroidX.coreTesting
+    
+    // to avoid error in CacheWorkerTest: "Cannot access class 'com.google.common.util.concurrent.ListenableFuture'.
+    // Check your module classpath for missing or conflicting dependencies"
+    androidTestImplementation Libs.guava
+
+    testImplementation Libs.AndroidX.Work.testing
+
+    kaptAndroidTest Libs.Hilt.compiler
+
     debugImplementation Libs.AndroidX.Test.Compose.tooling
     debugImplementation Libs.AndroidX.Test.Compose.manifest
 }

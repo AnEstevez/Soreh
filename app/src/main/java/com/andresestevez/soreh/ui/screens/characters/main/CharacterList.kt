@@ -21,6 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.andresestevez.soreh.R
@@ -50,6 +52,7 @@ fun CharacterListVerticalGrid(
             items(items = state.data) { itemUiState ->
                 CharacterListItem(
                     Modifier
+                        .semantics { contentDescription = itemUiState.character.name }
                         .animateItemPlacement()
                         .fillMaxWidth()
                         .padding(dimensionResource(id = R.dimen.padding_xsmall)),

@@ -46,4 +46,5 @@
     <string name="power_stats">Power Stats</string>
     <string name="show_x_results">Show %1$s results</string>
     <string name="filters">Filters</string>
+    <string name="tests_base_url">http://localhost:8080</string>
 </resources>
