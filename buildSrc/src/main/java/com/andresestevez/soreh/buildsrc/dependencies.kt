@@ -7,6 +7,8 @@ object Libs {
     const val glide = "com.github.bumptech.glide:glide:4.15.1"
     const val material = "com.google.android.material:material:1.9.0"
     const val coilCompose = "io.coil-kt:coil-compose:2.3.0"
+    const val guava = "com.google.guava:guava:29.0-android"
+
     object JavaX {
         const val inject = "javax.inject:javax.inject:1"
     }
@@ -38,10 +40,17 @@ object Libs {
         const val activityCompose = "androidx.activity:activity-compose:1.7.1"
         const val navigationCompose = "androidx.navigation:navigation-compose:2.5.3"
         const val hiltNavigationCompose= "androidx.hilt:hilt-navigation-compose:1.0.0"
-        const val workRuntimeKtx = "androidx.work:work-runtime-ktx:2.8.1"
         const val hiltWork = "androidx.hilt:hilt-work:1.0.0"
         const val hiltCompiler = "androidx.hilt:hilt-compiler:1.0.0"
         const val palette = "androidx.palette:palette:1.0.0"
+        const val coreTesting ="androidx.arch.core:core-testing:2.1.0"
+
+        object Work {
+            private const val version = "2.8.1"
+
+            const val runtimeKtx = "androidx.work:work-runtime-ktx:$version"
+            const val testing = "androidx.work:work-testing:$version"
+        }
 
         object Compose {
             private const val version = "1.4.3"
@@ -76,7 +85,10 @@ object Libs {
 
 
         object Test {
-            const val junit = "androidx.test.ext:junit:1.1.5"
+            const val runner = "androidx.test:runner:1.5.0"
+            const val rules = "androidx.test:rules:1.5.0"
+            const val junit = "androidx.test.ext:junit-ktx:1.1.5"
+            const val espresso = "androidx.test.espresso:espresso-core:3.5.1"
 
             object Compose {
                 private const val version = "1.4.3"
@@ -98,6 +110,7 @@ object Libs {
         private const val version = "4.11.0"
         const val okhttp = "com.squareup.okhttp3:okhttp:$version"
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
+        const val mockWebServer = "com.squareup.okhttp3:mockwebserver:$version"
     }
 
 

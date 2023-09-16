@@ -52,7 +52,7 @@ fun SorehBottomNavigationBar(
                     unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant
 
                 ),
-                icon = { Icon(imageVector = it.icon, contentDescription = null) },
+                icon = { Icon(imageVector = it.icon, contentDescription = it.name) },
                 onClick = { onClick(it.navCommand.destination) },
             )
         }
