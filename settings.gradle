@@ -21,3 +21,4 @@ rootProject.name = "Soreh"
 include ':app'
 include ':domain'
 include ':data'
+include ':testShared'

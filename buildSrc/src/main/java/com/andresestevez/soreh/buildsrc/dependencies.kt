@@ -8,12 +8,12 @@ object Libs {
     const val material = "com.google.android.material:material:1.9.0"
     const val coilCompose = "io.coil-kt:coil-compose:2.3.0"
     const val guava = "com.google.guava:guava:29.0-android"
+    const val junit = "junit:junit:4.13.2"
+    const val turbine = "app.cash.turbine:turbine:1.0.0"
 
     object JavaX {
         const val inject = "javax.inject:javax.inject:1"
     }
-
-    const val junit = "junit:junit:4.13.2"
 
     object Kotlin {
         private const val version = "1.8.20"
@@ -113,5 +113,8 @@ object Libs {
         const val mockWebServer = "com.squareup.okhttp3:mockwebserver:$version"
     }
 
-
+    object Mockito {
+        const val kotlin = "org.mockito.kotlin:mockito-kotlin:5.1.0"
+        const val inline = "org.mockito:mockito-inline:5.2.0"
+    }
 }

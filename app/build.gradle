@@ -113,10 +113,15 @@ dependencies {
 
 
     // For local unit tests
+    testImplementation project(":testShared")
     testImplementation Libs.Hilt.androidTesting
     kaptTest Libs.Hilt.compiler
 
     testImplementation Libs.junit
+    testImplementation Libs.Kotlin.Coroutines.test
+    testImplementation Libs.Mockito.inline
+    testImplementation Libs.Mockito.kotlin
+    testImplementation Libs.turbine
 
     // For instrumentation tests
     androidTestImplementation Libs.AndroidX.Test.junit

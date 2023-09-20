@@ -32,7 +32,7 @@ class MainViewModel @Inject constructor(getRandomCharactersList: GetRandomCharac
                         )
                     }) {
                         Timber.e(it)
-                        currentState.copy(userMessage = it.getUserMessage())
+                        currentState.copy(loading = false, userMessage = it.getUserMessage())
                     }
                 }
             }
