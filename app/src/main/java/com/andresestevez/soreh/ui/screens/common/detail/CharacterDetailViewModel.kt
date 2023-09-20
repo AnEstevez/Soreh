@@ -36,7 +36,7 @@ class CharacterDetailViewModel @Inject constructor(
                             onClick = { toggleFavoriteUseCase(it) }
                         })
                     }) {
-                        currentState.copy(userMessage = it.getUserMessage())
+                        currentState.copy(loading = false, userMessage = it.getUserMessage())
                     }
                 }
             }
