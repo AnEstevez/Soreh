@@ -1,9 +1,14 @@
 package com.andresestevez.soreh.ui.screens.characters.main
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -22,6 +27,7 @@ import androidx.tv.material3.ExperimentalTvMaterial3Api
 import com.andresestevez.soreh.ui.SorehAppState
 import com.andresestevez.soreh.ui.common.noRippleClickable
 import com.andresestevez.soreh.ui.screens.common.thumbWithPalette
+import com.commandiron.compose_loading.CubeGrid
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalTvMaterial3Api::class)
@@ -41,7 +47,15 @@ fun MainScreen(
         appState.onShowUserMessage(state.userMessage)
         viewModel.dismissUserMessage()
     }
-
+    if (state.loading) {
+        Box(modifier = Modifier.fillMaxSize()){
+            CubeGrid(
+                modifier = Modifier.align(Alignment.Center),
+                durationMillis = 800,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        }
+    }
     Carousel(
         modifier = Modifier
             .padding(
@@ -50,7 +64,7 @@ fun MainScreen(
             )
             .fillMaxSize(),
         itemCount = 10,
-        autoScrollDurationMillis = 2000,
+        autoScrollDurationMillis = 3000,
         carouselState = carouselState,
         carouselIndicator = {
             CarouselDefaults.IndicatorRow(
@@ -60,7 +74,12 @@ fun MainScreen(
                     .align(Alignment.TopCenter)
                     .padding(16.dp),
             )
-        }
+        },
+        contentTransformEndToStart = fadeIn(animationSpec = tween(2000))
+            .togetherWith(fadeOut(animationSpec = tween(2000))),
+        contentTransformStartToEnd = fadeIn(animationSpec = tween(2000))
+            .togetherWith(fadeOut(animationSpec = tween(2000)))
+
     ) { index ->
         if (state.data.isNotEmpty()) {
             Box(modifier = Modifier.noRippleClickable {

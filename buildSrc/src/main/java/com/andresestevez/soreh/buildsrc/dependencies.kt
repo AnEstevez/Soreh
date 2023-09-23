@@ -10,6 +10,9 @@ object Libs {
     const val guava = "com.google.guava:guava:29.0-android"
     const val junit = "junit:junit:4.13.2"
     const val turbine = "app.cash.turbine:turbine:1.0.0"
+    const val spinkit = "com.github.commandiron:ComposeLoading:1.0.4"
+    const val placeholder = "com.google.accompanist:accompanist-placeholder-material:0.30.1"
+    const val splashscreen = "androidx.core:core-splashscreen:1.0.1"
 
     object JavaX {
         const val inject = "javax.inject:javax.inject:1"
@@ -35,7 +38,7 @@ object Libs {
     }
 
     object AndroidX {
-        const val material3 = "androidx.compose.material3:material3:1.1.1"
+        const val material3 = "androidx.compose.material3:material3:1.1.2"
         const val coreKtx = "androidx.core:core-ktx:1.10.1"
         const val activityCompose = "androidx.activity:activity-compose:1.7.1"
         const val navigationCompose = "androidx.navigation:navigation-compose:2.5.3"
@@ -60,6 +63,8 @@ object Libs {
             const val uiViewbinding = "androidx.compose.ui:ui-viewbinding:$version"
             const val materialIconsExtended =
                 "androidx.compose.material:material-icons-extended:$version"
+            const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:$version"
+
         }
 
         object Room {
@@ -75,6 +80,8 @@ object Libs {
             const val runtimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
             // collectAsStateWithLifecycle
             const val runtimeCompose = "androidx.lifecycle:lifecycle-runtime-compose:$version"
+            // asFlow()
+            const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
         }
 
         object Tv {
@@ -85,6 +92,7 @@ object Libs {
 
 
         object Test {
+            const val core = "androidx.test:core-ktx:1.5.0"
             const val runner = "androidx.test:runner:1.5.0"
             const val rules = "androidx.test:rules:1.5.0"
             const val junit = "androidx.test.ext:junit-ktx:1.1.5"

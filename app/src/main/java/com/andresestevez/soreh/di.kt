@@ -2,6 +2,7 @@ package com.andresestevez.soreh
 
 import android.app.Application
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.andresestevez.soreh.data.datasources.LocalDataSource
 import com.andresestevez.soreh.data.datasources.RemoteDataSource
 import com.andresestevez.soreh.framework.local.RoomDataSource
@@ -68,6 +69,11 @@ class AppModule {
     @Provides
     @Singleton
     fun characterDaoProvider(db: SorehDatabase) = db.characterDao()
+
+
+    @Provides
+    @Singleton
+    fun workManagerProvider(app: Application) = WorkManager.getInstance(app)
 
 }
 

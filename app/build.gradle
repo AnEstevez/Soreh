@@ -71,13 +71,18 @@ dependencies {
     implementation Libs.AndroidX.Compose.uiToolingPreview
     implementation Libs.AndroidX.Compose.uiViewbinding
     implementation Libs.AndroidX.Compose.materialIconsExtended
+    implementation Libs.AndroidX.Compose.runtimeLivedata
     implementation Libs.AndroidX.material3
     implementation Libs.AndroidX.Tv.foundation
     implementation Libs.AndroidX.Tv.material
     implementation Libs.material
     implementation Libs.coilCompose
+    implementation Libs.spinkit
+    implementation Libs.placeholder
+    implementation Libs.splashscreen
 
 
+    implementation Libs.AndroidX.Lifecycle.livedataKtx
     implementation Libs.AndroidX.Lifecycle.runtimeCompose
     implementation Libs.AndroidX.navigationCompose
 

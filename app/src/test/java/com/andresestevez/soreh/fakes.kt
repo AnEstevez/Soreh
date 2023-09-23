@@ -99,7 +99,7 @@ class FakeLocalDatasource(charactersList: List<Character> = initialCharactersLis
         TODO("Not yet implemented")
     }
 
-    override fun getAllCharacters(): Flow<List<Character>> {
+    override suspend fun getAllCharacters(): List<Character> {
         TODO("Not yet implemented")
     }
 

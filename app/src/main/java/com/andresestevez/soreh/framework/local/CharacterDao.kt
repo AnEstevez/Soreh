@@ -16,7 +16,7 @@ interface CharacterDao {
     suspend fun count(): Int
 
     @Query("SELECT * FROM character")
-    fun getAllCharacters(): Flow<List<CharacterEntity>>
+    suspend fun getAllCharacters(): List<CharacterEntity>
 
     @Query("SELECT * FROM character WHERE id = :id")
     fun getCharacterById(id: Int): Flow<CharacterEntity>

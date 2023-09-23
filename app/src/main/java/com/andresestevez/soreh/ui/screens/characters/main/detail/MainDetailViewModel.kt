@@ -27,7 +27,7 @@ class MainDetailViewModel @Inject constructor(
     toggleFavoriteUseCase: ToggleFavoriteUseCase,
 ) : ViewModel() {
 
-    var state = MutableStateFlow(UiState(loading = true))
+    var state = MutableStateFlow(UiState())
         private set
 
     var pagesColorState = MutableStateFlow(PagesColorsState())
@@ -39,6 +39,7 @@ class MainDetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            state.value = UiState(loading = true)
             getCharactersByIdList(
                 idList = mainCharactersList.split(",").map { it.toInt() },
                 idListOrder = mainCharactersList

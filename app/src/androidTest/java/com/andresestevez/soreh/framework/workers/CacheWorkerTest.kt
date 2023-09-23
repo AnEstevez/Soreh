@@ -1,14 +1,10 @@
 package com.andresestevez.soreh.framework.workers
 
 import android.content.Context
-import android.util.Log
+import androidx.hilt.work.HiltWorkerFactory
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.work.Configuration
 import androidx.work.ListenableWorker
-import androidx.work.WorkManager
-import androidx.work.impl.utils.SynchronousExecutor
 import androidx.work.testing.TestListenableWorkerBuilder
-import androidx.work.testing.WorkManagerTestInitHelper
 import com.andresestevez.soreh.AppModule
 import com.andresestevez.soreh.data.server.MockServerDispatcher
 import com.andresestevez.soreh.framework.local.CharacterDao
@@ -29,17 +25,15 @@ import javax.inject.Inject
 @HiltAndroidTest
 @UninstallModules(AppModule::class)
 class CacheWorkerTest {
-    private lateinit var workManager: WorkManager
-    private lateinit var context: Context
-    private lateinit var configuration: Configuration
-    private lateinit var server: MockWebServer
 
+    private lateinit var context: Context
+    private lateinit var server: MockWebServer
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var cacheWorkerFactory: CacheWorkerFactory
+    lateinit var cacheWorkerFactory: HiltWorkerFactory
 
     @Inject
     lateinit var dao: CharacterDao
@@ -52,18 +46,7 @@ class CacheWorkerTest {
 
         hiltRule.inject()
 
-        // Configure WorkManager
-        configuration = Configuration.Builder()
-            // Set log level to Log.DEBUG to make it easier to debug
-            .setMinimumLoggingLevel(Log.DEBUG)
-            // Use a SynchronousExecutor here to make it easier to write tests
-            .setExecutor(SynchronousExecutor())
-            .build()
-
         context = InstrumentationRegistry.getInstrumentation().targetContext
-        WorkManagerTestInitHelper.initializeTestWorkManager(context, configuration)
-        workManager = WorkManager.getInstance(context)
-
     }
 
     @After

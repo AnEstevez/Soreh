@@ -2,6 +2,7 @@ package com.andresestevez.soreh.ui.screens.characters.tops
 
 import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,12 +16,16 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
@@ -31,6 +36,12 @@ import com.andresestevez.soreh.R
 import com.andresestevez.soreh.ui.SorehAppState
 import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import com.andresestevez.soreh.ui.screens.common.UiState
+import com.andresestevez.soreh.ui.screens.common.rememberVectorPainterWithColor
+import com.andresestevez.soreh.ui.theme.ShimmerHighlightColor
+import com.commandiron.compose_loading.CubeGrid
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.fade
+import com.google.accompanist.placeholder.material.placeholder
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -87,7 +98,11 @@ fun TopsCharacterLazyColumn(
         }
 
         if (state.loading) {
-            CircularProgressIndicator(modifier.align(Alignment.Center))
+            CubeGrid(
+                modifier = Modifier.align(Alignment.Center),
+                durationMillis = 800,
+                color = MaterialTheme.colorScheme.onSurface
+            )
         }
     }
 
@@ -110,7 +125,6 @@ fun CharacterListItem(
     ) {
         Box(Modifier.background(MaterialTheme.colorScheme.surface)) {
             Thumb(character)
-
             Box(
                 Modifier
                     .background(MaterialTheme.colorScheme.scrim)
@@ -132,6 +146,8 @@ fun CharacterListItem(
 
 @Composable
 private fun Thumb(uiState: ItemUiState) {
+    var placeholderVisible by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -141,8 +157,26 @@ private fun Thumb(uiState: ItemUiState) {
             model = uiState.character.thumb,
             contentDescription = null,
             modifier = Modifier
-                .fillMaxWidth(),
-            contentScale = ContentScale.Crop
+                .fillMaxWidth()
+                .placeholder(
+                    visible = placeholderVisible,
+                    placeholderFadeTransitionSpec = { tween(durationMillis = 2000) },
+                    contentFadeTransitionSpec = { tween(durationMillis = 2000) },
+                    color = Color.LightGray,
+                    highlight = PlaceholderHighlight.fade(highlightColor = ShimmerHighlightColor),
+                ),
+            contentScale = ContentScale.Crop,
+            onLoading = { placeholderVisible = true },
+            onSuccess = { placeholderVisible = false },
+            onError = { placeholderVisible = false },
+            error = rememberVectorPainterWithColor(
+                image = ImageVector.vectorResource(R.drawable.placeholder),
+                tintColor = MaterialTheme.colorScheme.onSecondaryContainer
+            ),
+            fallback = rememberVectorPainterWithColor(
+                image = ImageVector.vectorResource(R.drawable.placeholder),
+                tintColor = MaterialTheme.colorScheme.onSecondaryContainer
+            )
         )
 
     }

@@ -22,7 +22,6 @@ import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
@@ -61,6 +60,7 @@ import com.andresestevez.soreh.ui.screens.common.CharacterStats
 import com.andresestevez.soreh.ui.screens.common.shareCharacter
 import com.andresestevez.soreh.ui.screens.common.thumbWithPalette
 import com.andresestevez.soreh.ui.theme.Marcelus
+import com.commandiron.compose_loading.CubeGrid
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -116,6 +116,7 @@ fun DetailScreen(
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
         ) { padding ->
 
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -134,9 +135,6 @@ fun DetailScreen(
                         )
 
                 ) {
-                    if (state.loading) {
-                        CircularProgressIndicator(Modifier.align(Alignment.Center))
-                    }
 
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
@@ -246,7 +244,17 @@ fun DetailScreen(
                         }
                     }
                 }
+
+                if (state.loading) {
+                    CubeGrid(
+                        modifier = Modifier.align(Alignment.Center),
+                        durationMillis = 800,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+
             }
+
         }
 
     }
@@ -285,7 +293,7 @@ private fun ActionButtonsCharacterDetails(
         ) {
             Crossfade(
                 targetState = state.data?.character?.bookmarked == true,
-                animationSpec = tween(durationMillis = 1000)
+                animationSpec = tween(durationMillis = 1000), label = "bookmarked animation"
             ) { bookmarked ->
 
                 if (bookmarked) {

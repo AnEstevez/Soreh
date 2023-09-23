@@ -19,7 +19,7 @@ interface LocalDataSource {
 
     suspend fun countCharactersRaw(query: String): Int
 
-    fun getAllCharacters(): Flow<List<Character>>
+    suspend fun getAllCharacters(): List<Character>
 
     fun getFavorites(): Flow<List<Character>>
 

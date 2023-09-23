@@ -2,6 +2,7 @@ package com.andresestevez.soreh.di
 
 import android.app.Application
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.andresestevez.soreh.AppModule
 import com.andresestevez.soreh.BuildConfig
 import com.andresestevez.soreh.R
@@ -65,5 +66,9 @@ object TestAppModule {
         level = HttpLoggingInterceptor.Level.BODY
         OkHttpClient.Builder().addInterceptor(this).build()
     }
+
+    @Provides
+    @Singleton
+    fun workManagerProvider(app: Application) = WorkManager.getInstance(app)
 
 }

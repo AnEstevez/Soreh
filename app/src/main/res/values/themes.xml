@@ -2,4 +2,12 @@
 <resources>
 
     <style name="Theme.Soreh" parent="android:Theme.Material.Light.NoActionBar" />
+    
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_soreh_logo</item>
+         <item name="windowSplashScreenIconBackgroundColor">@color/white</item>
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimationDuration">800</item>
+        <item name="postSplashScreenTheme">@style/Theme.Soreh</item>
+    </style>
 </resources>
