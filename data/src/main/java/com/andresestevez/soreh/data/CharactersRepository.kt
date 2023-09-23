@@ -53,14 +53,11 @@ class CharactersRepository @Inject constructor(
                 emit(Result.failure(it))
             }
 
-    fun getRandomCharactersList(maxItems: Int = 10): Flow<Result<List<Character>>> =
-        localDataSource.getAllCharacters()
-            .map { characters ->
-                Result.success(characters.shuffled().take(maxItems))
-            }
-            .catch {
-                Result.failure<List<Character>>(it)
-            }
+    suspend fun getRandomCharactersList(maxItems: Int = 10): Result<List<Character>> = try {
+        Result.success(localDataSource.getAllCharacters().shuffled().take(maxItems))
+    } catch (t: Throwable) {
+        Result.failure(t)
+    }
 
     fun getFavorites(): Flow<Result<List<Character>>> = localDataSource.getFavorites()
         .map { characters -> Result.success(characters) }

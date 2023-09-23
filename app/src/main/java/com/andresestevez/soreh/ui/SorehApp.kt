@@ -20,7 +20,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.andresestevez.soreh.MainActivity
 import com.andresestevez.soreh.R
 import com.andresestevez.soreh.ui.navigation.Navigation
 import com.andresestevez.soreh.ui.navigation.navigateSingleTopWithPopUpToStartDestination

@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 class SorehAppState(
     val navHostController: NavHostController,
     val homeTopAppBarState: TopAppBarState,
+    val topsTopAppBarState: TopAppBarState,
     val favoritesTopAppBarState: TopAppBarState,
     val bottomSheetScaffoldState: BottomSheetScaffoldState,
     val navigationBarsInsetsDp: MutableState<Dp>,
@@ -51,7 +52,7 @@ class SorehAppState(
 
     val topsScrollBehavior
         @Composable get() = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
-            homeTopAppBarState
+            topsTopAppBarState
         )
 
     val favoritesScrollBehavior
@@ -106,6 +107,7 @@ class SorehAppState(
 fun rememberSorehAppState(
     navController: NavHostController = rememberNavController(),
     homeTopAppBarState: TopAppBarState = rememberTopAppBarState(),
+    topsTopAppBarState: TopAppBarState = rememberTopAppBarState(),
     favoritesTopAppBarState: TopAppBarState = rememberTopAppBarState(),
     bottomSheetScaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         rememberStandardBottomSheetState(
@@ -129,6 +131,7 @@ fun rememberSorehAppState(
         SorehAppState(
             navController,
             homeTopAppBarState,
+            topsTopAppBarState,
             favoritesTopAppBarState,
             bottomSheetScaffoldState,
             navigationBarsInsetsDp,

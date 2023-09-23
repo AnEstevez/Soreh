@@ -38,9 +38,9 @@ internal class RoomDataSource @Inject constructor(private val dao: CharacterDao)
         dao.countCharactersRaw(SimpleSQLiteQuery(query))
 
 
-    override fun getAllCharacters(): Flow<List<Character>> {
+    override suspend fun getAllCharacters(): List<Character> {
         return dao.getAllCharacters()
-            .map { it.map { characterEntity -> characterEntity.toDomain() } }.distinctUntilChanged()
+            .map {  characterEntity -> characterEntity.toDomain() }
     }
 
     override fun getFavorites(): Flow<List<Character>> {

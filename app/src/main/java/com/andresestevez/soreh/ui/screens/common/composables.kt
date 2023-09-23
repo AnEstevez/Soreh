@@ -4,8 +4,10 @@ import android.graphics.Bitmap
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -53,7 +55,11 @@ import androidx.palette.graphics.Palette
 import coil.compose.AsyncImage
 import com.andresestevez.soreh.R
 import com.andresestevez.soreh.data.models.Character
+import com.andresestevez.soreh.ui.theme.ShimmerHighlightColor
 import com.andresestevez.soreh.ui.theme.TomiokaRed700
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material.placeholder
+import com.google.accompanist.placeholder.shimmer
 
 @Composable
 fun Int.pxToDp() = with(LocalDensity.current) { this@pxToDp.toDp() }
@@ -62,6 +68,7 @@ fun Int.pxToDp() = with(LocalDensity.current) { this@pxToDp.toDp() }
 fun thumbWithPalette(thumb: String?): Palette? {
 
     var palette by remember { mutableStateOf<Palette?>(null) }
+    var placeholderVisible by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -70,20 +77,40 @@ fun thumbWithPalette(thumb: String?): Palette? {
 
         AsyncImage(
             model = thumb,
-            contentDescription = null,
-            placeholder = rememberVectorPainter(ImageVector.vectorResource(R.drawable.placeholder)),
+            contentDescription = "character image",
             error = rememberVectorPainterWithColor(
                 image = ImageVector.vectorResource(R.drawable.placeholder),
                 tintColor = MaterialTheme.colorScheme.onSecondaryContainer
             ),
-            modifier = Modifier.fillMaxWidth(),
+            fallback = rememberVectorPainterWithColor(
+                image = ImageVector.vectorResource(R.drawable.placeholder),
+                tintColor = MaterialTheme.colorScheme.onSecondaryContainer
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .placeholder(
+                    visible = placeholderVisible,
+                    placeholderFadeTransitionSpec = { tween(durationMillis = 1000) },
+                    contentFadeTransitionSpec = { tween(durationMillis = 1000) },
+                    color = Color.LightGray,
+                    highlight = PlaceholderHighlight.shimmer(
+                        highlightColor = ShimmerHighlightColor,
+                        animationSpec = infiniteRepeatable(
+                            animation = tween(durationMillis = 800, delayMillis = 150),
+                            repeatMode = RepeatMode.Restart
+                        )
+                    ),
+                ),
             contentScale = ContentScale.Crop,
+            onLoading = { placeholderVisible = true },
             onSuccess = {
+                placeholderVisible = false
                 // to avoid java.lang.IllegalStateException: unable to getPixels(), pixel access is not supported on Config#HARDWARE bitmaps
                 val bitmap = it.result.drawable.toBitmap().copy(Bitmap.Config.RGBA_F16, true)
 
                 palette = Palette.Builder(bitmap).generate()
-            }
+            },
+            onError = { placeholderVisible = false }
         )
 
     }
@@ -104,7 +131,7 @@ fun rememberVectorPainterWithColor(image: ImageVector, tintColor: Color) =
     )
 
 @Composable
-fun <T: Any> rememberSaveableMutableStateListOf(vararg elements: T): SnapshotStateList<T> {
+fun <T : Any> rememberSaveableMutableStateListOf(vararg elements: T): SnapshotStateList<T> {
     return rememberSaveable(
         saver = listSaver(
             save = { stateList ->
@@ -143,14 +170,16 @@ fun CustomProgressBar(
 ) {
 
     var fullBarWidthPx by remember { mutableIntStateOf(0) }
+    var targetValuePercent by remember { mutableIntStateOf(0) }
 
     val percentCounter by animateIntAsState(
-        targetValue = percent,
+        targetValue = targetValuePercent,
         animationSpec = tween(
             durationMillis = durationMillis,
             delayMillis = delayMillis,
             easing = easing
-        )
+        ),
+        label = "percent animation"
     )
 
     val animatedColor by animateColorAsState(
@@ -163,7 +192,7 @@ fun CustomProgressBar(
             durationMillis = durationMillis,
             delayMillis = delayMillis,
             easing = easing
-        )
+        ), label = "color animation"
     )
 
     Row(
@@ -191,6 +220,7 @@ fun CustomProgressBar(
                 style = textStyle
             )
         }
+
         Box(
             modifier = Modifier
                 .width(statValueWidthDp)
@@ -218,13 +248,14 @@ fun CustomProgressBar(
         ) {
 
             val valueBarWidthDp by animateDpAsState(
-                targetValue = (fullBarWidthPx.pxToDp() * percent) / 100,
+                targetValue = (fullBarWidthPx.pxToDp() * targetValuePercent) / 100,
                 animationSpec = tween(
                     durationMillis = durationMillis,
                     delayMillis = delayMillis,
                     easing = easing
-                )
-            )
+                ),
+                label = "dp animation"
+            ).also { targetValuePercent = percent }
 
             Box(
                 modifier = modifier

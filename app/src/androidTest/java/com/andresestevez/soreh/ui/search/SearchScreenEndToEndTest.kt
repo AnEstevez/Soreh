@@ -18,16 +18,18 @@ import androidx.compose.ui.test.performKeyPress
 import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.printToLog
+import androidx.hilt.work.HiltWorkerFactory
 import androidx.test.espresso.Espresso
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.work.testing.TestListenableWorkerBuilder
 import com.andresestevez.soreh.AppModule
-import com.andresestevez.soreh.MainActivity
-import com.andresestevez.soreh.common.Helpers
+import com.andresestevez.soreh.common.WorkManagerRule
 import com.andresestevez.soreh.data.server.MockServerDispatcher
+import com.andresestevez.soreh.framework.workers.CacheWorker
+import com.andresestevez.soreh.ui.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
@@ -35,7 +37,6 @@ import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 @UninstallModules(AppModule::class)
 class SearchScreenEndToEndTest {
@@ -44,12 +45,16 @@ class SearchScreenEndToEndTest {
     val hiltRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
+    val workManagerRule = WorkManagerRule()
+
+    @get:Rule(order = 2)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     private lateinit var server: MockWebServer
 
     @Inject
-    lateinit var helper: Helpers
+    lateinit var cacheWorkerFactory: HiltWorkerFactory
+
 
     @Before
     fun setUp() {
@@ -59,9 +64,13 @@ class SearchScreenEndToEndTest {
 
         hiltRule.inject()
 
-        runTest {
-            helper.populateBDFromRemote()
-        }
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        // Get the ListenableWorker
+        val cacheWorker = TestListenableWorkerBuilder<CacheWorker>(context = context)
+            .setWorkerFactory(cacheWorkerFactory).build()
+
+        // Start the work synchronously
+        cacheWorker.startWork()
     }
 
     @After
@@ -70,7 +79,7 @@ class SearchScreenEndToEndTest {
     }
 
     @Test
-    fun searchScreen_findCharactersByNameAndSelectBlackFlash_navigatesToDetail() : Unit =
+    fun searchScreen_findCharactersByNameAndSelectBlackFlash_navigatesToDetail(): Unit =
         with(composeTestRule) {
             onNodeWithContentDescription("SEARCH").performClick()
 
@@ -96,7 +105,7 @@ class SearchScreenEndToEndTest {
 
 
     @Test
-    fun searchScreen_backFromDetailScreen_restoresContentInSearchScreen() : Unit =
+    fun searchScreen_backFromDetailScreen_restoresContentInSearchScreen(): Unit =
         with(composeTestRule) {
             onNodeWithContentDescription("SEARCH").performClick()
 
@@ -123,8 +132,6 @@ class SearchScreenEndToEndTest {
             onNodeWithContentDescription("Black Flash").assertIsDisplayed()
 
         }
-
-
 
 
 }

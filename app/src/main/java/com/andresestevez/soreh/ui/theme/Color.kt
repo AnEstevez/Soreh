@@ -23,6 +23,6 @@ val TomiokaWhiteHighEmphasis = Color(0xDEFFFFFF)
 val TomiokaWhiteMediumEmphasis = Color(0x99FFFFFF)
 val TomiokaWhiteDisabled = Color(0x61FFFFFF)
 
-
+val ShimmerHighlightColor = Color(240, 240, 240, 255)
 
 

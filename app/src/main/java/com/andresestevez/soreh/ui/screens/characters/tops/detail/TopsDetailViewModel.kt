@@ -32,7 +32,7 @@ class TopsDetailViewModel @Inject constructor(
     toggleFavoriteUseCase: ToggleFavoriteUseCase,
 ) : ViewModel() {
 
-    var state = MutableStateFlow(UiState(loading = true))
+    var state = MutableStateFlow(UiState())
         private set
 
     var pagesColorState = MutableStateFlow(PagesColorsState())
@@ -45,6 +45,7 @@ class TopsDetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            state.value = UiState(loading = true)
             getTopsUseCase.searchCharacters(getQueryForPublisher(currentTopPublisher))
                 .collect { result ->
                     state.update { currentState ->

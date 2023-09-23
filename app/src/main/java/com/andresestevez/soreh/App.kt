@@ -3,9 +3,7 @@ package com.andresestevez.soreh
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import androidx.work.Constraints
 import androidx.work.ExistingWorkPolicy
-import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.andresestevez.soreh.framework.workers.CacheWorker
@@ -66,19 +64,15 @@ class App : Application(), Configuration.Provider {
 
 
     private fun startCacheWorker() {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
+        val cacheWorkRequest = OneTimeWorkRequestBuilder<CacheWorker>().build()
 
-        val cacheWorkRequest = OneTimeWorkRequestBuilder<CacheWorker>()
-            .setConstraints(constraints)
-            .build()
+        WorkManager.getInstance(applicationContext)
+            .enqueueUniqueWork(
+                CacheWorker.WORK_NAME,
+                ExistingWorkPolicy.REPLACE,
+                cacheWorkRequest
+            )
 
-        WorkManager.getInstance(applicationContext).enqueueUniqueWork(
-            CacheWorker.WORK_NAME,
-            ExistingWorkPolicy.KEEP,
-            cacheWorkRequest
-        )
     }
 
 }

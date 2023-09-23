@@ -31,7 +31,6 @@ import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
@@ -73,14 +72,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.andresestevez.soreh.R
 import com.andresestevez.soreh.ui.SorehScreen
-import com.andresestevez.soreh.ui.screens.common.detail.DetailsInfo
 import com.andresestevez.soreh.ui.screens.common.CharacterStats
 import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import com.andresestevez.soreh.ui.screens.common.UiState
 import com.andresestevez.soreh.ui.screens.common.calculateCurrentOffsetForPage
+import com.andresestevez.soreh.ui.screens.common.detail.DetailsInfo
 import com.andresestevez.soreh.ui.screens.common.rememberVectorPainterWithColor
 import com.andresestevez.soreh.ui.screens.common.shareCharacter
 import com.andresestevez.soreh.ui.theme.Marcelus
+import com.commandiron.compose_loading.CubeGrid
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -290,7 +290,11 @@ fun TopsDetailScreen(
                         }
                     }
                     if (state.loading) {
-                        CircularProgressIndicator(Modifier.align(Alignment.Center))
+                        CubeGrid(
+                            modifier = Modifier.align(Alignment.Center),
+                            durationMillis = 800,
+                            color = MaterialTheme.colorScheme.surface
+                        )
                     }
                 }
             }
@@ -385,7 +389,7 @@ private fun ActionButtonsCharacterDetails(
         ) {
             Crossfade(
                 targetState = state.character.bookmarked,
-                animationSpec = tween(durationMillis = 1000)
+                animationSpec = tween(durationMillis = 1000), label = "bookmarked animation"
             ) { bookmarked ->
 
                 if (bookmarked) {
