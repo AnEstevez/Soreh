@@ -1,7 +1,9 @@
 package com.andresestevez.soreh.ui.screens.characters.favorites
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.andresestevez.soreh.ui.SorehAppState
@@ -24,7 +26,12 @@ fun FavoritesScreen(
     CharacterListVerticalGrid(
         state = state,
         onClick = { characterId -> onClick(characterId) },
-        contentPaddingValues = appState.scaffoldPadding.value,
+        contentPaddingValues = PaddingValues(
+            top = appState.scaffoldPadding.value.calculateTopPadding(),
+            start = 5.dp,
+            end = 5.dp,
+            bottom = appState.scaffoldPadding.value.calculateBottomPadding()
+        ),
         columns = 2
     )
 
