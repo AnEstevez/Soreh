@@ -110,10 +110,7 @@ dependencies {
 
     implementation Libs.AndroidX.palette
 
-
     implementation Libs.accompanistSystemUiController
-
-    implementation Libs.glide
 
 
 
@@ -150,6 +147,7 @@ dependencies {
 
     debugImplementation Libs.AndroidX.Test.Compose.tooling
     debugImplementation Libs.AndroidX.Test.Compose.manifest
+    debugImplementation Libs.leakcanary
 }
 
 

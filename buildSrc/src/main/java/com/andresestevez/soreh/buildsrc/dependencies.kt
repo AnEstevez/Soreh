@@ -4,7 +4,6 @@ object Libs {
     const val androidGradlePlugin = "com.android.tools.build:gradle:8.1.0"
     const val timber = "com.jakewharton.timber:timber:5.0.1"
     const val accompanistSystemUiController = "com.google.accompanist:accompanist-systemuicontroller:0.31.3-beta"
-    const val glide = "com.github.bumptech.glide:glide:4.15.1"
     const val material = "com.google.android.material:material:1.9.0"
     const val coilCompose = "io.coil-kt:coil-compose:2.3.0"
     const val guava = "com.google.guava:guava:29.0-android"
@@ -13,6 +12,7 @@ object Libs {
     const val spinkit = "com.github.commandiron:ComposeLoading:1.0.4"
     const val placeholder = "com.google.accompanist:accompanist-placeholder-material:0.30.1"
     const val splashscreen = "androidx.core:core-splashscreen:1.0.1"
+    const val leakcanary = "com.squareup.leakcanary:leakcanary-android:2.12"
 
     object JavaX {
         const val inject = "javax.inject:javax.inject:1"

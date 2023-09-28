@@ -44,7 +44,7 @@ class CacheWorker @AssistedInject constructor(
         STRINGS_API_SEARCH.forEach { name ->
             val result = repository.getCharactersFromRemoteByName(name)
             result.onSuccess { characters -> repository.saveAll(characters) }
-                .onFailure { throw it }
+                .onFailure { Timber.e(it) }
         }
     }
 
