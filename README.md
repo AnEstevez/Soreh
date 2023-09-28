@@ -12,53 +12,16 @@ In Soreh app you can find superheroes and villains from different publishers and
 
 <br>
 <p align="center">
-<img src="previews/main_light.png" width="19%"/> <img src="previews/search_light.png" width="19%"/> <img src="previews/top_light.png" width="19%"/>  <img src="previews/fav_light.png" width="19%"/><img src="previews/detail_light.png" width="19%"/>
+<img src="previews/main_light.png" width="30%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="previews/search_light.png" width="30%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="previews/detail_light.png" width="30%"/>
 </p>
 <p align="center">
-<img src="previews/main_dark.png" width="19%"/> <img src="previews/search_dark.png" width="19%"/> <img src="previews/top_dark.png" width="19%"/>  <img src="previews/fav_dark.png" width="19%"/><img src="previews/detail_dark.png" width="19%"/>
+<img src="previews/main_dark.png" width="30%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="previews/search_dark.png" width="30%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+<img src="previews/detail_dark.png" width="30%"/>
 </p>
 
-## Tech stack & Open-source libraries
-- Jetpack Compose - Android's modern toolkit for building native UI.
-- [Splash Screen](https://developer.android.com/develop/ui/views/launch/splash-screen) - SplashScreen API lets apps launch with animation, including an into-app motion at launch, a splash screen showing your app icon, and a transition to your app itself.  
-- ViewModel - State Holder. Responsible for the production of UI state, contains the necessary logic for that task.
-- Lifecycle - Lifecycle-aware components.
-- [Navigation Compose](https://developer.android.com/jetpack/compose/navigation) - The Navigation component provides support for Jetpack Compose applications. You can navigate between composables while taking advantage of the Navigation component’s infrastructure and features.
-- [WorkManager](https://developer.android.com/jetpack/androidx/releases/work) - The WorkManager API makes it easy to schedule deferrable, asynchronous tasks that must be run reliably.
-- Room - Database.
-- Kotlin Coroutines - A concurrency design pattern to simplify code that executes asynchronously.
-- Kotlin Flows - In coroutines, a flow is a type that can emit multiple values sequentially, as opposed to suspend functions that return only a single value. For example, you can use a flow to receive live updates from a database.
-- [Dagger-Hilt](https://dagger.dev/hilt/gradle-setup) - Dependency injection.
-- [Coil](https://github.com/coil-kt/coil) - An image loading library for Android backed by Kotlin Coroutines.
-- [Retrofit2 & Moshi](https://github.com/square/retrofit) - REST API consumption.
-- [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver) - A scriptable web server for testing HTTP clients.
-- [Timber](https://github.com/JakeWharton/timber) - A logger with a small, extensible API which provides utility on top of Android's normal Log class.
-- [ComposeLoading](https://github.com/commandiron/ComposeLoading) - Loading spinners in Android Jetpack Compose.
-- [Placeholder](https://google.github.io/accompanist/placeholder/) - A library which provides a modifier for display 'placeholder' UI while content is loading.
-- [Compose Material Design 3 components](https://developer.android.com/jetpack/androidx/releases/compose-material3) - Modular and customizable Material Design UI components for Android.
-- [Mockito](https://github.com/mockito/mockito-kotlin) - Mocking framework for unit tests.
-- [Turbine](https://github.com/cashapp/turbine) - A small testing library for kotlinx.coroutines Flow.
-- [Leakcanary](https://square.github.io/leakcanary/getting_started/) - A memory leak detection library.
-
-## Architecture
-<h3 align="center">CLEAN Architecture</h3>
-<br>
-<p align="center">
-  <img src="previews/clean.png" width="25%" />
-</p>
-<br><br>
-<h3 align="center">MVVM Architecture & Repository Pattern</h3>
-<br>
-<p align="center">
- <img src="previews/architecture_1.png" width="60%"/>
-</p>
-<br><br>
-<h3 align="center">Network Caching</h3>
-<br>
-<p align="center">
- <img src="previews/architecture_2.png" width="90%"/>
-</p>
-<br><br>
 
 ## Features
 
@@ -89,28 +52,77 @@ In Soreh app you can find superheroes and villains from different publishers and
   - End-to-end for "Search" feature
   - Worker
 
-## Preview
 
-<H4 align="center">Splash Screen & Carousel</H4>
+
+
+  ## Preview
+
+  <H4 align="center">Pager Transition, Dynamic Background Color & Implicit Intent</H4>
+  <p align="center">
+  <img src="previews/preview_detail.gif" />
+  </p>
+  <br><br>
+  <H4 align="center">Pager & Pager Indicator Transition</H4>
+  <p align="center">
+  <img src="previews/preview_tops.gif" />
+  </p>
+  <br><br>
+  <H4 align="center">Search with Filters & Sorting Criteria</H4>
+  <p align="center">
+  <img src="previews/preview_search.gif" />
+  </p>
+  <br><br>
+  <H4 align="center">Splash Screen & Carousel</H4>
+  <p align="center">
+  <img src="previews/preview_splash.gif"/>
+  </p>
+  <br><br>
+
+
+
+## Tech stack & Open-source libraries
+- Jetpack Compose - Android's modern toolkit for building native UI.
+- [Splash Screen](https://developer.android.com/develop/ui/views/launch/splash-screen) - SplashScreen API lets apps launch with animation, including an into-app motion at launch, a splash screen showing your app icon, and a transition to your app itself.  
+- ViewModel - State Holder. Responsible for the production of UI state, contains the necessary logic for that task.
+- Lifecycle - Lifecycle-aware components.
+- [Navigation Compose](https://developer.android.com/jetpack/compose/navigation) - The Navigation component provides support for Jetpack Compose applications. You can navigate between composables while taking advantage of the Navigation component’s infrastructure and features.
+- [WorkManager](https://developer.android.com/jetpack/androidx/releases/work) - The WorkManager API makes it easy to schedule deferrable, asynchronous tasks that must be run reliably.
+- Room - Database.
+- Kotlin Coroutines - A concurrency design pattern to simplify code that executes asynchronously.
+- Kotlin Flows - In coroutines, a flow is a type that can emit multiple values sequentially, as opposed to suspend functions that return only a single value. For example, you can use a flow to receive live updates from a database.
+- [Dagger-Hilt](https://dagger.dev/hilt/gradle-setup) - Dependency injection.
+- [Coil](https://github.com/coil-kt/coil) - An image loading library for Android backed by Kotlin Coroutines.
+- [Retrofit2 & Moshi](https://github.com/square/retrofit) - REST API consumption.
+- [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver) - A scriptable web server for testing HTTP clients.
+- [Timber](https://github.com/JakeWharton/timber) - A logger with a small, extensible API which provides utility on top of Android's normal Log class.
+- [ComposeLoading](https://github.com/commandiron/ComposeLoading) - Loading spinners in Android Jetpack Compose.
+- [Placeholder](https://google.github.io/accompanist/placeholder/) - A library which provides a modifier for display 'placeholder' UI while content is loading.
+- [Compose Material Design 3 components](https://developer.android.com/jetpack/androidx/releases/compose-material3) - Modular and customizable Material Design UI components for Android.
+- [Mockito](https://github.com/mockito/mockito-kotlin) - Mocking framework for unit tests.
+- [Turbine](https://github.com/cashapp/turbine) - A small testing library for kotlinx.coroutines Flow.
+- [Leakcanary](https://square.github.io/leakcanary/getting_started/) - A memory leak detection library.
+
+
+## Architecture
+<h3 align="center">CLEAN Architecture</h3>
+<br>
 <p align="center">
-<img src="previews/preview_splash.gif"/>
+  <img src="previews/clean.png" width="25%" />
 </p>
 <br><br>
-<H4 align="center">Search with Filters & Sorting Criteria</H4>
+<h3 align="center">MVVM Architecture & Repository Pattern</h3>
+<br>
 <p align="center">
-<img src="previews/preview_search.gif" />
+ <img src="previews/architecture_1.png" width="60%"/>
 </p>
 <br><br>
-<H4 align="center">Pager Transition, Dynamic Background Color & Implicit Intent</H4>
+<h3 align="center">Network Caching</h3>
+<br>
 <p align="center">
-<img src="previews/preview_detail.gif" />
+ <img src="previews/architecture_2.png" width="90%"/>
 </p>
 <br><br>
-<H4 align="center">Pager & Pager Indicator Transition</H4>
-<p align="center">
-<img src="previews/preview_tops.gif" />
-</p>
-<br><br>
+
 
 ## API
 The SuperHero API exposes SuperHeroes and Villians data from all universes under a single REST API.  
