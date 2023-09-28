@@ -35,7 +35,7 @@ In Soreh app you can find superheroes and villains from different publishers and
 - [Timber](https://github.com/JakeWharton/timber) - A logger with a small, extensible API which provides utility on top of Android's normal Log class.
 - [ComposeLoading](https://github.com/commandiron/ComposeLoading) - Loading spinners in Android Jetpack Compose.
 - [Placeholder](https://google.github.io/accompanist/placeholder/) - A library which provides a modifier for display 'placeholder' UI while content is loading.
-- [Compose Material Design 3 components](https://developer.android.com/jetpack/androidx/releases/compose-material3) Modular and customizable Material Design UI components for Android.
+- [Compose Material Design 3 components](https://developer.android.com/jetpack/androidx/releases/compose-material3) - Modular and customizable Material Design UI components for Android.
 - [Mockito](https://github.com/mockito/mockito-kotlin) - Mocking framework for unit tests.
 - [Turbine](https://github.com/cashapp/turbine) - A small testing library for kotlinx.coroutines Flow.
 - [Leakcanary](https://square.github.io/leakcanary/getting_started/) - A memory leak detection library.
@@ -63,10 +63,10 @@ In Soreh app you can find superheroes and villains from different publishers and
 ## Features
 
 - Four screens
- - Main - A carousel showing 10 random characters
- - Search - A screen to search by name, with filters and different sorting criteria (FlowRow and Material3 components: SearchBar, BottomSheetScaffold, FilterChip, RangeSlider, ExposedDropdownMenuBox, ExposedDropdownMenu, DropdownMenuItem)
- - Tops - The top 10 of the most complete characters of some of the most important publishers/universes
- - Favorites - A screen to save your favorite characters
+  - Main - A carousel showing 10 random characters
+  - Search - A screen to search by name, with filters and different sorting criteria (FlowRow and Material3 components: SearchBar, BottomSheetScaffold, FilterChip, RangeSlider, ExposedDropdownMenuBox, ExposedDropdownMenu, DropdownMenuItem)
+  - Tops - The top 10 of the most complete characters of some of the most important publishers/universes
+  - Favorites - A screen to save your favorite characters
 - Splash screen that remains until the worker completes the network caching
 - [Single source of truth (Room)](https://developer.android.com/jetpack/guide/data-layer#source-of-truth)
 - [Unidirectional Data Flow](https://developer.android.com/jetpack/guide/ui-layer#udf)
