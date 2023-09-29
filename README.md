@@ -55,28 +55,28 @@ In Soreh app you can find superheroes and villains from different publishers and
 
 
 
-  ## Preview
+## Preview
 
-  <H4 align="center">Pager Transition, Dynamic Background Color & Implicit Intent</H4>
-  <p align="center">
-  <img src="previews/preview_detail.gif" />
-  </p>
-  <br><br>
-  <H4 align="center">Pager & Pager Indicator Transition</H4>
-  <p align="center">
-  <img src="previews/preview_tops.gif" />
-  </p>
-  <br><br>
-  <H4 align="center">Search with Filters & Sorting Criteria</H4>
-  <p align="center">
-  <img src="previews/preview_search.gif" />
-  </p>
-  <br><br>
-  <H4 align="center">Splash Screen & Carousel</H4>
-  <p align="center">
-  <img src="previews/preview_splash.gif"/>
-  </p>
-  <br><br>
+<H4 align="center">Pager Transition, Dynamic Background Color & Implicit Intent</H4>
+<p align="center">
+<img src="previews/preview_detail.gif" />
+</p>
+<br><br>
+<H4 align="center">Pager & Pager Indicator Transition</H4>
+<p align="center">
+<img src="previews/preview_tops.gif" />
+</p>
+<br><br>
+<H4 align="center">Search with Filters & Sorting Criteria</H4>
+<p align="center">
+<img src="previews/preview_search.gif" />
+</p>
+<br><br>
+<H4 align="center">Splash Screen & Carousel</H4>
+<p align="center">
+<img src="previews/preview_splash.gif"/>
+</p>
+<br><br>
 
 
 
