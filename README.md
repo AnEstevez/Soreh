@@ -12,14 +12,14 @@ In Soreh app you can find superheroes and villains from different publishers and
 
 <br>
 <p align="center">
-<img src="previews/main_light.png" width="30%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="previews/search_light.png" width="30%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="previews/detail_light.png" width="30%"/>
+<img src="previews/main_light.png" width="27%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="previews/search_light.png" width="27%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="previews/detail_light.png" width="27%"/>
 </p>
 <p align="center">
-<img src="previews/main_dark.png" width="30%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="previews/search_dark.png" width="30%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-<img src="previews/detail_dark.png" width="30%"/>
+<img src="previews/main_dark.png" width="27%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="previews/search_dark.png" width="27%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+<img src="previews/detail_dark.png" width="27%"/>
 </p>
 
 
