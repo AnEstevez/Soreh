@@ -28,7 +28,7 @@ import com.andresestevez.soreh.R
 import com.andresestevez.soreh.ui.SorehAppState
 import com.andresestevez.soreh.ui.common.noRippleClickable
 import com.andresestevez.soreh.ui.mainActivity
-import com.andresestevez.soreh.ui.screens.characters.main.CharacterListVerticalGrid
+import com.andresestevez.soreh.ui.screens.common.CharacterListVerticalGrid
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

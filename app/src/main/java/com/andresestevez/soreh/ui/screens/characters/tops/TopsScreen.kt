@@ -77,7 +77,7 @@ fun TopsScreen(
                     icon = {
                         Icon(
                             imageVector = imageVector,
-                            contentDescription = null,
+                            contentDescription = "Tab $index",
                             modifier = modifier
                         )
                     }

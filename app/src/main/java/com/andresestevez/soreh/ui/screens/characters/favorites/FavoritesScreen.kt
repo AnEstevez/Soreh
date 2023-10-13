@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.andresestevez.soreh.ui.SorehAppState
-import com.andresestevez.soreh.ui.screens.characters.main.CharacterListVerticalGrid
+import com.andresestevez.soreh.ui.screens.common.CharacterListVerticalGrid
 
 @Composable
 fun FavoritesScreen(

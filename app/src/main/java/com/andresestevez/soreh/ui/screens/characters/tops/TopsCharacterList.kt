@@ -132,7 +132,7 @@ fun CharacterListItem(
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = resourceDrawable),
-                    contentDescription = null,
+                    contentDescription = character.character.name,
                     tint = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f),
                     modifier = Modifier
                         .height(150.dp)
