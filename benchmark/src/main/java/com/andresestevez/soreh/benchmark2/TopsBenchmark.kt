@@ -1,8 +1,8 @@
 package com.andresestevez.soreh.benchmark2
 
+import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.FrameTimingMetric
 import androidx.benchmark.macro.StartupMode
-import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.uiautomator.By
@@ -25,38 +25,33 @@ import org.junit.runner.RunWith
  * for investigating your app's performance.
  */
 @RunWith(AndroidJUnit4::class)
-class Benchmark {
+class TopsBenchmark {
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
     @Test
-    fun startup() = benchmarkRule.measureRepeated(
-        packageName = "com.andresestevez.soreh",
-        metrics = listOf(StartupTimingMetric()),
-        iterations = 1,
-        startupMode = StartupMode.COLD
-    ) {
-        pressHome()
-        startActivityAndWait()
-    }
+    fun topsScrollAndGoToDetailCompilationModeNone() = topsScrollAndGoToDetail(CompilationMode.None())
 
     @Test
-    fun topsScrollAndGoToDetail() = benchmarkRule.measureRepeated(
+    fun topsScrollAndGoToDetailCompilationModePartial() = topsScrollAndGoToDetail(CompilationMode.Partial())
+
+    private fun topsScrollAndGoToDetail(mode: CompilationMode) = benchmarkRule.measureRepeated(
         packageName = "com.andresestevez.soreh",
         metrics = listOf(FrameTimingMetric()),
         iterations = 1,
         startupMode = StartupMode.COLD,
+        compilationMode = mode
     ) {
         pressHome()
         startActivityAndWait()
-
-//        device.wait(Until.hasObject(By.desc("TOPS")), 8000)
 
         val buttonBottomNavigationTops = device.findObject(By.desc("TOPS"))
         buttonBottomNavigationTops.click()
 
         val buttonMarvel = device.findObject(By.desc("Tab 1"))
         buttonMarvel.click()
+
+        device.wait(Until.hasObject(By.scrollable(true)), 3000)
 
         val topList = device.findObject(By.scrollable(true))
         topList.setGestureMargin(device.displayWidth / 6)
@@ -70,30 +65,4 @@ class Benchmark {
 
     }
 
-    @Test
-    fun homeGoToDetailAndSwipe() = benchmarkRule.measureRepeated(
-        packageName = "com.andresestevez.soreh",
-        metrics = listOf(FrameTimingMetric()),
-        iterations = 1,
-        startupMode = StartupMode.COLD,
-    ) {
-        pressHome()
-        startActivityAndWait()
-
-        device.wait(Until.hasObject(By.desc("Carousel 0")), 15000)
-
-        val carouselElement1 = device.findObject(By.desc("Carousel 0"))
-        carouselElement1.click()
-
-        device.wait(Until.hasObject(By.desc("Card 0")), 3000)
-
-        val card1 = device.findObject(By.desc("Card 0"))
-        card1.swipe(Direction.LEFT, 0.8f)
-
-        val card2 = device.findObject(By.desc("Card 1"))
-        card2.swipe(Direction.LEFT, 0.8f)
-
-        val card3 = device.findObject(By.desc("Card 2"))
-        card3.swipe(Direction.LEFT, 0.8f)
-    }
 }

@@ -134,7 +134,8 @@ dependencies {
 
     implementation Libs.accompanistSystemUiController
 
-
+    // baseline profile
+    runtimeOnly Libs.AndroidX.profileinstaller
 
     // For local unit tests
     testImplementation project(":testShared")

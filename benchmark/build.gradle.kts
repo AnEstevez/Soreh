@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.ManagedVirtualDevice
+
 plugins {
     id("com.android.test")
     id("org.jetbrains.kotlin.android")
@@ -21,6 +23,18 @@ android {
         targetSdk = 34
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    testOptions {
+        managedDevices {
+            devices {
+                create("pixel6Api29", ManagedVirtualDevice::class) {
+                    device = "Pixel 6"
+                    apiLevel = 29
+                    systemImageSource = "aosp"
+                }
+            }
+        }
     }
 
     buildTypes {
