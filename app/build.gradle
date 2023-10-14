@@ -32,15 +32,32 @@ android {
         buildConfig = true
     }
 
+    signingConfigs {
+        release {
+            storeFile file('E:\\dev\\proyectosAndroid\\Soreh recursos\\keystore\\key_soreh.jks')
+            storePassword 'hoechst-1'
+            keyAlias 'key0'
+            keyPassword 'Soreh-0'
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
+        }
+        benchmark {
+            initWith release
+            matchingFallbacks = ['release']
+            debuggable false
+            proguardFiles("benchmark-rules.pro")
+            signingConfig signingConfigs.debug
         }
 
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -117,7 +134,8 @@ dependencies {
 
     implementation Libs.accompanistSystemUiController
 
-
+    // baseline profile
+    runtimeOnly Libs.AndroidX.profileinstaller
 
     // For local unit tests
     testImplementation project(":testShared")

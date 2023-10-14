@@ -1,4 +1,4 @@
-package com.andresestevez.soreh.ui.screens.characters.main
+package com.andresestevez.soreh.ui.screens.common
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -35,9 +35,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.andresestevez.soreh.R
-import com.andresestevez.soreh.ui.screens.common.ItemUiState
-import com.andresestevez.soreh.ui.screens.common.UiState
-import com.andresestevez.soreh.ui.screens.common.rememberVectorPainterWithColor
 import com.andresestevez.soreh.ui.theme.ShimmerHighlightColor
 import com.commandiron.compose_loading.CubeGrid
 import com.google.accompanist.placeholder.PlaceholderHighlight

@@ -47,6 +47,7 @@ object Libs {
         const val hiltCompiler = "androidx.hilt:hilt-compiler:1.0.0"
         const val palette = "androidx.palette:palette:1.0.0"
         const val coreTesting ="androidx.arch.core:core-testing:2.1.0"
+        const val profileinstaller = "androidx.profileinstaller:profileinstaller:1.3.1"
 
         object Work {
             private const val version = "2.8.1"
