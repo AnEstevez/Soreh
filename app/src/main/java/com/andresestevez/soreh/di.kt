@@ -5,10 +5,15 @@ import androidx.room.Room
 import androidx.work.WorkManager
 import com.andresestevez.soreh.data.datasources.LocalDataSource
 import com.andresestevez.soreh.data.datasources.RemoteDataSource
+import com.andresestevez.soreh.framework.analytics.AnalyticsHelper
+import com.andresestevez.soreh.framework.analytics.FirebaseAnalyticsHelper
 import com.andresestevez.soreh.framework.local.RoomDataSource
 import com.andresestevez.soreh.framework.local.SorehDatabase
 import com.andresestevez.soreh.framework.remote.RemoteService
 import com.andresestevez.soreh.framework.remote.SuperHeroDataSource
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -87,4 +92,17 @@ abstract class AppDataModule {
     @Binds
     internal abstract fun bindLocalDataSource(localDataSource: RoomDataSource): LocalDataSource
 
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class AnalyticsModule {
+    @Binds
+    abstract fun bindsAnalyticsHelper(analyticsHelperImpl: FirebaseAnalyticsHelper): AnalyticsHelper
+
+    companion object {
+        @Provides
+        @Singleton
+        fun provideFirebaseAnalytics(): FirebaseAnalytics { return Firebase.analytics }
+    }
 }

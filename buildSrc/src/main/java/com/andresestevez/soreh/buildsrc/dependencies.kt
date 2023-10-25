@@ -1,7 +1,7 @@
 package com.andresestevez.soreh.buildsrc
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:8.1.0"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:8.1.2"
     const val timber = "com.jakewharton.timber:timber:5.0.1"
     const val accompanistSystemUiController = "com.google.accompanist:accompanist-systemuicontroller:0.31.3-beta"
     const val material = "com.google.android.material:material:1.9.0"
@@ -125,5 +125,10 @@ object Libs {
     object Mockito {
         const val kotlin = "org.mockito.kotlin:mockito-kotlin:5.1.0"
         const val inline = "org.mockito:mockito-inline:5.2.0"
+    }
+
+    object Firebase {
+        const val bom = "com.google.firebase:firebase-bom:32.3.1"
+        const val analytics = "com.google.firebase:firebase-analytics-ktx"
     }
 }

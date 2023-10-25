@@ -73,6 +73,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.andresestevez.soreh.R
+import com.andresestevez.soreh.framework.analytics.LocalAnalyticsHelper
+import com.andresestevez.soreh.framework.analytics.LogScreenView
+import com.andresestevez.soreh.framework.analytics.logBookmark
+import com.andresestevez.soreh.framework.analytics.logShare
 import com.andresestevez.soreh.ui.SorehScreen
 import com.andresestevez.soreh.ui.screens.common.CharacterStats
 import com.andresestevez.soreh.ui.screens.common.ItemUiState
@@ -92,6 +96,8 @@ import kotlin.math.abs
 fun MainDetailScreen(
     viewModel: MainDetailViewModel = hiltViewModel(),
 ) {
+    val localAnalyticsHelper = LocalAnalyticsHelper.current
+    localAnalyticsHelper.LogScreenView("MainDetailScreen")
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -367,6 +373,7 @@ private fun ActionButtonsCharacterDetails(
 ) {
 
     val coroutineScope = rememberCoroutineScope()
+    val analyticsHelper = LocalAnalyticsHelper.current
 
     Row(
         modifier = Modifier
@@ -383,6 +390,10 @@ private fun ActionButtonsCharacterDetails(
                 )
                 .size(35.dp),
             onClick = {
+                analyticsHelper.logBookmark(
+                    isBookmarked = !state.character.bookmarked,
+                    itemId = state.character.name
+                )
                 coroutineScope.launch {
                     state.onClick()
                 }
@@ -424,6 +435,7 @@ private fun ActionButtonsCharacterDetails(
                 )
                 .size(35.dp),
             onClick = {
+                analyticsHelper.logShare(itemId = state.character.name)
                 shareCharacter(
                     context,
                     state.character

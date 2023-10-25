@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.andresestevez.soreh.R
+import com.andresestevez.soreh.framework.analytics.LocalAnalyticsHelper
+import com.andresestevez.soreh.framework.analytics.LogScreenView
 import com.andresestevez.soreh.ui.SorehAppState
 import com.andresestevez.soreh.ui.common.noRippleClickable
 import com.andresestevez.soreh.ui.mainActivity
@@ -38,6 +40,9 @@ fun SearchScreen(
     appState: SorehAppState,
     onClick: (Int) -> Unit,
 ) {
+
+    val localAnalyticsHelper = LocalAnalyticsHelper.current
+    localAnalyticsHelper.LogScreenView("SearchScreen")
 
     val state by viewModel.state.collectAsStateWithLifecycle()
     val filters by viewModel.filters.collectAsStateWithLifecycle()

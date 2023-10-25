@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "926161263060",
+    "project_id": "soreh-c5d98",
+    "storage_bucket": "soreh-c5d98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926161263060:android:5e671fc1624efec9c71e41",
+        "android_client_info": {
+          "package_name": "com.andresestevez.soreh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXz6-FdT6qM2_d_i79JIZbH1TbauPDspE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926161263060:android:0172bf85ce787330c71e41",
+        "android_client_info": {
+          "package_name": "com.andresestevez.soreh.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXz6-FdT6qM2_d_i79JIZbH1TbauPDspE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
