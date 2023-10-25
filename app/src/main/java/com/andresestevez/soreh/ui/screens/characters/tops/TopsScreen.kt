@@ -20,6 +20,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.andresestevez.soreh.R
+import com.andresestevez.soreh.framework.analytics.LocalAnalyticsHelper
+import com.andresestevez.soreh.framework.analytics.LogScreenView
 import com.andresestevez.soreh.ui.SorehAppState
 import com.andresestevez.soreh.ui.screens.common.SquareIndicator
 import kotlinx.coroutines.launch
@@ -31,6 +33,10 @@ fun TopsScreen(
     appState: SorehAppState,
     onClick: (characterPosition: Int, publisher: Int) -> Unit,
 ) {
+
+    val localAnalyticsHelper = LocalAnalyticsHelper.current
+    localAnalyticsHelper.LogScreenView("SearchScreen")
+
 
     val coroutineScope = rememberCoroutineScope()
     val tabs = listOf(

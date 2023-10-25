@@ -55,6 +55,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.palette.graphics.Palette
+import com.andresestevez.soreh.framework.analytics.LocalAnalyticsHelper
+import com.andresestevez.soreh.framework.analytics.LogScreenView
+import com.andresestevez.soreh.framework.analytics.logBookmark
+import com.andresestevez.soreh.framework.analytics.logShare
 import com.andresestevez.soreh.ui.SorehScreen
 import com.andresestevez.soreh.ui.screens.common.CharacterStats
 import com.andresestevez.soreh.ui.screens.common.shareCharacter
@@ -70,6 +74,9 @@ import kotlinx.coroutines.launch
 fun DetailScreen(
     viewModel: CharacterDetailViewModel = hiltViewModel(),
 ) {
+
+    val localAnalyticsHelper = LocalAnalyticsHelper.current
+    localAnalyticsHelper.LogScreenView("DetailScreen")
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -272,6 +279,8 @@ private fun ActionButtonsCharacterDetails(
             .padding(horizontal = 19.dp, vertical = 15.dp)
     ) {
 
+        val analyticsHelper = LocalAnalyticsHelper.current
+
         FilledIconButton(
             modifier = Modifier
                 .padding(horizontal = 5.dp)
@@ -282,8 +291,12 @@ private fun ActionButtonsCharacterDetails(
                 )
                 .size(35.dp),
             onClick = {
+                analyticsHelper.logBookmark(
+                    isBookmarked = !state.data!!.character.bookmarked,
+                    itemId = state.data.character.name
+                )
                 coroutineScope.launch {
-                    state.data?.onClick?.let { onClick -> onClick() }
+                    state.data.onClick.let { onClick -> onClick() }
                 }
             },
             colors = IconButtonDefaults.filledIconButtonColors(
@@ -323,9 +336,10 @@ private fun ActionButtonsCharacterDetails(
                 )
                 .size(35.dp),
             onClick = {
+                analyticsHelper.logShare(itemId = state.data!!.character.name)
                 shareCharacter(
                     context,
-                    state.data!!.character
+                    state.data.character
                 )
             },
             colors = IconButtonDefaults.filledIconButtonColors(

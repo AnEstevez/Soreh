@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_soreh_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Soreh"
-        tools:targetApi="31">
+        tools:targetApi="34">
         <profileable
             android:shell="true"
             tools:targetApi="29" />

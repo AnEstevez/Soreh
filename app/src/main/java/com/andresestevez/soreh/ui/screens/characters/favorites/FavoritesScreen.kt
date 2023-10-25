@@ -6,6 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.andresestevez.soreh.framework.analytics.LocalAnalyticsHelper
+import com.andresestevez.soreh.framework.analytics.LogScreenView
 import com.andresestevez.soreh.ui.SorehAppState
 import com.andresestevez.soreh.ui.screens.common.CharacterListVerticalGrid
 
@@ -15,6 +17,9 @@ fun FavoritesScreen(
     appState: SorehAppState,
     onClick: (Int) -> Unit,
 ) {
+
+    val localAnalyticsHelper = LocalAnalyticsHelper.current
+    localAnalyticsHelper.LogScreenView("FavoritesScreen")
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 

@@ -26,6 +26,8 @@ import androidx.tv.material3.Carousel
 import androidx.tv.material3.CarouselDefaults
 import androidx.tv.material3.CarouselState
 import androidx.tv.material3.ExperimentalTvMaterial3Api
+import com.andresestevez.soreh.framework.analytics.LocalAnalyticsHelper
+import com.andresestevez.soreh.framework.analytics.LogScreenView
 import com.andresestevez.soreh.ui.SorehAppState
 import com.andresestevez.soreh.ui.common.noRippleClickable
 import com.andresestevez.soreh.ui.screens.common.thumbWithPalette
@@ -39,6 +41,9 @@ fun MainScreen(
     appState: SorehAppState,
     onClick: (Int, String) -> Unit = { _, _ -> },
 ) {
+
+    val localAnalyticsHelper = LocalAnalyticsHelper.current
+    localAnalyticsHelper.LogScreenView("MainScreen")
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 

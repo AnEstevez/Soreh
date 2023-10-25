@@ -6,16 +6,23 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import com.andresestevez.soreh.framework.analytics.AnalyticsHelper
+import com.andresestevez.soreh.framework.analytics.LocalAnalyticsHelper
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
 
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
@@ -31,8 +38,10 @@ class MainActivity : ComponentActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            TransparentSystemBars()
-            SorehApp()
+            CompositionLocalProvider(LocalAnalyticsHelper provides analyticsHelper) {
+                TransparentSystemBars()
+                SorehApp()
+            }
         }
     }
 }
