@@ -36,10 +36,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('E:\\dev\\proyectosAndroid\\Soreh recursos\\keystore\\key_soreh.jks')
-            storePassword 'hoechst-1'
-            keyAlias 'key0'
-            keyPassword 'Soreh-0'
+            storeFile file('E:\\dev\\key_soreh.jks')
+            storePassword 'myStorePassword'
+            keyAlias 'myKeyAlias'
+            keyPassword 'myKeyPassword'
         }
     }
 
