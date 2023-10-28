@@ -46,6 +46,7 @@ In Soreh app you can find superheroes and villains from different publishers and
 - Multi-module project. One module per CLEAN Architecture layer
 - Firebase Analytics with CompositionLocalProvider
 - Firebase Crashlytics integrated with Timber
+- [Baseline Profiles](https://developer.android.com/topic/performance/baselineprofiles/overview) - By shipping a Baseline Profile in an app or library, Android Runtime (ART) can optimize specified code paths through Ahead-of-Time (AOT) compilation, providing performance enhancements for every new user and every app update.
 - Unit Tests
   - Repository
   - ViewModel
