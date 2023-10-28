@@ -44,6 +44,8 @@ In Soreh app you can find superheroes and villains from different publishers and
 - Implicit intents - To view or share the complete info of a character
 - CLEAN Architecture - UI, Domain and Data layer ([google way](https://developer.android.com/topic/architecture#recommended-app-arch))
 - Multi-module project. One module per CLEAN Architecture layer
+- Firebase Analytics with CompositionLocalProvider
+- Firebase Crashlytics integrated with Timber
 - Unit Tests
   - Repository
   - ViewModel
@@ -82,6 +84,8 @@ In Soreh app you can find superheroes and villains from different publishers and
 
 ## Tech stack & Open-source libraries
 - Jetpack Compose - Android's modern toolkit for building native UI.
+- [Firebase Analytics](https://firebase.google.com/products/analytics/) - Google Analytics for Firebase provides free, unlimited reporting on up to 500 distinct events. The SDK automatically captures certain key events and user properties, and you can define your own custom events to measure the things that uniquely matter to your business.
+- [Firebase Crashlytics](https://firebase.google.com/products/crashlytics/) - Firebase Crashlytics, a real time crash reporting tool, helps you prioritize and fix your most pervasive app crashes based on the impact on real users.
 - [Splash Screen](https://developer.android.com/develop/ui/views/launch/splash-screen) - SplashScreen API lets apps launch with animation, including an into-app motion at launch, a splash screen showing your app icon, and a transition to your app itself.  
 - ViewModel - State Holder. Responsible for the production of UI state, contains the necessary logic for that task.
 - Lifecycle - Lifecycle-aware components.
