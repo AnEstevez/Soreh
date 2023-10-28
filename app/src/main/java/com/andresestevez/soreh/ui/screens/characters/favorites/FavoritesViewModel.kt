@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +29,7 @@ class FavoritesViewModel @Inject constructor(useCase: GetFavoritesUseCase) : Vie
                             loading = false,
                             data = characters.map { ItemUiState(it) })
                     }) {
+                        Timber.e(it)
                         currentState.copy(
                             loading = false,
                             userMessage = it.getUserMessage()

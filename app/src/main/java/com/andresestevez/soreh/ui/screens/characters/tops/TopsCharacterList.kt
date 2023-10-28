@@ -42,6 +42,7 @@ import com.commandiron.compose_loading.CubeGrid
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.fade
 import com.google.accompanist.placeholder.material.placeholder
+import timber.log.Timber
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -168,7 +169,10 @@ private fun Thumb(uiState: ItemUiState) {
             contentScale = ContentScale.Crop,
             onLoading = { placeholderVisible = true },
             onSuccess = { placeholderVisible = false },
-            onError = { placeholderVisible = false },
+            onError = {
+                placeholderVisible = false
+                Timber.w("Error loading the image of the character [${uiState.character.name}] with id [${uiState.character.id}] from URL [${uiState.character.thumb}]")
+            },
             error = rememberVectorPainterWithColor(
                 image = ImageVector.vectorResource(R.drawable.placeholder),
                 tintColor = MaterialTheme.colorScheme.onSecondaryContainer

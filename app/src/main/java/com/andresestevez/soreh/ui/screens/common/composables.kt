@@ -60,12 +60,13 @@ import com.andresestevez.soreh.ui.theme.TomiokaRed700
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
+import timber.log.Timber
 
 @Composable
 fun Int.pxToDp() = with(LocalDensity.current) { this@pxToDp.toDp() }
 
 @Composable
-fun thumbWithPalette(thumb: String?): Palette? {
+fun thumbWithPalette(character: Character): Palette? {
 
     var palette by remember { mutableStateOf<Palette?>(null) }
     var placeholderVisible by remember { mutableStateOf(false) }
@@ -76,7 +77,7 @@ fun thumbWithPalette(thumb: String?): Palette? {
     ) {
 
         AsyncImage(
-            model = thumb,
+            model = character.thumb,
             contentDescription = "character image",
             error = rememberVectorPainterWithColor(
                 image = ImageVector.vectorResource(R.drawable.placeholder),
@@ -110,7 +111,10 @@ fun thumbWithPalette(thumb: String?): Palette? {
 
                 palette = Palette.Builder(bitmap).generate()
             },
-            onError = { placeholderVisible = false }
+            onError = {
+                placeholderVisible = false
+                Timber.w("Error loading the image of the character [${character.name}] with id [${character.id}] from URL [${character.thumb}]")
+            }
         )
 
     }

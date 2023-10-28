@@ -98,6 +98,8 @@ object Libs {
             const val rules = "androidx.test:rules:1.5.0"
             const val junit = "androidx.test.ext:junit-ktx:1.1.5"
             const val espresso = "androidx.test.espresso:espresso-core:3.5.1"
+            const val uiautomator = "androidx.test.uiautomator:uiautomator:2.2.0"
+            const val benchmarkMacroJunit4 = "androidx.benchmark:benchmark-macro-junit4:1.2.0"
 
             object Compose {
                 private const val version = "1.4.3"
@@ -130,5 +132,6 @@ object Libs {
     object Firebase {
         const val bom = "com.google.firebase:firebase-bom:32.3.1"
         const val analytics = "com.google.firebase:firebase-analytics-ktx"
+        const val crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     }
 }
