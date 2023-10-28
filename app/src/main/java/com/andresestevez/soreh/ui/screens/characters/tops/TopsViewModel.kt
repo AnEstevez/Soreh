@@ -15,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -77,6 +78,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
                     useCase.searchCharactersSuspend(dcQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
+                        Timber.e(it)
                         currentState.copy(loading = false, userMessage = it.getUserMessage())
                     }
                 }
@@ -87,6 +89,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
                     useCase.searchCharactersSuspend(marvelQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
+                        Timber.e(it)
                         currentState.copy(loading = false, userMessage = it.getUserMessage())
                     }
                 }
@@ -97,6 +100,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
                     useCase.searchCharactersSuspend(imageQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
+                        Timber.e(it)
                         currentState.copy(loading = false, userMessage = it.getUserMessage())
                     }
                 }
@@ -107,6 +111,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
                     useCase.searchCharactersSuspend(darkQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
+                        Timber.e(it)
                         currentState.copy(loading = false, userMessage = it.getUserMessage())
                     }
                 }
@@ -117,6 +122,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
                     useCase.searchCharactersSuspend(lucasQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
+                        Timber.e(it)
                         currentState.copy(loading = false, userMessage = it.getUserMessage())
                     }
                 }
@@ -127,6 +133,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
                     useCase.searchCharactersSuspend(nbcQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
+                        Timber.e(it)
                         currentState.copy(loading = false, userMessage = it.getUserMessage())
                     }
                 }

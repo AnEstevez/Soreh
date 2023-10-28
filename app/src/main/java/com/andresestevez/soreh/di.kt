@@ -13,6 +13,7 @@ import com.andresestevez.soreh.framework.remote.RemoteService
 import com.andresestevez.soreh.framework.remote.SuperHeroDataSource
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.ktx.Firebase
 import dagger.Binds
 import dagger.Module
@@ -79,6 +80,10 @@ class AppModule {
     @Provides
     @Singleton
     fun workManagerProvider(app: Application) = WorkManager.getInstance(app)
+
+    @Provides
+    @Singleton
+    fun crashlyticsProvider() = FirebaseCrashlytics.getInstance()
 
 }
 

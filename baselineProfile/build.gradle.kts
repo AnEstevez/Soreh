@@ -1,3 +1,4 @@
+import com.andresestevez.soreh.buildsrc.Libs
 
 plugins {
     id("com.android.test")
@@ -44,8 +45,8 @@ baselineProfile {
 }
 
 dependencies {
-    implementation("androidx.test.ext:junit:1.1.5")
-    implementation("androidx.test.espresso:espresso-core:3.5.1")
-    implementation("androidx.test.uiautomator:uiautomator:2.2.0")
-    implementation("androidx.benchmark:benchmark-macro-junit4:1.2.0")
+    implementation(Libs.AndroidX.Test.junit)
+    implementation(Libs.AndroidX.Test.espresso)
+    implementation(Libs.AndroidX.Test.uiautomator)
+    implementation(Libs.AndroidX.Test.benchmarkMacroJunit4)
 }

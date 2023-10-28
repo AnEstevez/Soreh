@@ -173,7 +173,7 @@ fun DetailScreen(
                                             .background(MaterialTheme.colorScheme.surface)
                                     ) {
                                         palette =
-                                            thumbWithPalette(thumb = state.data?.character?.thumb)
+                                            state.data?.character?.let { thumbWithPalette(character = it) }
                                     }
 
                                     Box(modifier = Modifier.align(Alignment.BottomEnd)) {

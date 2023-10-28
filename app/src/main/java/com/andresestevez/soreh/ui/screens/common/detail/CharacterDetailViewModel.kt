@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,6 +37,7 @@ class CharacterDetailViewModel @Inject constructor(
                             onClick = { toggleFavoriteUseCase(it) }
                         })
                     }) {
+                        Timber.e(it)
                         currentState.copy(loading = false, userMessage = it.getUserMessage())
                     }
                 }

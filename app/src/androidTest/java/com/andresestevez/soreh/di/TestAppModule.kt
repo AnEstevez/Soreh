@@ -8,6 +8,7 @@ import com.andresestevez.soreh.BuildConfig
 import com.andresestevez.soreh.R
 import com.andresestevez.soreh.framework.local.SorehDatabase
 import com.andresestevez.soreh.framework.remote.RemoteService
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
@@ -71,4 +72,7 @@ object TestAppModule {
     @Singleton
     fun workManagerProvider(app: Application) = WorkManager.getInstance(app)
 
+    @Provides
+    @Singleton
+    fun crashlyticsProvider() = FirebaseCrashlytics.getInstance()
 }

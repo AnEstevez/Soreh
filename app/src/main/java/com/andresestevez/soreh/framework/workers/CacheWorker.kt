@@ -5,6 +5,9 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.andresestevez.soreh.data.CharactersRepository
+import com.andresestevez.soreh.framework.analytics.AnalyticsEvent
+import com.andresestevez.soreh.framework.analytics.AnalyticsEvent.Types.Companion.WORKER_API_CALL
+import com.andresestevez.soreh.framework.analytics.AnalyticsHelper
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +20,7 @@ class CacheWorker @AssistedInject constructor(
     @Assisted val ctx: Context,
     @Assisted params: WorkerParameters,
     private val repository: CharactersRepository,
+    private val analyticsHelper: AnalyticsHelper
 ) : CoroutineWorker(ctx, params) {
 
     companion object {
@@ -29,6 +33,7 @@ class CacheWorker @AssistedInject constructor(
             Timber.d("CacheWorker start")
             if (repository.isRefreshRequired()) {
                 Timber.d("API call start")
+                analyticsHelper.logEvent(AnalyticsEvent(WORKER_API_CALL))
                 cacheDataFromApi()
                 Timber.d("API call end")
             }

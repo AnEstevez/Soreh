@@ -100,7 +100,7 @@ fun MainScreen(
                             .joinToString(",")
                     )
                 }) {
-                thumbWithPalette(thumb = state.data[index].character.thumb)
+                thumbWithPalette(character = state.data[index].character)
             }
         }
     }

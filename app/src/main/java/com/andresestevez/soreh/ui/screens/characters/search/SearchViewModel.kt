@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,6 +40,7 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             }) {
+                Timber.e(it)
                 state.update { currentState ->
                     currentState.copy(loading = false, userMessage = it.getUserMessage())
                 }
@@ -57,6 +59,7 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             }) {
+                Timber.e(it)
                 targetCharactersState.update { currentState ->
                     currentState.copy(loading = false, userMessage = it.getUserMessage())
                 }

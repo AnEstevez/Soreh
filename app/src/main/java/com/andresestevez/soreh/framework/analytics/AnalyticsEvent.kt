@@ -21,6 +21,7 @@ data class AnalyticsEvent(
             const val SHARE = "share"
             const val BOOKMARKED = "bookmarked"
             const val UNBOOKMARKED = "unbookmarked"
+            const val WORKER_API_CALL = "worker_api_call"
         }
     }
 
