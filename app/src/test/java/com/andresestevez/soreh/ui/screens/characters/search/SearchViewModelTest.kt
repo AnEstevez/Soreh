@@ -38,7 +38,7 @@ class SearchViewModelTest {
 
         //when
         vm.countTargetCharacters("select * from characters")
-        vm.targetCharactersState.test {
+        vm.targetCharactersUiState.test {
 
             //then
             assertEquals(TargetCharactersUiState(), awaitItem())
@@ -55,7 +55,7 @@ class SearchViewModelTest {
 
         //when
         vm.countTargetCharacters("select * from characters")
-        vm.targetCharactersState.test {
+        vm.targetCharactersUiState.test {
 
             //then
             assertEquals(TargetCharactersUiState(), awaitItem())
@@ -76,7 +76,7 @@ class SearchViewModelTest {
 
         //when
         vm.searchCharacters("select * from characters")
-        vm.state.test {
+        vm.uiState.test {
 
             //then
             assertEquals(UiState(), awaitItem())
@@ -93,7 +93,7 @@ class SearchViewModelTest {
 
         //when
         vm.searchCharacters("select * from characters")
-        vm.state.test {
+        vm.uiState.test {
 
             //then
             assertEquals(UiState(), awaitItem())

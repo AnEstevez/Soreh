@@ -8,6 +8,7 @@ import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import com.andresestevez.soreh.ui.screens.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -19,21 +20,23 @@ class SearchViewModel @Inject constructor(
 ) : ViewModel() {
 
     var filters = MutableStateFlow(CharactersFilter())
-    var state = MutableStateFlow(UiState())
-        private set
-    var targetCharactersState = MutableStateFlow(TargetCharactersUiState())
-        private set
+
+    private var _uiState = MutableStateFlow(UiState())
+    val uiState = _uiState.asStateFlow()
+
+    private var _targetCharactersState = MutableStateFlow(TargetCharactersUiState())
+    val targetCharactersUiState = _targetCharactersState.asStateFlow()
 
     fun searchCharacters(query: String) {
         viewModelScope.launch {
-            state.value = UiState(loading = true)
+            _uiState.value = UiState(loading = true)
             searchCharactersUseCase.searchCharacters(query).fold({ characters ->
-                state.update { currentState ->
+                _uiState.update { currentState ->
                     currentState.copy(
                         loading = false,
                         data = characters.map { character -> ItemUiState(character) })
                 }
-                targetCharactersState.update { currentState ->
+                _targetCharactersState.update { currentState ->
                     currentState.copy(
                         loading = false,
                         data = characters.size,
@@ -41,7 +44,7 @@ class SearchViewModel @Inject constructor(
                 }
             }) {
                 Timber.e(it)
-                state.update { currentState ->
+                _uiState.update { currentState ->
                     currentState.copy(loading = false, userMessage = it.getUserMessage())
                 }
             }
@@ -50,9 +53,9 @@ class SearchViewModel @Inject constructor(
 
     fun countTargetCharacters(query: String) {
         viewModelScope.launch {
-            targetCharactersState.value = TargetCharactersUiState(loading = true)
+            _targetCharactersState.value = TargetCharactersUiState(loading = true)
             searchCharactersUseCase.countCharacters(query).fold({ count ->
-                targetCharactersState.update { currentState ->
+                _targetCharactersState.update { currentState ->
                     currentState.copy(
                         loading = false,
                         data = count,
@@ -60,7 +63,7 @@ class SearchViewModel @Inject constructor(
                 }
             }) {
                 Timber.e(it)
-                targetCharactersState.update { currentState ->
+                _targetCharactersState.update { currentState ->
                     currentState.copy(loading = false, userMessage = it.getUserMessage())
                 }
             }
@@ -68,7 +71,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun dismissUserMessage() {
-        state.update { it.copy(userMessage = "") }
+        _uiState.update { it.copy(userMessage = "") }
     }
 }
 

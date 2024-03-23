@@ -38,7 +38,7 @@ class FavoritesIntegrationTest {
         vm = FavoritesViewModel(useCase)
 
         //when
-        vm.state.test {
+        vm.uiState.test {
 
             //then
             assertEquals(UiState(), awaitItem())

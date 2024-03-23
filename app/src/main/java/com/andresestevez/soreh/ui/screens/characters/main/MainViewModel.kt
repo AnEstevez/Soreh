@@ -12,6 +12,7 @@ import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import com.andresestevez.soreh.ui.screens.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -20,15 +21,15 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getRandomCharactersList: GetRandomCharactersListUseCase,
-    private val workManager: WorkManager
+    workManager: WorkManager
 ) :
     ViewModel() {
 
     private val workInfo =
         workManager.getWorkInfosForUniqueWorkLiveData(CacheWorker.WORK_NAME).map { it[0] }.asFlow()
 
-    var state = MutableStateFlow(UiState())
-        private set
+    private var _uiState = MutableStateFlow(UiState())
+    var uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -40,16 +41,16 @@ class MainViewModel @Inject constructor(
 
     private fun refresh() {
         viewModelScope.launch {
-            state.value = UiState(loading = true)
+            _uiState.value = UiState(loading = true)
             getRandomCharactersList(10).fold({ characters ->
-                state.update { currentState ->
+                _uiState.update { currentState ->
                     currentState.copy(
                         data = characters.map { character -> ItemUiState(character = character) },
                         loading = false
                     )
                 }
             }) {
-                state.update { currentState ->
+                _uiState.update { currentState ->
                     Timber.e(it)
                     currentState.copy(loading = false, userMessage = it.getUserMessage())
                 }
@@ -58,7 +59,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun dismissUserMessage() {
-        state.update { it.copy(userMessage = "") }
+        _uiState.update { it.copy(userMessage = "") }
     }
 }
 

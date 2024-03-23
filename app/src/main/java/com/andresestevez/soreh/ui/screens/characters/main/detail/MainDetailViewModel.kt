@@ -16,6 +16,7 @@ import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import com.andresestevez.soreh.ui.screens.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -28,11 +29,11 @@ class MainDetailViewModel @Inject constructor(
     toggleFavoriteUseCase: ToggleFavoriteUseCase,
 ) : ViewModel() {
 
-    var state = MutableStateFlow(UiState())
-        private set
+    private var _uiState = MutableStateFlow(UiState())
+    val uiState = _uiState.asStateFlow()
 
-    var pagesColorState = MutableStateFlow(PagesColorsState())
-        private set
+    private var _pagesColorState = MutableStateFlow(PagesColorsState())
+    val pagesColorUiState = _pagesColorState.asStateFlow()
 
     val currentMainCharacter = stateHandle.get<Int>(CURRENT_MAIN_CHARACTER) ?: 0
 
@@ -40,19 +41,19 @@ class MainDetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            state.value = UiState(loading = true)
+            _uiState.value = UiState(loading = true)
             getCharactersByIdList(
                 idList = mainCharactersList.split(",").map { it.toInt() },
                 idListOrder = mainCharactersList
             )
                 .collect { result ->
-                    state.update { currentState ->
+                    _uiState.update { currentState ->
                         currentState.copy(
                             loading = true,
                         )
                     }
                     result.fold({ characters ->
-                        state.update { currentState ->
+                        _uiState.update { currentState ->
                             currentState.copy(
                                 loading = false,
                                 data = characters.map {
@@ -62,7 +63,7 @@ class MainDetailViewModel @Inject constructor(
                                 })
                         }
                     }) {
-                        state.update { currentState ->
+                        _uiState.update { currentState ->
                             Timber.e(it)
                             currentState.copy(
                                 loading = false,
@@ -75,7 +76,7 @@ class MainDetailViewModel @Inject constructor(
     }
 
     fun dismissUserMessage() {
-        state.update { it.copy(userMessage = "") }
+        _uiState.update { it.copy(userMessage = "") }
     }
 
     fun updatePagesBackgroundColor(bitmap: Bitmap, page: Int, isSystemInDarkTheme: Boolean) {
@@ -89,7 +90,7 @@ class MainDetailViewModel @Inject constructor(
 
         val gradientEndColor = Color(palette.getDominantColor(Color.Black.toArgb()))
 
-        pagesColorState.update { currentState ->
+        _pagesColorState.update { currentState ->
             currentState.getPagesColorStateUpdated(page, Pair(gradientStartColor, gradientEndColor))
         }
 

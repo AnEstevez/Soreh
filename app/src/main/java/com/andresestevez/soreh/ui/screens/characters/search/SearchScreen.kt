@@ -44,7 +44,7 @@ fun SearchScreen(
     val localAnalyticsHelper = LocalAnalyticsHelper.current
     localAnalyticsHelper.LogScreenView("SearchScreen")
 
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
     val filters by viewModel.filters.collectAsStateWithLifecycle()
 
     val coroutineScope = rememberCoroutineScope()
