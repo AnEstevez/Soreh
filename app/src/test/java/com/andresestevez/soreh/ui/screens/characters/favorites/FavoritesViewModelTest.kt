@@ -38,7 +38,7 @@ class FavoritesViewModelTest {
         vm = FavoritesViewModel(useCase)
 
         //when
-        vm.state.test {
+        vm.uiState.test {
 
             //then
             assertEquals(UiState(), awaitItem())
@@ -54,7 +54,7 @@ class FavoritesViewModelTest {
         vm = FavoritesViewModel(useCase)
 
         //when
-        vm.state.test {
+        vm.uiState.test {
 
             //then
             assertEquals(UiState(), awaitItem())

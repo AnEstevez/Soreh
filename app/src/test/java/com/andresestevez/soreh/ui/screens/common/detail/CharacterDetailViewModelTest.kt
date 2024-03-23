@@ -48,7 +48,7 @@ class CharacterDetailViewModelTest {
         vm = CharacterDetailViewModel(stateHandle, getCharacterByIdUseCase, toggleFavoritesUseCase)
 
         //when
-        vm.state.test {
+        vm.uiState.test {
 
             //then
             assertEquals(UiState(), awaitItem())
@@ -67,7 +67,7 @@ class CharacterDetailViewModelTest {
         vm = CharacterDetailViewModel(stateHandle, getCharacterByIdUseCase, toggleFavoritesUseCase)
 
         //when
-        vm.state.test {
+        vm.uiState.test {
 
             //then
             assertEquals(UiState(), awaitItem())
@@ -86,7 +86,7 @@ class CharacterDetailViewModelTest {
         vm = CharacterDetailViewModel(stateHandle, getCharacterByIdUseCase, toggleFavoritesUseCase)
 
         //when
-        vm.state.test {
+        vm.uiState.test {
 
             assertEquals(UiState(), awaitItem())
             assertEquals(UiState(loading = true), awaitItem())

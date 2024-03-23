@@ -21,7 +21,7 @@ fun FavoritesScreen(
     val localAnalyticsHelper = LocalAnalyticsHelper.current
     localAnalyticsHelper.LogScreenView("FavoritesScreen")
 
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     if (state.userMessage.isNotEmpty()) {
         appState.onShowUserMessage(state.userMessage)

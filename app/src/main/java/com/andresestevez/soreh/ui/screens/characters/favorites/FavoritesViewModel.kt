@@ -8,6 +8,7 @@ import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import com.andresestevez.soreh.ui.screens.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -16,14 +17,14 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(useCase: GetFavoritesUseCase) : ViewModel() {
 
-    var state: MutableStateFlow<UiState> = MutableStateFlow(UiState())
-        private set
+    private var _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
+    val uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            state.update { currentState -> currentState.copy(loading = true) }
+            _uiState.update { currentState -> currentState.copy(loading = true) }
             useCase().collect { result ->
-                state.update { currentState ->
+                _uiState.update { currentState ->
                     result.fold({ characters ->
                         currentState.copy(
                             loading = false,
@@ -35,13 +36,12 @@ class FavoritesViewModel @Inject constructor(useCase: GetFavoritesUseCase) : Vie
                             userMessage = it.getUserMessage()
                         )
                     }
-
                 }
             }
         }
     }
 
     fun dismissUserMessage() {
-        state.update { it.copy(userMessage = "") }
+        _uiState.update { it.copy(userMessage = "") }
     }
 }

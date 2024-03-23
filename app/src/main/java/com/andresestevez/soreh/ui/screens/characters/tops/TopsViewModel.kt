@@ -13,6 +13,7 @@ import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import com.andresestevez.soreh.ui.screens.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -21,48 +22,54 @@ import javax.inject.Inject
 @HiltViewModel
 class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
 
-    var dcUiState = MutableStateFlow(UiState(loading = true))
-        private set
+    private var _dcUiState = MutableStateFlow(UiState(loading = true))
+    val dcUiState = _dcUiState.asStateFlow()
+
     private val dcQuery = CharactersQueryBuilder(CharactersFilter(
         publishers = mutableListOf(Publisher.DC),
         sort = Pair(SortingField.Average, SortingDirection.Desc),
         limit = 10,
     ), false).build()
 
-    var marvelUiState = MutableStateFlow(UiState(loading = true))
-        private set
+    private var _marvelUiState = MutableStateFlow(UiState(loading = true))
+    val marvelUiState = _marvelUiState.asStateFlow()
+
     private val marvelQuery = CharactersQueryBuilder(CharactersFilter(
         publishers = mutableListOf(Publisher.Marvel),
         sort = Pair(SortingField.Average, SortingDirection.Desc),
         limit = 10,
     ), false).build()
 
-    var imageUiState = MutableStateFlow(UiState(loading = true))
-        private set
+    private var _imageUiState = MutableStateFlow(UiState(loading = true))
+    val imageUiState = _imageUiState.asStateFlow()
+
     private val imageQuery = CharactersQueryBuilder(CharactersFilter(
         publishers = mutableListOf(Publisher.Image),
         sort = Pair(SortingField.Average, SortingDirection.Desc),
         limit = 10,
     ), false).build()
 
-    var darkUiState = MutableStateFlow(UiState(loading = true))
-        private set
+    private var _darkUiState = MutableStateFlow(UiState(loading = true))
+    val darkUiState = _darkUiState.asStateFlow()
+
     private val darkQuery = CharactersQueryBuilder(CharactersFilter(
         publishers = mutableListOf(Publisher.DarkHorse),
         sort = Pair(SortingField.Average, SortingDirection.Desc),
         limit = 10,
     ), false).build()
 
-    var lucasUiState = MutableStateFlow(UiState(loading = true))
-        private set
+    private var _lucasUiState = MutableStateFlow(UiState(loading = true))
+    val lucasUiState = _lucasUiState.asStateFlow()
+
     private val lucasQuery = CharactersQueryBuilder(CharactersFilter(
         publishers = mutableListOf(Publisher.GeorgeLucas),
         sort = Pair(SortingField.Average, SortingDirection.Desc),
         limit = 10,
     ), false).build()
 
-    var nbcUiState = MutableStateFlow(UiState(loading = true))
-        private set
+    private var _nbcUiState = MutableStateFlow(UiState(loading = true))
+    val nbcUiState = _nbcUiState.asStateFlow()
+
     private val nbcQuery = CharactersQueryBuilder(CharactersFilter(
         publishers = mutableListOf(Publisher.NBC),
         sort = Pair(SortingField.Average, SortingDirection.Desc),
@@ -74,7 +81,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
     init {
         viewModelScope.launch {
             launch {
-                dcUiState.update { currentState ->
+                _dcUiState.update { currentState ->
                     useCase.searchCharactersSuspend(dcQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
@@ -85,7 +92,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
             }
 
             launch {
-                marvelUiState.update { currentState ->
+                _marvelUiState.update { currentState ->
                     useCase.searchCharactersSuspend(marvelQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
@@ -96,7 +103,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
             }
 
             launch {
-                imageUiState.update { currentState ->
+                _imageUiState.update { currentState ->
                     useCase.searchCharactersSuspend(imageQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
@@ -107,7 +114,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
             }
 
             launch {
-                darkUiState.update { currentState ->
+                _darkUiState.update { currentState ->
                     useCase.searchCharactersSuspend(darkQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
@@ -118,7 +125,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
             }
 
             launch {
-                lucasUiState.update { currentState ->
+                _lucasUiState.update { currentState ->
                     useCase.searchCharactersSuspend(lucasQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
@@ -129,7 +136,7 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
             }
 
             launch {
-                nbcUiState.update { currentState ->
+                _nbcUiState.update { currentState ->
                     useCase.searchCharactersSuspend(nbcQuery).fold({ characters ->
                         currentState.copy(loading = false, data = characters.map { ItemUiState(it) })
                     }) {
@@ -142,12 +149,12 @@ class TopsViewModel @Inject constructor(useCase: GetTopsUseCase) : ViewModel() {
     }
 
     fun dismissUserMessage() {
-        dcUiState.update { it.copy(userMessage = "") }
-        marvelUiState.update { it.copy(userMessage = "") }
-        imageUiState.update { it.copy(userMessage = "") }
-        darkUiState.update { it.copy(userMessage = "") }
-        lucasUiState.update { it.copy(userMessage = "") }
-        nbcUiState.update { it.copy(userMessage = "") }
+        _dcUiState.update { it.copy(userMessage = "") }
+        _marvelUiState.update { it.copy(userMessage = "") }
+        _imageUiState.update { it.copy(userMessage = "") }
+        _darkUiState.update { it.copy(userMessage = "") }
+        _lucasUiState.update { it.copy(userMessage = "") }
+        _nbcUiState.update { it.copy(userMessage = "") }
     }
 
 }

@@ -78,7 +78,7 @@ fun DetailScreen(
     val localAnalyticsHelper = LocalAnalyticsHelper.current
     localAnalyticsHelper.LogScreenView("DetailScreen")
 
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     val snackbarHostState = remember { SnackbarHostState() }
 

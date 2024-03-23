@@ -98,9 +98,9 @@ fun TopsDetailScreen(
     val localAnalyticsHelper = LocalAnalyticsHelper.current
     localAnalyticsHelper.LogScreenView("TopsDetailScreen")
 
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val pagesColorState by viewModel.pagesColorState.collectAsStateWithLifecycle()
+    val pagesColorState by viewModel.pagesColorUiState.collectAsStateWithLifecycle()
 
     val snackbarHostState = remember { SnackbarHostState() }
 

@@ -40,7 +40,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.andresestevez.soreh.R
 import com.andresestevez.soreh.ui.SorehAppState
 import com.andresestevez.soreh.ui.mainActivity
-import com.andresestevez.soreh.ui.screens.characters.search.*
 import com.andresestevez.soreh.ui.screens.characters.search.Alignment.*
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -53,7 +52,7 @@ fun SorehBottomSheet(
 ) {
 
     val filters = searchViewModel.filters.collectAsStateWithLifecycle()
-    val targetCharactersState = searchViewModel.targetCharactersState.collectAsStateWithLifecycle()
+    val targetCharactersState = searchViewModel.targetCharactersUiState.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
 
     Column(

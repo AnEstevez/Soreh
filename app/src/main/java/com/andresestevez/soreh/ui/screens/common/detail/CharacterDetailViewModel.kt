@@ -10,6 +10,7 @@ import com.andresestevez.soreh.ui.navigation.NavCommand.Companion.CHARACTER_ID
 import com.andresestevez.soreh.ui.screens.common.ItemUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -22,16 +23,16 @@ class CharacterDetailViewModel @Inject constructor(
     toggleFavoriteUseCase: ToggleFavoriteUseCase,
 ) : ViewModel() {
 
-    var state = MutableStateFlow(UiState())
-        private set
+    private var _uiState = MutableStateFlow(UiState())
+    val uiState = _uiState.asStateFlow()
 
     private val characterId = stateHandle.get<Int>(CHARACTER_ID) ?: 0
 
     init {
         viewModelScope.launch {
-            state.value = UiState(loading = true)
+            _uiState.value = UiState(loading = true)
             getCharacterByIdUseCase(characterId).collect { result ->
-                state.update { currentState ->
+                _uiState.update { currentState ->
                     result.fold({
                         currentState.copy(loading = false, data = ItemUiState(it).apply {
                             onClick = { toggleFavoriteUseCase(it) }
@@ -46,7 +47,7 @@ class CharacterDetailViewModel @Inject constructor(
     }
 
     fun dismissUserMessage() {
-        state.update { it.copy(userMessage = "") }
+        _uiState.update { it.copy(userMessage = "") }
     }
 
     data class UiState(

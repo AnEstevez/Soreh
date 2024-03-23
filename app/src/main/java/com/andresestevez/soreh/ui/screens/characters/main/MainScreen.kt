@@ -45,7 +45,7 @@ fun MainScreen(
     val localAnalyticsHelper = LocalAnalyticsHelper.current
     localAnalyticsHelper.LogScreenView("MainScreen")
 
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     var initialActiveIndex by rememberSaveable { mutableIntStateOf(0) }
     val carouselState = remember { CarouselState(initialActiveItemIndex = initialActiveIndex) }
